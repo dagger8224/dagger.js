@@ -1192,7 +1192,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                             dataBinder(directives, value, fields, 'blur');
                             dataBinder(directives, value, fields, 'focus');
                         } else if ((Object.is(tagName, 'INPUT') && ((isFileType && (Object.is(name, 'file') || Object.is(name, 'result'))) || (isCheckedType && (isCheckedDirective || isSelectedDirective)) || (!isCheckedType && !isFileType && isValueDirective))) || ((Object.is(tagName, 'OPTION') && isCheckedDirective) || (Object.is(tagName, 'SELECT') && isSelectedDirective) || (Object.is(tagName, 'TEXTAREA') && isValueDirective))) {
-                            dataBinder(directives, value, fields, decorators.input ? 'input' : 'change');
+                            dataBinder(directives, value, fields, decorators.change ? 'change' : 'input');
                         }
                     }
                     if (isValueDirective) { return directives.controllers.unshift(directive); }
