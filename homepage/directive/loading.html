@@ -1,4 +1,4 @@
-<template $exist="language == 'zh-cn'">
+<template *exist="language == 'zh-cn'">
   <h2>${ $['directive.loading'] }</h2>
   <div class="content">
     <h3 class="question">+loading指令的作用</h3>
@@ -25,12 +25,12 @@
     </div>
   </div>
 </template>
-<template $exist="language == 'en-us'">
+<template *exist="language == 'en-us'">
   <h2>${ $['directive.loading'] }</h2>
   <div class="content">
-    <template $each="$['directive.loading.sections']">
+    <template *each="$['directive.loading.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </div>
 </template>

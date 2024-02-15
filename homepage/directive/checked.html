@@ -1,16 +1,16 @@
 <h2>${ $['directive.checked'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">$checked指令的作用</h3>
-    <div class="answer">“$checked”指令用于绑定宿主元素的选中状态，适用于类型为“radio”和“checkbox”的input元素，以及option元素。</div>
+    <div class="answer">“*checked”指令用于绑定宿主元素的选中状态，适用于类型为“radio”和“checkbox”的input元素，以及option元素。</div>
     <h3 class="question">$checked指令表达式的执行结果</h3>
     <div class="answer">
-      <div>“$checked”指令的执行结果是布尔值。值为true代表元素处于选中状态，值为false代表元素处于取消选中状态。</div>
+      <div>“*checked”指令的执行结果是布尔值。值为true代表元素处于选中状态，值为false代表元素处于取消选中状态。</div>
       <div>当该指令表达式的内容是合法的<a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators#%E5%B7%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F">左表达式</a>时，用户对宿主元素的操作将导致表达式计算结果同步变化，实现作用域数据与DOM元素属性之间的的双向绑定。</div>
       <div>我们来看$checked指令的示例：
-        <iframe height="300" style="width: 100%;" scrolling="no" title="[ dagger-demo] $checked directive for radio" src="https://codepen.io/dagger8224/embed/yLvVmrx?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+        <iframe height="300" style="width: 100%;" scrolling="no" title="[ dagger-demo] *checked directive for radio" src="https://codepen.io/dagger8224/embed/yLvVmrx?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
           See the Pen <a href="https://codepen.io/dagger8224/pen/yLvVmrx">
-          [ dagger-demo] $checked directive for radio</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
+          [ dagger-demo] *checked directive for radio</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
           on <a href="https://codepen.io">CodePen</a>.
         </iframe>
       </div>
@@ -19,26 +19,26 @@
     <div class="answer">
       <div>$checked指令支持如下两个修饰符：
         <div class="margin">1. “oneway”，布尔类型。值为true代表当前指令是单向绑定的，用户对宿主元素的操作不会更新关联的作用域数据。示例如下：
-          <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] $checked directive (oneway decorator)" src="https://codepen.io/dagger8224/embed/xxYLEzL?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+          <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] *checked directive (oneway decorator)" src="https://codepen.io/dagger8224/embed/xxYLEzL?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
             See the Pen <a href="https://codepen.io/dagger8224/pen/xxYLEzL">
-            [dagger-demo] $checked directive (oneway decorator)</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
+            [dagger-demo] *checked directive (oneway decorator)</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
             on <a href="https://codepen.io">CodePen</a>.
           </iframe>
         </div>
         <div class="margin">2. “indeterminate”，布尔类型。该修饰符只对checkbox元素生效。indeterminate为true则框架将在指令执行结果为null或者undefined时将checkbox设置为<a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/input/checkbox">未确定</a>状态。示例如下：
-          <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] $checked directive (indeterminate decorator)" src="https://codepen.io/dagger8224/embed/poarEOj?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+          <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] *checked directive (indeterminate decorator)" src="https://codepen.io/dagger8224/embed/poarEOj?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
             See the Pen <a href="https://codepen.io/dagger8224/pen/poarEOj">
-            [dagger-demo] $checked directive (indeterminate decorator)</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
+            [dagger-demo] *checked directive (indeterminate decorator)</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
             on <a href="https://codepen.io">CodePen</a>.
           </iframe>
         </div>
       </div>
     </div>
   </template>
-  <template $exist="language == 'en-us'">
-    <template $each="$['directive.checked.sections']">
+  <template *exist="language == 'en-us'">
+    <template *each="$['directive.checked.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </template>
 </div>

@@ -49,7 +49,7 @@
         "answer": "<span>directive is an important concept in dagger.js. Formally, directive is special <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes'>attribute</a> (with specified prefix). At runtime, directives will be converted to expressions under context scopes, and interactive with the related DOM element. In later tutorials, we will see the examples of usage for different directives.</span>"
     }, {
         "question": "The category of directives",
-        "answer": "<span>There are four types of directives: <a href='directive/raw'>meta directive</a> (with symbol \"@\" as prefix, such as \"@raw\"), <a href='directive/lifeCycle'>lifeCycle directives</a> (with symbol \"$\" as prefix, such as \"+loading\"), <a href='directive/controller'>control directives</a> (with symbol \"$\" as prefix, such as \"$value\") and <a href='directive/eventHandler'>event directive</a> (with symbol \"+\" as prefix, such as \"+click\").</span>"
+        "answer": "<span>There are four types of directives: <a href='directive/raw'>meta directive</a> (with symbol \"@\" as prefix, such as \"@raw\"), <a href='directive/lifeCycle'>lifeCycle directives</a> (with symbol \"$\" as prefix, such as \"+loading\"), <a href='directive/controller'>control directives</a> (with symbol \"$\" as prefix, such as \"*value\") and <a href='directive/eventHandler'>event directive</a> (with symbol \"+\" as prefix, such as \"+click\").</span>"
     }, {
         "question": "The structure of directives",
         "answer": "<span>A typical directive is composed of </span><span class='format'>\"prefix + name + decorators (optional) + expression\"</span><span>. <a href='directive/decorator'>decorators</a> are a group of key value pairs separated by symbol \"#\", which are used to customize the behavior of directive. The meta directive is composed of </span><span class='format'>\"prefix + name\"</span><span> only.</span>"
@@ -97,7 +97,7 @@
         "answer": "<span>The +loading directive is triggered by framework before the related element is created. The main usage of +loading is to create a new variable scope in the context.</span>"
     }, {
         "question": "The return value of +loading directive expression",
-        "answer": "<span>A context scope would be created based on the return value in case it's a plain object (not include the extended object such as Array), the variables insides the scope could be visited in the other directive expressions (except for the <a href='directive/each'>$each</a> and <a href='directive/exist'>$exist</a> directives) on the related element and all directive expressions of its children. The variables defined in the inner scope will override the variables with the same name defined in outer scopes.</span>"
+        "answer": "<span>A context scope would be created based on the return value in case it's a plain object (not include the extended object such as Array), the variables insides the scope could be visited in the other directive expressions (except for the <a href='directive/each'>*each</a> and <a href='directive/exist'>*exist</a> directives) on the related element and all directive expressions of its children. The variables defined in the inner scope will override the variables with the same name defined in outer scopes.</span>"
     }],
     "directive.loaded": "Directive/+loaded",
     "directive.loaded.sections": [{
@@ -137,144 +137,144 @@
         "answer": "<span>The control directives (or controller) are the extension of element attributes, which provide the ability of dynamic response. Furthermore, some control directives provide the feature of two-way data binding between the related element and scoped variables.</span>"
     }, {
         "question": "The list of control directives",
-        "answer": "<a href='directive/checked'>$checked</a><a href='directive/class'>$class</a><a href='directive/each'>$each</a><a href='directive/exist'>$exist</a><a href='directive/file'>$file</a><a href='directive/focus'>$focus</a><a href='directive/html'>$html</a><a href='directive/selected'>$selected</a><a href='directive/style'>$style</a><a href='directive/text'>$text</a><a href='directive/value'>$value</a><a href='directive/watch'>$watch</a><a href='directive/boolean'>boolean</a><a href='directive/general'>general</a>"
+        "answer": "<a href='directive/checked'>*checked</a><a href='directive/class'>*class</a><a href='directive/each'>*each</a><a href='directive/exist'>*exist</a><a href='directive/file'>*file</a><a href='directive/focus'>*focus</a><a href='directive/html'>*html</a><a href='directive/selected'>*selected</a><a href='directive/style'>*style</a><a href='directive/text'>*text</a><a href='directive/value'>*value</a><a href='directive/watch'>*watch</a><a href='directive/boolean'>boolean</a><a href='directive/general'>general</a>"
     }, {
         "question": "The list of two-way data binding control directives",
-        "answer": "<a href='directive/checked'>$checked</a><a href='directive/file'>$file</a><a href='directive/selected'>$selected</a><a href='directive/value'>$value</a>"
+        "answer": "<a href='directive/checked'>*checked</a><a href='directive/file'>*file</a><a href='directive/selected'>*selected</a><a href='directive/value'>*value</a>"
     }, {
         "question": "The return value of control directive expression",
-        "answer": "<span>The return value of control directive (except for $watch directive) expression would have specified impact on the property or behavior of the related element.</span>"
+        "answer": "<span>The return value of control directive (except for *watch directive) expression would have specified impact on the property or behavior of the related element.</span>"
     }, {
         "question": "The trigger opportunity of control directive expression",
-        "answer": "<span>Most of the control directives (except for $each and $exist directives) are triggered by framework firstly after the +loading directive (in case there is), and before the +loaded directive (in case there is). The control directives might be triggered multiple times during the lifetime of related element if the dependency variables of directive expression updated. In case there are multiple control directives declared on the same element, the first time trigger order is the same as the order of declaration.</span>"
+        "answer": "<span>Most of the control directives (except for *each and *exist directives) are triggered by framework firstly after the +loading directive (in case there is), and before the +loaded directive (in case there is). The control directives might be triggered multiple times during the lifetime of related element if the dependency variables of directive expression updated. In case there are multiple control directives declared on the same element, the first time trigger order is the same as the order of declaration.</span>"
     }, {
         "question": "The available elements to apply control directives",
         "answer": "<span>Unless specified in the document, all DOM elements but &lt;html&gt; tag are available for control directives.</span>"
     }],
-    "directive.checked": "Directive/$checked",
+    "directive.checked": "Directive/*checked",
     "directive.checked.sections": [{
-        "question": "The effective of $checked directive",
-        "answer": "<span>The $checked directive is used to bind with the check state of related element, it's suitable for radio, checkbox and option under select element. For other elements, $checked directive will act as a <a href='directive/general'>general directive</a>.</span>"
+        "question": "The effective of *checked directive",
+        "answer": "<span>The *checked directive is used to bind with the check state of related element, it's suitable for radio, checkbox and option under select element. For other elements, *checked directive will act as a <a href='directive/general'>general directive</a>.</span>"
     }, {
-        "question": "The return value of $checked directive expression",
+        "question": "The return value of *checked directive expression",
         "answer": "<span>The related element will be checked when the expression return true or equivalent value, otherwise will be unchecked. When the expression returns a valid left-hand side of assignment, user's operation on the related element will sync to the variable.</span>"
     }, {
-        "question": "The relationship between $checked directive and checked/selected attribute",
-        "answer": "<span>For the elements declared $checked directive, the builtin \"checked/selected\" are ignored.</span>"
+        "question": "The relationship between *checked directive and checked/selected attribute",
+        "answer": "<span>For the elements declared *checked directive, the builtin \"checked/selected\" are ignored.</span>"
     }],
-    "directive.class": "Directive/$class",
+    "directive.class": "Directive/*class",
     "directive.class.sections": [{
-        "question": "The effective of $class directive",
-        "answer": "<span>The $class directive is used to bind with the class names of related element.</span>"
+        "question": "The effective of *class directive",
+        "answer": "<span>The *class directive is used to bind with the class names of related element.</span>"
     }, {
-        "question": "The return value of $class directive expression",
+        "question": "The return value of *class directive expression",
         "answer": "<span>The return value will be taken as class names if it's string. For array, each item will be converted to string and taken as class names. For object, all field keys with corresponding value true or equivalent value will be taken as class names. For other cases, the return value will be converted to string to proceed. No recursive processing for nested array or object.</span>"
     }, {
-        "question": "The relationship between $class directive and class attribute",
-        "answer": "<span>The return value of $class expression will be merged with the \"class\" attribute as the proceeded class names.</span>"
+        "question": "The relationship between *class directive and class attribute",
+        "answer": "<span>The return value of *class expression will be merged with the \"class\" attribute as the proceeded class names.</span>"
     }],
-    "directive.each": "Directive/$each",
+    "directive.each": "Directive/*each",
     "directive.each.sections": [{
-        "question": "The effective of $each directive",
-        "answer": "<span>The $each directive is used to render iteratable variables with the same view template.</span>"
+        "question": "The effective of *each directive",
+        "answer": "<span>The *each directive is used to render iteratable variables with the same view template.</span>"
     }, {
-        "question": "The return value of $each directive expression",
+        "question": "The return value of *each directive expression",
         "answer": "<span>The framework will render multiple element instances based on the related element in case the return value is iteratable, and to create a new scope based on each iterator. There are 3 predefined variables in the scope, \"item\" as the slice data itself, \"index\" as the iteration index, and \"key\" as the field name in parent variable. The variables could be renamed with <a href='directive/decorator'>directive decorator</a>.</span>"
     }, {
         "question": "The other directives of the related element",
-        "answer": "<span>For the directives other than $each on the template element, there will be a standalone instance created under each child scope.</span>"
+        "answer": "<span>For the directives other than *each on the template element, there will be a standalone instance created under each child scope.</span>"
     }],
-    "directive.exist": "Directive/$exist",
+    "directive.exist": "Directive/*exist",
     "directive.exist.sections": [{
-        "question": "The effective of $exist directive",
-        "answer": "<span>The $exist directive is used to toggle the existing state of the related element.</span>"
+        "question": "The effective of *exist directive",
+        "answer": "<span>The *exist directive is used to toggle the existing state of the related element.</span>"
     }, {
-        "question": "The return value of $exist directive expression",
+        "question": "The return value of *exist directive expression",
         "answer": "<span>The related element will be created in case the directive expression return true or equivalent value, otherwise it will be destroyed.</span>"
     }, {
-        "question": "The relationship between $exist directive and lifeCycle directives",
-        "answer": "<span>Each time when the return value of $exist directive expression toggled, the lifeCycle directives will be triggered (\"+loading/+loaded\" for creating, \"+unloading/+unloaded\" for destroying).</span>"
+        "question": "The relationship between *exist directive and lifeCycle directives",
+        "answer": "<span>Each time when the return value of *exist directive expression toggled, the lifeCycle directives will be triggered (\"+loading/+loaded\" for creating, \"+unloading/+unloaded\" for destroying).</span>"
     }],
-    "directive.file": "Directive/$file",
+    "directive.file": "Directive/*file",
     "directive.file.sections": [{
-        "question": "The effective of $file directive",
-        "answer": "<span>The $file directive is used to bind with the local file(s) selected via the related element.</span>"
+        "question": "The effective of *file directive",
+        "answer": "<span>The *file directive is used to bind with the local file(s) selected via the related element.</span>"
     }, {
-        "question": "The return value of $file directive expression",
+        "question": "The return value of *file directive expression",
         "answer": "<span>The return value of directive expression will refer to the selected File (single file selector) or FileList (multiple file selector) in case it is a valid left-hand side of assignment.</span>"
     }, {
-        "question": "The restriction of $file directive",
-        "answer": "<span>The $file directive is valid  only for the input element with type \"file\".</span>"
+        "question": "The restriction of *file directive",
+        "answer": "<span>The *file directive is valid  only for the input element with type \"file\".</span>"
     }],
-    "directive.focus": "Directive/$focus",
+    "directive.focus": "Directive/*focus",
     "directive.focus.sections": [{
-        "question": "The effective of $focus directive",
-        "answer": "<span>The $focus directive is used to set focus/blur state of the related element.</span>"
+        "question": "The effective of *focus directive",
+        "answer": "<span>The *focus directive is used to set focus/blur state of the related element.</span>"
     }, {
-        "question": "The return value of $focus directive expression",
+        "question": "The return value of *focus directive expression",
         "answer": "<span>The related element will be set focused in case the directive expression return true or equivalent value.</span>"
     }, {
-        "question": "The relationship between $focus directive and autofocus attribute",
-        "answer": "<span>For the elements declared $focus directive, the builtin \"autofocus\" attribute is ignored.</span>"
+        "question": "The relationship between *focus directive and autofocus attribute",
+        "answer": "<span>For the elements declared *focus directive, the builtin \"autofocus\" attribute is ignored.</span>"
     }],
-    "directive.html": "Directive/$html",
+    "directive.html": "Directive/*html",
     "directive.html.sections": [{
-        "question": "The effective of $html directive",
-        "answer": "<span>The $html directive is used to create child html fragment dynamically for the related element. The builtin inner content of related element will be replaced by the return value of $html directive expression. It's usually used together with the <a href='router/introduction'>router configs</a>.</span>"
+        "question": "The effective of *html directive",
+        "answer": "<span>The *html directive is used to create child html fragment dynamically for the related element. The builtin inner content of related element will be replaced by the return value of *html directive expression. It's usually used together with the <a href='router/introduction'>router configs</a>.</span>"
     }, {
-        "question": "The return value of $html directive expression",
+        "question": "The return value of *html directive expression",
         "answer": "<span>The return value of directive expression will be treated as the inner html of the related element. The directives declared on the html template will take effect after the child related element created, the variable scopes are inherited from the parent's scope chain.</span>"
     }],
-    "directive.result": "Directive/$result",
-    "directive.selected": "Directive/$selected",
+    "directive.result": "Directive/*result",
+    "directive.selected": "Directive/*selected",
     "directive.selected.sections": [{
-        "question": "The effective of $selected directive",
-        "answer": "<span>The $selected directive is used to bind with the value of the selected related element, it's suitable for radio, checkbox and select element. For other elements, $selected directive will act as a <a href='directive/general'>general directive</a>.</span>"
+        "question": "The effective of *selected directive",
+        "answer": "<span>The *selected directive is used to bind with the value of the selected related element, it's suitable for radio, checkbox and select element. For other elements, *selected directive will act as a <a href='directive/general'>general directive</a>.</span>"
     }, {
-        "question": "The return value of $selected directive expression",
+        "question": "The return value of *selected directive expression",
         "answer": "<span>The related element will be selected when the return value equal to the value (for radio or single select elements) or includes the value (for checkbox or multiple select elements), otherwise will be unchecked. When the expression returns a valid left-hand side of assignment, user's operation on the related element will sync to the variable.</span>"
     }, {
-        "question": "The relationship between $selected directive and checked/selected attribute",
-        "answer": "<span>For the elements declared $selected directive, the builtin \"checked/selected\" are ignored.</span>"
+        "question": "The relationship between *selected directive and checked/selected attribute",
+        "answer": "<span>For the elements declared *selected directive, the builtin \"checked/selected\" are ignored.</span>"
     }, {
-        "question": "The relationship between $selected directive and $checked directive",
-        "answer": "<span>The $selected expression is binding to the selected value(s) of related element(s), while the $checked directive is binding to the checked state. To apply $selected and $checked directives together might mess up the checked state and binding data of the related elements.</span>"
+        "question": "The relationship between *selected directive and *checked directive",
+        "answer": "<span>The *selected expression is binding to the selected value(s) of related element(s), while the *checked directive is binding to the checked state. To apply *selected and *checked directives together might mess up the checked state and binding data of the related elements.</span>"
     }],
-    "directive.style": "Directive/$style",
+    "directive.style": "Directive/*style",
     "directive.style.sections": [{
-        "question": "The effective of $style directive",
-        "answer": "<span>The $style directive is used to bind with the style property of related element.</span>"
+        "question": "The effective of *style directive",
+        "answer": "<span>The *style directive is used to bind with the style property of related element.</span>"
     }, {
-        "question": "The return value of $style directive expression",
+        "question": "The return value of *style directive expression",
         "answer": "<span>The return value will be taken as style property if it's string. For array, each item will be converted to string and taken as style property. For object, all field key/value pairs will be stitched and taken as style property. For other cases, the return value will be converted to string to proceed. No recursive processing for nested array or object.</span>"
     }, {
-        "question": "The relationship between $style directive and style attribute",
-        "answer": "<span>The return value of $style expression will be merged with the \"style\" attribute as the proceeded style property.</span>"
+        "question": "The relationship between *style directive and style attribute",
+        "answer": "<span>The return value of *style expression will be merged with the \"style\" attribute as the proceeded style property.</span>"
     }],
-    "directive.text": "Directive/$text",
+    "directive.text": "Directive/*text",
     "directive.text.sections": [{
-        "question": "The effective of $text directive",
-        "answer": "<span>The $text directive is used to create child text content dynamically for the related element. The builtin inner content of related element will be replaced.</span>"
+        "question": "The effective of *text directive",
+        "answer": "<span>The *text directive is used to create child text content dynamically for the related element. The builtin inner content of related element will be replaced.</span>"
     }, {
-        "question": "The return value of $text directive expression",
+        "question": "The return value of *text directive expression",
         "answer": "<span>The return value of directive expression will be taken as the inner text of the related element.</span>"
     }, {
-        "question": "Inline $text directive expression",
-        "answer": "<span>The text content of html tags with form of string template literal will be recognized as implicit $text directive expression.</span>"
+        "question": "Inline *text directive expression",
+        "answer": "<span>The text content of html tags with form of string template literal will be recognized as implicit *text directive expression.</span>"
     }],
-    "directive.value": "Directive/$value",
+    "directive.value": "Directive/*value",
     "directive.value.sections": [{
-        "question": "The effective of $value directive",
-        "answer": "<span>The $value directive is used to bind with the value property of the related element.</span>"
+        "question": "The effective of *value directive",
+        "answer": "<span>The *value directive is used to bind with the value property of the related element.</span>"
     }, {
-        "question": "The return value of $value directive expression",
-        "answer": "<span>The return value of $value directive expression will be taken as the value property of the related element. The \"input\", \"textarea\" and \"option\" tags are available for $value directive.  When the expression returns a valid left-hand side of assignment, user's operation on the related element will sync to the variable. <br/>Please note that for the element declared the $value directive and the <a href='directive/selected'>$selected</a> directive both, the variable binding to the $selected expression should be the return value of $value directive expression but not the converted value property (as string).</span>"
+        "question": "The return value of *value directive expression",
+        "answer": "<span>The return value of *value directive expression will be taken as the value property of the related element. The \"input\", \"textarea\" and \"option\" tags are available for *value directive.  When the expression returns a valid left-hand side of assignment, user's operation on the related element will sync to the variable. <br/>Please note that for the element declared the *value directive and the <a href='directive/selected'>*selected</a> directive both, the variable binding to the *selected expression should be the return value of *value directive expression but not the converted value property (as string).</span>"
     }, {
-        "question": "The relationship between $value directive and value attribute",
-        "answer": "<span>For the element declared $value directive, the builtin \"value\" attribute is ignored.</span>"
+        "question": "The relationship between *value directive and value attribute",
+        "answer": "<span>For the element declared *value directive, the builtin \"value\" attribute is ignored.</span>"
     }, {
-        "question": "The restriction of $value directive",
-        "answer": "<span>It's illegal to use $value directive on \"input\" element with type \"file\".</span>"
+        "question": "The restriction of *value directive",
+        "answer": "<span>It's illegal to use *value directive on \"input\" element with type \"file\".</span>"
     }],
     "directive.boolean": "Directive/boolean",
     "directive.boolean.sections": [{
@@ -290,7 +290,7 @@
     "directive.general": "Directive/general",
     "directive.general.sections": [{
         "question": "The effective of general directive",
-        "answer": "<span>The general directive is used to bind with the attribute with the same name of the related element. For instance, $id directive is binding to the \"id\" attribute.</span>"
+        "answer": "<span>The general directive is used to bind with the attribute with the same name of the related element. For instance, *id directive is binding to the \"id\" attribute.</span>"
     }, {
         "question": "The return value of general directive expression",
         "answer": "<span>The return value of general directive expression will be converted to string and assigned to the attribute with the same name.</span>"
@@ -299,18 +299,18 @@
         "answer": "<span>For the element declared \"xxx\" directive, the builtin \"xxx\" attribute is ignored.</span>"
     }, {
         "question": "The restriction of general directive",
-        "answer": "<span>Please note that the actions of some control directives depends on the specified attributes of the related element. For instance, the \"$checked/$selected\" directives depends on the type of \"input\" element, in this case, to declare \"$type\" directive would cause unexpected behavior of the \"$checked/$selected\" directives. Generally speaking, to declare static attributes instead of general directive in possible cases would reduce the unnecessary complexity and improve the runtime performance.</span>"
+        "answer": "<span>Please note that the actions of some control directives depends on the specified attributes of the related element. For instance, the \"*checked/*selected\" directives depends on the type of \"input\" element, in this case, to declare \"$type\" directive would cause unexpected behavior of the \"*checked/*selected\" directives. Generally speaking, to declare static attributes instead of general directive in possible cases would reduce the unnecessary complexity and improve the runtime performance.</span>"
     }],
-    "directive.watch": "Directive/$watch",
+    "directive.watch": "Directive/*watch",
     "directive.watch.sections": [{
-        "question": "The effective of $watch directive",
-        "answer": "<span>The $watch directive is used to process specified logic when the dependency variables updated.</span>"
+        "question": "The effective of *watch directive",
+        "answer": "<span>The *watch directive is used to process specified logic when the dependency variables updated.</span>"
     }, {
-        "question": "The return value of $watch directive expression",
-        "answer": "<span>The return value of $watch directive expression will be ignored.</span>"
+        "question": "The return value of *watch directive expression",
+        "answer": "<span>The return value of *watch directive expression will be ignored.</span>"
     }, {
-        "question": "The restriction of $watch directive",
-        "answer": "<span>Different from other control directives, it's valid to declare multiple $watch directives with different decorators on the same element, each of them works independently.</span>"
+        "question": "The restriction of *watch directive",
+        "answer": "<span>Different from other control directives, it's valid to declare multiple *watch directives with different decorators on the same element, each of them works independently.</span>"
     }],
     "directive.eventHandler": "Directive/eventHandler",
     "directive.eventHandler.sections": [{
@@ -329,7 +329,7 @@
         "answer": "<span>Decorator is an optional part of directive, which is used to customize the behavior of corresponding directive. Decorator is not support by meta directive.</span>"
     }, {
         "question": "The structure of directive decorator",
-        "answer": "<span>It's valid to declare multiple decorators separated by \"#\" for the same directive. A full decorator is a key/value pair separated by \":\", the value of which could be omitted (the default value is boolean \"true\" unless specified). For instance, the directive '$value#trim#number:false=\"value\"' declares two decorators: trim == true and number == false.</span>"
+        "answer": "<span>It's valid to declare multiple decorators separated by \"#\" for the same directive. A full decorator is a key/value pair separated by \":\", the value of which could be omitted (the default value is boolean \"true\" unless specified). For instance, the directive '*value#trim#number:false=\"value\"' declares two decorators: trim == true and number == false.</span>"
     }, {
         "question": "The predefined general directive decorator",
         "answer": "<span>The directives work under \"insensitive\" mode by default. That is, during the proceeding of directive expression, any update on variables won't trigger the related directive expressions immediately, instead, the expressions will be pushed into a pending proceeding queue which to be triggered after the proceeding of current directive expression.<br/>You may declare \"sensitive(:true)\" decorator to set the work mode as sensitive, under which the framework will break to proceed the related directive expressions once detecting update on variables, and getting back to the stopped call stack after the process finished.</span>"
@@ -338,7 +338,7 @@
         "answer": "<span>The decorator \"next\" is used to specify the name of callback parameter referring to the target <a href='router/introduction'>router</a> object for \"<a href='directive/sentry'>+sentry</a>\" lifeCycle directive, the default value is \"$nextRouter\"; The decorator \"node\" is used to set the name of callback parameter referring to the related element for \"<a href='directive/loaded'>+loaded</a>\", \"<a href='directive/unloading'>+unloading</a>\", \"<a href='directive/unloaded'>+unloaded</a>\", the default value is \"$node\".</span>"
     }, {
         "question": "The predefined control directive decorators",
-        "answer": "<span>The $value directive supports the following decorators: <div class=\"sub-answer\">1. number, which is used to convert the input string to number;<br/>2. trim, which is used to remove whitespace from both ends of the input string;<br/>3. input, which is used to update the input content to the return value of directive expression right after user input, by default the update is triggered after the input element lost focus (response on \"change\" event).</div>The $each directive supports the following decorators: <div class=\"sub-answer\">1. item, which is used to set the name of the slice variable (the default name is \"item\"); <br/>2. index, which is used to set the name of index (with type number) of the the slice variable (the default name is \"index\"); <br/>3. key, which is used to set the name of field key (with type string) of the the slice variable (the default name is \"key\").</div>The $checked directive supports decorator \"scope\", which is used to specify the parent element selector of the checkable group (by default is the parentNode of related element).<br/>The $focus directive support decorator \"prevent\", which is used to specify <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/API/HTMLOrForeignElement/focus'> whether or not the browser should scroll the document to bring the newly-focused element into view</a>.</span>"
+        "answer": "<span>The *value directive supports the following decorators: <div class=\"sub-answer\">1. number, which is used to convert the input string to number;<br/>2. trim, which is used to remove whitespace from both ends of the input string;<br/>3. input, which is used to update the input content to the return value of directive expression right after user input, by default the update is triggered after the input element lost focus (response on \"change\" event).</div>The *each directive supports the following decorators: <div class=\"sub-answer\">1. item, which is used to set the name of the slice variable (the default name is \"item\"); <br/>2. index, which is used to set the name of index (with type number) of the the slice variable (the default name is \"index\"); <br/>3. key, which is used to set the name of field key (with type string) of the the slice variable (the default name is \"key\").</div>The *checked directive supports decorator \"scope\", which is used to specify the parent element selector of the checkable group (by default is the parentNode of related element).<br/>The *focus directive support decorator \"prevent\", which is used to specify <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/API/HTMLOrForeignElement/focus'> whether or not the browser should scroll the document to bring the newly-focused element into view</a>.</span>"
     }, {
         "question": "The predefined eventHandler directive decorator",
         "answer": "<span>The eventHandler directives support the following decorators: <div class=\"sub-answer\">1. target, which is used to set the target of event listener, for instance, \"+resize#target:window\" will add listener for \"resize\" event on window;<br/>2. event, which is used to set the parameter name referring to the triggered event (the default name is \"$event\");<br/>3. current, which is used to specify the target of event triggering should be the same target of event listener;<br/>4. modifier, which is used to set <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/getModifierState'>the current state of the specified modifier key</a> (including Ctrl/Alt/Shift/Command/CapsLock etc.). The value of modifier decorator could either be string or string array. If the value is string array, the directive expression won't be triggered unless all the modifier keys are active;<br/>5. code, which is used to set the regExp or regExp array matching with the <a target='_blank' href='https://developer.mozilla.org/en-us/docs/Web/API/KeyboardEvent/code'>event.code</a>. If the value is regExp array, the directive expression won't be triggered unless all the regExps matched;<br/>6. key, which is used to  set the regExp or regExp array matching with the <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key'>event.key</a> for keyboard event or <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/buttons'>event.buttons</a> for mouse event (the enum for mouse event are \"Left/Right/Middle/Back/Forward\"). If the value is regExp array, the directive expression won't be triggered unless all the regExps matched;<br/>7. prevent, which is used to specify that the <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault'>event.preventDefault</a> method will be called in the directive expression;<br/>8. stop, which is used to specify that the <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation'>event.stopPropagation</a> method will be called in the directive expression;<br/>9. stopImmediate, which is used to specify that the <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation'>event.stopImmediatePropagation</a> method will be called in the directive expression;<br/>10. capture/once/passive, which are used to set the <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener'>options</a> of the event listener.</div></span>"
@@ -387,7 +387,7 @@
         "answer": "<span>Besides the common config fields of module, there is a \"style\" field (should be string or string array) to refer to the relative path(s) of style module(s) active for current template module.</span>"
     }, {
         "question": "The restriction of template module",
-        "answer": "<span>1. Recursion and circular references are not supported, however, it's easy to construct reference structures using conditional \"<a href='directive/html'>$html</a>\" directive.<br/>2. Limited by the parsing rule of html tags and the consideration of compatibility, the characters \"$\" and \"-\" are disabled in the module path. Please add the prefix \"-\" before the uppercase characters when declaring module path as html tag, for instance, the html tag \"&lt;my-module.-template&gt;\" will be mapped to the module path \"myModule.Template\".<br/>3. The template tag will be replaced by its content when parsing and won't be converted to a real DOM element, so it should not be specified as the target of <a href='directive/eventHandler'>eventHandler</a> directives.</span>"
+        "answer": "<span>1. Recursion and circular references are not supported, however, it's easy to construct reference structures using conditional \"<a href='directive/html'>*html</a>\" directive.<br/>2. Limited by the parsing rule of html tags and the consideration of compatibility, the characters \"$\" and \"-\" are disabled in the module path. Please add the prefix \"-\" before the uppercase characters when declaring module path as html tag, for instance, the html tag \"&lt;my-module.-template&gt;\" will be mapped to the module path \"myModule.Template\".<br/>3. The template tag will be replaced by its content when parsing and won't be converted to a real DOM element, so it should not be specified as the target of <a href='directive/eventHandler'>eventHandler</a> directives.</span>"
     }],
     "module.namespace": "Module/namespace",
     "module.namespace.sections": [{
@@ -459,7 +459,7 @@
         "answer": "<span>The routing configs are declared via \"routing\" field of the root <a href='miscellaneous/introduction'>configs</a>.</span>"
     }, {
         "question": "The way to redirect routing",
-        "answer": "<span>Clicking on the links with the \"href\" attribute refer to the hash value (the relative path starts with \"./\" or \"/\" would be recognized as url path but not hash), or executing the statement \"location.hash = 'xxx';\" in javaScript methods would update the hash state. Once the routing configs matched with the target hash value found, the declared modules and other resources would be loaded and resolved. The framework will initialize the context variable scopes, and work together with the \"<a href='directive/html'>$html</a>\" directive to render the context view.<br/>Please note that the routing redirect will trigger the validation of \"<a href='directive/sentry'>+sentry</a>\", and the redirect would be blocked in case the validation failed.</span>"
+        "answer": "<span>Clicking on the links with the \"href\" attribute refer to the hash value (the relative path starts with \"./\" or \"/\" would be recognized as url path but not hash), or executing the statement \"location.hash = 'xxx';\" in javaScript methods would update the hash state. Once the routing configs matched with the target hash value found, the declared modules and other resources would be loaded and resolved. The framework will initialize the context variable scopes, and work together with the \"<a href='directive/html'>*html</a>\" directive to render the context view.<br/>Please note that the routing redirect will trigger the validation of \"<a href='directive/sentry'>+sentry</a>\", and the redirect would be blocked in case the validation failed.</span>"
     }],
     "router.structure": "Routing/structure",
     "router.structure.sections": [{

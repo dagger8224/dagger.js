@@ -163,7 +163,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     return template.content;
 }, selectorInjector = (element, tags) => forEach(element.children, child => {
     if (Object.is(child.tagName, 'TEMPLATE')) {
-       (child.hasAttribute('@slot') || child.hasAttribute('$html')) && (child.$tags = tags);
+       (child.hasAttribute('@slot') || child.hasAttribute('*html')) && (child.$tags = tags);
         selectorInjector(child.content, tags);
     } else if (child instanceof HTMLElement) {
         forEach(tags, tag => child.setAttribute(tag, ''));
@@ -530,7 +530,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     }) => (node, decorators) => node.multiple ? [...node.files].map(file => processor(file, decorators)) : processor(node.files[0], decorators))(),
     selected: node => {
         const { name, type, tagName } = node, isSelect = Object.is(tagName, 'SELECT');
-        asserter([`Please specify valid "name" attribute on input node "%o" to support "$selected" directive`, node], isSelect || name);
+        asserter([`Please specify valid "name" attribute on input node "%o" to support "*selected" directive`, node], isSelect || name);
         const data = [...(isSelect ? node.selectedOptions : querySelector(document.body, `input[type="${ type }"][name="${ name }"]:checked`, true, true))].map(node => valueResolver(node)), multiple = isSelect ? node.multiple : Object.is(type, 'checkbox');
 
         return multiple ? data : data[0];
@@ -624,7 +624,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         nodeContext.childrenMap = newChildrenMap;
     })(),
     exist: (data, _, nodeContext) => data ? (Object.is(nodeContext.state, 'unloaded') && nodeContext.loading()) : nodeContext.unloading(true),
-    file: (data, node) => asserter([`The data bound to directive "$file" of element "%o" should be "File${ node.multiple ? ' array' : '' }" instead of "%o"`, node, data], !data || (node.multiple ? (Array.isArray(data) && data.every(file => (file instanceof File))) : (data instanceof File))),
+    file: (data, node) => asserter([`The data bound to directive "*file" of element "%o" should be "File${ node.multiple ? ' array' : '' }" instead of "%o"`, node, data], !data || (node.multiple ? (Array.isArray(data) && data.every(file => (file instanceof File))) : (data instanceof File))),
     focus: (data, node, _, { decorators: { prevent = false } }) => data ? node.focus({ preventScroll: prevent }) : node.blur(),
     html: (data, node, nodeContext, { decorators: { root = false, strict = false } }) => {
         data = textResolver(data);
@@ -643,7 +643,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         }
         node ? node.appendChild(fragment) : nodeContext.parentNode.insertBefore(fragment, nodeContext.landmark);
     },
-    result: (data, node) => asserter([`The data bound to directive "$result" of element "%o" should be "object${ node.multiple ? ' array' : '' }" instead of "%o"`, node, data], !data || (node.multiple ? (Array.isArray(data) && data.every(file => (file instanceof Object))) : (data instanceof Object))),
+    result: (data, node) => asserter([`The data bound to directive "*result" of element "%o" should be "object${ node.multiple ? ' array' : '' }" instead of "%o"`, node, data], !data || (node.multiple ? (Array.isArray(data) && data.every(file => (file instanceof Object))) : (data instanceof Object))),
     selected: ((selectedResolver = (node, data, multiple) => {
         const value = valueResolver(node);
         return multiple ? (data || []).some(item => Object.is(item, value)) : Object.is(data, value);
@@ -651,7 +651,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         const { type, tagName } = node, isSelect = Object.is(tagName, 'SELECT');
         if (isSelect || (Object.is(tagName, 'INPUT') && (Object.is(type, 'checkbox') || Object.is(type, 'radio')))) {
             const multiple = isSelect ? node.multiple : Object.is(type, 'checkbox');
-            multiple && asserter(['The data bound to directive "$selected" of element "%o" should be "array" instead of "%o"', node, data], (data == null) || Array.isArray(data));
+            multiple && asserter(['The data bound to directive "*selected" of element "%o" should be "array" instead of "%o"', node, data], (data == null) || Array.isArray(data));
             if (isSelect) {
                 promisor.then(() => forEach(querySelector(node, 'option', true), option => (option.selected = selectedResolver(option, data, multiple))));
             } else {
@@ -688,7 +688,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     value: ((timeNormalizer = (data, padLength = 2) => String(data).padStart(padLength, '0')) => (data, node, nodeContext, { decorators: { trim = false } }) => {
         nodeContext.value = data;
         const { tagName, type } = node, isInput = Object.is(tagName, 'INPUT');
-        asserter(['It\'s illegal to use directive "$value" on element "%o"', node], !(isInput && Object.is(type, 'file')));
+        asserter(['It\'s illegal to use directive "*value" on element "%o"', node], !(isInput && Object.is(type, 'file')));
         if (isInput) {
             const isDate = ['date', 'datetime-local'].includes(type);
             if (data instanceof Date) {
@@ -769,7 +769,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                     asserter(['The name of "@directive" expression should be "string" instead of "%o"', expression.name], isString(expression.name));
                     asserter(['The value of "@directive" expression should be "string" instead of "%o"', expression.value], isString(expression.value));
                     const name = expression.name.trim();
-                    asserter([`It's illegal to create "@raw", "@directive" or "$each" directive with the "@directive" expression "%o"`, expressions], !name.startsWith('@raw') && !name.startsWith('@directive') && !name.startsWith('$each'));
+                    asserter([`It's illegal to create "@raw", "@directive" or "*each" directive with the "@directive" expression "%o"`, expressions], !name.startsWith('@raw') && !name.startsWith('@directive') && !name.startsWith('*each'));
                     profile.resolveDirective(name, expression.value, this.directives);
                 });
                 processorResolver();
@@ -1022,7 +1022,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         }
     })();
     return NodeContext;
-})(), NodeProfile = ((directiveType = { '$': 'controller', '+': 'event' }, interactiveDirectiveNames = hashTableResolver('checked', 'file', 'focus', 'result', 'selected', 'value'), lifeCycleDirectiveNames = hashTableResolver('loading', 'loaded', 'sentry', 'unloading', 'unloaded'), rawElementNames = hashTableResolver('STYLE', 'SCRIPT'), caseResolver = content => content.includes('__') ? content.replace(/__[a-z]/g, string => string[2].toUpperCase()) : content, dataBinder = (directives, value, fields, event) => directives.eventHandlers.push(directiveResolver(`Object.is(${ value }, _$data_) || (${ value } = _$data_)`, Object.assign({ event }, fields), '$node, _$data_')), directiveAttributeResolver = (node, name, value = '') => {
+})(), NodeProfile = ((directiveType = { '*': 'controller', '+': 'event' }, interactiveDirectiveNames = hashTableResolver('checked', 'file', 'focus', 'result', 'selected', 'value'), lifeCycleDirectiveNames = hashTableResolver('loading', 'loaded', 'sentry', 'unloading', 'unloaded'), rawElementNames = hashTableResolver('STYLE', 'SCRIPT'), caseResolver = content => content.includes('__') ? content.replace(/__[a-z]/g, string => string[2].toUpperCase()) : content, dataBinder = (directives, value, fields, event) => directives.eventHandlers.push(directiveResolver(`Object.is(${ value }, _$data_) || (${ value } = _$data_)`, Object.assign({ event }, fields), '$node, _$data_')), directiveAttributeResolver = (node, name, value = '') => {
     daggerOptions.debugDirective && node.setAttribute(`${ directiveType[name[0]] || 'meta' }-${ decodeURIComponent(name.substring(1)).trim().replace(/\#/g, '__').replace(/:/g, '_').replace(/[^\w]/g, '-') }-debug`, value);
 }, directiveResolver = ((baseSignature = '$module, $scope') => (expression, fields = {}, signature = '$node') => {
     const { clear, debug } = fields.decorators || {};
@@ -1056,13 +1056,13 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                 rootNodeProfiles && node.removeAttribute(cloak);
             } else {
                 const controllers = [], eventHandlers = [], directives = { controllers, eventHandlers }, name = caseResolver(tagName.toLowerCase()), moduleProfile = Object.is(node.constructor, HTMLUnknownElement) && namespace.fetchViewModule(name.split('.')[0]), resolved = Object.is(moduleProfile.state, 'resolved'), dynamicDirective = '@directive', dynamic = attributes[dynamicDirective], slotDirective = '@slot';
-                moduleProfile && asserter(`It is illegal to use "$html" or "$text" directive on view module "${ name }"`, !node.hasAttribute('$html') && !node.hasAttribute('$text'));
+                moduleProfile && asserter(`It is illegal to use "*html" or "*text" directive on view module "${ name }"`, !node.hasAttribute('*html') && !node.hasAttribute('*text'));
                 if (moduleProfile) {
                     this.virtual = true;
                     this.resolveLandmark(node, 'virtual node removed');
                 }
                 if (moduleProfile && !resolved) {
-                    this.resolveDirective('$html', `\`${ node.outerHTML.replace(/`/g, '\\`').replace(/\${/g, '\\${') }\``, directives);
+                    this.resolveDirective('*html', `\`${ node.outerHTML.replace(/`/g, '\\`').replace(/\${/g, '\\${') }\``, directives);
                     this.directives = directives;
                 } else {
                     if (node.hasAttribute(slotDirective)) {
@@ -1071,10 +1071,10 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                         node.removeAttribute(slotDirective);
                         if (this.defaultSlotScope) {
                             this.defaultSlotScope[slotName] = node.innerHTML;
-                            warner([`\u274e Please avoid adding "$html" or "$text" directive on element "%o" as it's declared "${ slotDirective }" meta directive already`, node], !node.hasAttribute('$html') && !node.hasAttribute('$text'));
-                            node.removeAttribute('$html');
-                            node.removeAttribute('$text');
-                            this.resolveDirective('$html#strict', slotName, directives);
+                            warner([`\u274e Please avoid adding "*html" or "*text" directive on element "%o" as it's declared "${ slotDirective }" meta directive already`, node], !node.hasAttribute('*html') && !node.hasAttribute('*text'));
+                            node.removeAttribute('*html');
+                            node.removeAttribute('*text');
+                            this.resolveDirective('*html#strict', slotName, directives);
                         }
                     }
                     forEach([...attributes], ({ name, value }) => this.resolveDirective(name, value, directives));
@@ -1157,16 +1157,16 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
             isWatch && decorators.lazy && (value = `${ value.substring(value.indexOf('(') + 1, value.lastIndexOf(')')).trim() || 'null' }, $node => ${ value }`);
             const directive = directiveResolver(value, fields);
             if (Object.is(name, 'each')) {
-                asserter(['It is illegal to use "$each" directive with "id" attribute together on node "%o"', node], !node.hasAttribute('id'));
+                asserter(['It is illegal to use "*each" directive with "id" attribute together on node "%o"', node], !node.hasAttribute('id'));
                 directives.each = directive;
-                this.resolveLandmark(node, '"$each" node replaced');
+                this.resolveLandmark(node, '"*each" node replaced');
                 this.unique = false;
             } else if (Object.is(name, 'exist')) {
                 directives.exist = directive;
-                this.resolveLandmark(node, '"$exist" node replaced');
+                this.resolveLandmark(node, '"*exist" node replaced');
                 this.unique = false;
             } else if (Object.is(name, 'html') || Object.is(name, 'text')) {
-                warner(['\u274e Please avoid adding "$html" and "$text" directives together on element "%o"', node], !directives.child);
+                warner(['\u274e Please avoid adding "*html" and "*text" directives together on element "%o"', node], !directives.child);
                 directives.child = directive;
             } else {
                 if (Object.is(name, 'class')) {

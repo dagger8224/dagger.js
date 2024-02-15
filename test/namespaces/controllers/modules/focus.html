@@ -21,7 +21,7 @@
   </style>
   <template id="view">
     <div +loading="loading($router.variables.focus)">
-      <input $focus="focus" +blur="onBlur()" +focus="onFocus()" $value="focus">
+      <input *focus="focus" +blur="onBlur()" +focus="onFocus()" *value="focus">
       <button +click="focus = !focus">toggle</button>
       focus value is: ${ focus }, the current input element is ${ focus ? 'focused' : 'blurred' }.
     </div>

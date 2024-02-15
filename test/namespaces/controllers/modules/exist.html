@@ -36,8 +36,8 @@
   </style>
   <template id="view">
     <div +loading="{ exist: true }">
-      <div class="exist" $exist="exist">
-          <div class="container1" $html="'inner_template1'"></div>
+      <div class="exist" *exist="exist">
+          <div class="container1" *html="'inner_template1'"></div>
       </div>
       <button +click="exist = !exist">toggle</button>
     </div>

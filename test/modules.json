@@ -54,7 +54,7 @@
     "selected": "http://localhost:8283/modules/selected.html",
     "modules": {
         "uri": "http://localhost:8283/modules/modules.html",
-        "integrity": "0Mx1R/oDhBjDCm0yUn5pLJaqzpgUFjoY4fxfytKfYvQ="
+        "integrity": "5pWhhDj869mTm7mqm4PCDcbs0/QrftpyWM8cJDdRdxk="
     },
     "module_component": {
         "name": "component",

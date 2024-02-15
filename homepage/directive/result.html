@@ -1,6 +1,6 @@
 <h2>${ $['directive.result'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">$result指令的作用</h3>
     <div class="answer">$result指令用于绑定本地文件的上传状态和结果，适用于类型为file的input元素。</div>
     <h3 class="question">$result指令的执行结果</h3>
@@ -26,12 +26,12 @@
         <div class="margin">2. “data”，布尔类型。值为true指明当前文件应该采用<a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader/readAsDataURL">DataURL</a>方式加载。</div>
         <div class="margin">3. “encoding”，字符串类型。用于指明当采用<a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader/readAsText">文本方式</a>（默认）读取当前文件时需要使用的编码类型（默认为“utf-8”）。</div>
         我们来看示例：
-        <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] $result directive (decorators)" src="https://codepen.io/dagger8224/embed/bGLrqyb?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+        <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] *result directive (decorators)" src="https://codepen.io/dagger8224/embed/bGLrqyb?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
             See the Pen <a href="https://codepen.io/dagger8224/pen/bGLrqyb">
-            [dagger-demo] $result directive (decorators)</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
+            [dagger-demo] *result directive (decorators)</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
             on <a href="https://codepen.io">CodePen</a>.
           </iframe>
     </div>
   </template>
-  <template $exist="language == 'en-us'"></template>
+  <template *exist="language == 'en-us'"></template>
 </div>

@@ -12,12 +12,12 @@
     <script type="dagger/options" src="/options.json"></script>
     <script type="dagger/modules" src="/modules.json"></script>
     <script type="dagger/routers" src="/routers.js"></script>
-    <title $text="`${ $router.constants.title } demo`">loading...</title>
+    <title *text="`${ $router.constants.title } demo`">loading...</title>
     <template id="index_template">
         <div id="plain-previous-sibling"></div>
         <div id="plain-wrapper">
             <div id="index" +loading="content">
-                <a $each#item:slice="array" $href="`controllers/${ slice.path }${ slice.query ? `?${ slice.query }` : '' }`" $title="`${ slice.path } demo`">${ index + 1 }. ${ slice.path } demo</a>
+                <a *each#item:slice="array" *href="`controllers/${ slice.path }${ slice.query ? `?${ slice.query }` : '' }`" $title="`${ slice.path } demo`">${ index + 1 }. ${ slice.path } demo</a>
                 <br/>
             </div>
         </div>
@@ -33,12 +33,12 @@
       <div class="ssss"><template +loading="{ item: 0 }" @slot>hello ${ item }</template></div>
       <div class="prefix-raw">prefix</div>
       <div class="prefix-plain">prefix-${ item }</div>
-      <div $class="`prefix-${ item }`">prefix-${ item }</div>
+      <div *class="`prefix-${ item }`">prefix-${ item }</div>
       <modules.namespace.inner.inner_template321></modules.namespace.inner.inner_template321>
-      <suffix $each="'string'" $exist="true" @directive="{ name: '$exist', value: `${ index > 2 }` }"></suffix>
+      <suffix *each="'string'" *exist="true" @directive="{ name: '*exist', value: `${ index > 2 }` }"></suffix>
     </template>
     <template id="suffix">
-        <div $class="`suffix-${ item }`">suffix-${ item }</div>
+        <div *class="`suffix-${ item }`">suffix-${ item }</div>
     </template>
     <script id="index_test_script" type="dagger/script">
         export const test = () => alert('index_test_script');
@@ -80,19 +80,19 @@
       <div @slot="2">default1</div>-->
       <div class="test">test123</div>
     </prefix>
-    <div $exist="$router.path.includes('newpage')" $html="'newpage'"></div>
-    <div $exist="$router.path.includes('401')" $html="'m401'"></div>
-    <div $exist="$router.path.includes('404')" $html="'m404'"></div>
+    <div *exist="$router.path.includes('newpage')" *html="'newpage'"></div>
+    <div *exist="$router.path.includes('401')" *html="'m401'"></div>
+    <div *exist="$router.path.includes('404')" *html="'m404'"></div>
     <button +click="history.pushState({}, '', 'newpage')">click</button>
     <a href="newpage">newpage</a>
     <a href="#anchor1">anchor1</a>
     <a href="#anchor2">anchor2</a>
     <a href="#anchor3">anchor3</a>
     <span class="raw">Please click the following links to see directives demo:</span>
-    <a $exist="true" href="mailto://dagger8224@gmail.com">mail to author</a>
+    <a *exist="true" href="mailto://dagger8224@gmail.com">mail to author</a>
     <div +click#stop="console.log('div click bubble', $event.currentTarget, $event.target)">
       <!--<button +click#outside="console.log('button click bubble/outside', $event.currentTarget, $event.target)">click</button>-->
-      <div class="mountPoint1" +loading="{ item: 'default-item' }" $html#router="$router.constants.template"></div>
+      <div class="mountPoint1" +loading="{ item: 'default-item' }" *html#router="$router.constants.template"></div>
       <span>This the end!</span>
     </div>
     <div style="height: 2000px"></div>

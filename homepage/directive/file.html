@@ -1,6 +1,6 @@
 <h2>${ $['directive.file'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">$file指令的作用</h3>
     <div class="answer">$file指令用于将用户选择的本地文件信息绑定到作用域变量上。</div>
     <h3 class="question">$file指令的宿主元素</h3>
@@ -9,17 +9,17 @@
     <div class="answer">当$file指令表达式的内容是合法的<a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators#%E5%B7%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F">左表达式</a>时，用户使用宿主元素进行文件选择操作之后，表达式变量将指向保存选中文件信息的File（单文件选择器）或者FileList（多文件选择器）。</div>
     <h3 class="question">$file指令示例</h3>
     <div class="answer">下面我们来看$file指令的示例。
-      <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] $file directive" src="https://codepen.io/dagger8224/embed/rNJmZKz?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+      <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] *file directive" src="https://codepen.io/dagger8224/embed/rNJmZKz?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
         See the Pen <a href="https://codepen.io/dagger8224/pen/rNJmZKz">
-        [dagger-demo] $file directive</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
+        [dagger-demo] *file directive</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
         on <a href="https://codepen.io">CodePen</a>.
       </iframe>
     </div>
   </template>
-  <template $exist="language == 'en-us'">
-    <template $each="$['directive.file.sections']">
+  <template *exist="language == 'en-us'">
+    <template *each="$['directive.file.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </template>
 </div>

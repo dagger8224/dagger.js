@@ -13,9 +13,9 @@
   <template id="view">
     <h2>${ $['miscellaneous.introduction'] }</h2>
     <div class="content">
-      <template $each="$['miscellaneous.introduction.sections']">
+      <template *each="$['miscellaneous.introduction.sections']">
         <h3 class="question">${ item.question }</h3>
-        <div class="answer" $html="item.answer"></div>
+        <div class="answer" *html="item.answer"></div>
       </template>
     </div>
   </template>

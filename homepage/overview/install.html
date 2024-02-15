@@ -1,4 +1,4 @@
-<template $exist="language == 'zh-cn'">
+<template *exist="language == 'zh-cn'">
   <h2>${ $['overview.install'] }</h2>
   <div class="content">
     <h3 class="question">版本信息</h3>
@@ -74,7 +74,7 @@
     </div>
   </div>
 </template>
-<template $exist="language == 'en-us'">
+<template *exist="language == 'en-us'">
   <div class="section">
     <h2>${ $['overview.version'] }</h2>
     <span>${ $['overview.version.content'] }</span>
@@ -82,26 +82,26 @@
     <span>${ $.period || '.' }</span>
   </div>
   <div class="section">
-    <div $html="$['overview.version.files']"></div>
+    <div *html="$['overview.version.files']"></div>
     1. 
     <a class="bold margin" target="_blank" href="https://cdn.jsdelivr.net/npm/@peakman/dagger.js@0.9.13/dagger.js">dagger.js</a>
-    <div style="display: inline-block;" $html="$['dagger.js']"></div>
+    <div style="display: inline-block;" *html="$['dagger.js']"></div>
     <br/>
     2. 
     <a class="bold margin" target="_blank" href="https://cdn.jsdelivr.net/npm/@peakman/dagger.js@0.9.13/dagger.min.js">dagger.min.js</a>
-    <div style="display: inline-block;" $html="$['dagger.min.js']"></div>
+    <div style="display: inline-block;" *html="$['dagger.min.js']"></div>
     <br/>
     3. 
     <a class="bold margin" target="_blank" href="https://cdn.jsdelivr.net/npm/@peakman/dagger.js@0.9.13/dagger.release.js">dagger.release.js</a>
     
-    <div style="display: inline-block;" $html="$['dagger.release.js']"></div>
+    <div style="display: inline-block;" *html="$['dagger.release.js']"></div>
     <br/>
     4. 
     <a class="bold margin" target="_blank" href="https://cdn.jsdelivr.net/npm/@peakman/dagger.js@0.9.13/dagger.release.min.js">dagger.release.min.js</a>
-    <div style="display: inline-block;" $html="$['dagger.release.min.js']"></div>
+    <div style="display: inline-block;" *html="$['dagger.release.min.js']"></div>
   </div>
   <div class="section">
     <h3>${ $.compatibility }</h3>
-    <div $html="$['compatibility.content']"></div>
+    <div *html="$['compatibility.content']"></div>
   </div>
 </template>

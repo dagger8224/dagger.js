@@ -1,8 +1,8 @@
 <div +loading="{ text: 'Hello dagger' }">
     <button id="button1" +click="text = `${ text }!`">button1</button>
     <button id="button2" +click="text = { a: 1, b: [] }">button2</button>
-    <span id="span1" $text="text">Some Content</span>
-    <span id="span2" $text="`The text content is: ${ text }`">Some Content</span>
+    <span id="span1" *text="text">Some Content</span>
+    <span id="span2" *text="`The text content is: ${ text }`">Some Content</span>
     <span id="span3">${ text }</span>
     <span id="span4">The text content is: ${ text }</span>
 </div>

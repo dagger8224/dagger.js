@@ -1,4 +1,4 @@
-<template $exist="language == 'zh-cn'">
+<template *exist="language == 'zh-cn'">
     <h2>${ $['directive.scope'] }</h2>
     <div class="content">
       <h3 class="question">什么是作用域</h3>
@@ -11,13 +11,13 @@
         on <a href="https://codepen.io">CodePen</a>.
       </iframe>
       <h3 class="question">自定义作用域</h3>
-      <div class="answer"><div>可以通过<a href="directive/loading">+loading</a>和<a href="directive/each">$each</a>指令创建新的作用域对象实例。</div><div>由指令创建出的作用域称为自定义作用域，创建出自定义作用域的指令称为该作用域的源指令。</div><div>如果在某条指令的宿主元素或其上层元素的指令中创建过自定义作用域，那么该指令表达式中的“$scope”将指向其最近层级元素上的源指令所创建出的作用域对象。</div></div>
+      <div class="answer"><div>可以通过<a href="directive/loading">+loading</a>和<a href="directive/each">*each</a>指令创建新的作用域对象实例。</div><div>由指令创建出的作用域称为自定义作用域，创建出自定义作用域的指令称为该作用域的源指令。</div><div>如果在某条指令的宿主元素或其上层元素的指令中创建过自定义作用域，那么该指令表达式中的“$scope”将指向其最近层级元素上的源指令所创建出的作用域对象。</div></div>
       <h3 class="question">如何销毁作用域</h3>
       <div class="answer">自定义作用域对象在其源指令的宿主元素被销毁时自动销毁。根作用域在页面的生存期内永远不会被销毁。</div>
       <h3 class="question">作用域的工作方式</h3>
       <div class="answer">
         <div>dagger.js作用域的工作方式与原生javaScript<a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Scope">作用域</a>非常接近。请记住如下几个规则：</div>
-        <div class="margin">1. 某一层级源指令创建的自定义作用域将在该源指令宿主元素的其它指令（“<a href="directive/each">$each</a>”和“<a href="directive/exist">$exist</a>”指令除外，参见相关章节）及宿主元素子层级元素上的所有指令上生效。</div>
+        <div class="margin">1. 某一层级源指令创建的自定义作用域将在该源指令宿主元素的其它指令（“<a href="directive/each">*each</a>”和“<a href="directive/exist">*exist</a>”指令除外，参见相关章节）及宿主元素子层级元素上的所有指令上生效。</div>
         <div class="margin">2. 高层级宿主元素上声明的指令无法访问其子层级宿主元素的源指令创建出的自定义作用域。</div>
         <div class="margin">3. 低层级源指令上创建的作用域对象继承自高层级源指令上创建的作用域。这意味着您可以通过指令中的“$scope”访问上层作用域变量上那些未被覆盖的字段。</div>
         <div>下面的演示动画直观展示了作用域的工作方式：
@@ -47,12 +47,12 @@
       </div>
     </div>
   </template>
-  <template $exist="language == 'en-us'">
+  <template *exist="language == 'en-us'">
     <h2>${ $['directive.scope'] }</h2>
     <div class="content">
-      <template $each="$['directive.loading.sections']">
+      <template *each="$['directive.loading.sections']">
         <h3 class="question">${ item.question }</h3>
-        <div class="answer" $html="item.answer"></div>
+        <div class="answer" *html="item.answer"></div>
       </template>
     </div>
   </template>

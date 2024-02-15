@@ -24,12 +24,12 @@
   </style>
   <template id="view">
     <div +loading="loading()" style="margin-top: 20px;">
-      <label>single file select (*.txt, *.js, *.zip)</label><input type="file" accept=".txt,.js,.zip" $multiple="!multiple" $file="file" $result#data="result" $watch="watch(file, 'single')">
-      <span $text#test0="`${ result.progress }%`"></span>
+      <label>single file select (*.txt, *.js, *.zip)</label><input type="file" accept=".txt,.js,.zip" $multiple="!multiple" *file="file" *result#data="result" *watch="watch(file, 'single')">
+      <span *text#test0="`${ result.progress }%`"></span>
       <br/>
-      <label>multiple files select</label><input type="file" $multiple="multiple" $file="files" $result="results" $watch="watch(files, 'multiple')">
-      <span $each#item:result="results" $text="`${ index } - ${ result.progress }%`"></span>
-      <!--<label>video select</label><input type="file" $multiple="multiple" accept="video/*" capture="environment" $file="video" $watch="watch(video, 'video')">-->
+      <label>multiple files select</label><input type="file" $multiple="multiple" *file="files" *result="results" *watch="watch(files, 'multiple')">
+      <span *each#item:result="results" *text="`${ index } - ${ result.progress }%`"></span>
+      <!--<label>video select</label><input type="file" $multiple="multiple" accept="video/*" capture="environment" *file="video" *watch="watch(video, 'video')">-->
     </div>
   </template>
 </html>

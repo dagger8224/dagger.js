@@ -1,6 +1,6 @@
 <template +loading="{ checkedList: [true, false, true, false] }">
-    <div $each="checkedList">
-        <input type="checkbox" name="checkbox-group1" $value="index + 1" $id="`checkbox${ index + 1 }`" $checked="item">
-        <button $id="`button${ index + 1 }`" +click="item = !item">toggle item${ index + 1 }</button>
+    <div *each="checkedList">
+        <input type="checkbox" name="checkbox-group1" *value="index + 1" *id="`checkbox${ index + 1 }`" *checked="item">
+        <button *id="`button${ index + 1 }`" +click="item = !item">toggle item${ index + 1 }</button>
     </div>
 </template>

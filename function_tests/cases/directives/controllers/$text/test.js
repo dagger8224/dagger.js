@@ -1,4 +1,4 @@
-runner('$text directive test suite', describe, it, __dirname, async $ => {
+runner('*text directive test suite', describe, it, __dirname, async $ => {
     const helper = async expectedValue => {
         let text = await $('#span1').text();
         expect(text).toBe(expectedValue);

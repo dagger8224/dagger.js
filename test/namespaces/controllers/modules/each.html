@@ -9,13 +9,13 @@
   <template id="innerTemplate1">
     <!-- comment 1 -->
     <div class="innerItem1">
-      <div $class="`prefix1-${ index1 + 1 }`"></div>
-      <inner_template2 $each#item:item2#index:index2="loop3"></inner_template2>
+      <div *class="`prefix1-${ index1 + 1 }`"></div>
+      <inner_template2 *each#item:item2#index:index2="loop3"></inner_template2>
     </div>
   </template>
   <template id="innerTemplate2">
     <!-- comment 2 -->
-    <div $class="`prefix2-${ index2 + 1 }`" $html="`<span>html ${ index2 + 1 }</span>`"></div>
+    <div *class="`prefix2-${ index2 + 1 }`" *html="`<span>html ${ index2 + 1 }</span>`"></div>
     <div class="innerItem2">index: ${ index1 + 1 } - ${ index2 + 1 }: ${ item1.content } - ${ item2 }</div>
   </template>
   <script type="dagger/script">
@@ -105,16 +105,16 @@
       <div class="container" +click="logger($event)">
         <div class="separator"></div>
         <label>loop0 [array]:</label>
-        <div $each="loop0">
+        <div *each="loop0">
           <p>${ key }: ${ JSON.stringify(item) }</p>
         </div>
         <div class="separator"></div>
         <label>loop1 [object]:</label>
-        <div $each#item#key="loop1">
+        <div *each#item#key="loop1">
           <p>${ key }: ${ JSON.stringify(item) }</p>
         </div>
         <div class="separator"></div>
-        <label>loop2 [toggle with $exist]:</label>
+        <label>loop2 [toggle with *exist]:</label>
         <div>data: ${ JSON.stringify(loop2) }</div>
         <button +click="trigger(loop1)">trigger loop1</button>
         <button +click="show(loop2)">show</button>
@@ -135,13 +135,13 @@
         <button +click="fill(loop2)">fill (3)</button>
         <button +click="copyWithin(loop2)">copyWithin</button>
         <button +click="$module.loop3(loop3)">toggle loop3</button>
-        <div class="test" $class="`each-item${ key }`" $each#xxx#item:slice="loop2" $id="key" $exist="slice.exist" +loading="console.log('loading', index, key)" +loaded="console.log('loaded', index, key)" +unloading="console.log('unloading', index, key)" +unloaded="console.log('unloaded')" loading="$intervalIds.push(setInterval(() => { slice.exist = !slice.exist; }, 3000));">
+        <div class="test" *class="`each-item${ key }`" *each#xxx#item:slice="loop2" *id="key" *exist="slice.exist" +loading="console.log('loading', index, key)" +loaded="console.log('loaded', index, key)" +unloading="console.log('unloading', index, key)" +unloaded="console.log('unloaded')" loading="$intervalIds.push(setInterval(() => { slice.exist = !slice.exist; }, 3000));">
           <p>index: ${ index }-key: ${ key }-${ slice.content }</p>
         </div>
         <div class="separator"></div>
         <label>loop2 [nested]:</label>
-        <inner_template1 $each#item:item1#index:index1="loop2" $exist="item1.exist"></inner_template1>
-        <!--<inner_template1 $each#key:index1="new Array(2)"></inner_template1>-->
+        <inner_template1 *each#item:item1#index:index1="loop2" *exist="item1.exist"></inner_template1>
+        <!--<inner_template1 *each#key:index1="new Array(2)"></inner_template1>-->
         <span>This is the end!</span>
       </div>
     </template>

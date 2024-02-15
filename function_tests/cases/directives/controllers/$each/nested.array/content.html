@@ -1,5 +1,5 @@
-<div class="each-div-layer1" $each#index:i#key:key1#item:item1="['a', 'b', 'c']">
-    <span class="each-span-layer2" $each#index:j#key:key2#item:item2="['m', 'n']">
+<div class="each-div-layer1" *each#index:i#key:key1#item:item1="['a', 'b', 'c']">
+    <span class="each-span-layer2" *each#index:j#key:key2#item:item2="['m', 'n']">
         ${ i } - ${ item1 } - ${ key1 } - ${ j } - ${ item2 } - ${ key2 }
     </span>
 </div>

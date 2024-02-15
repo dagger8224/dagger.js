@@ -1,6 +1,6 @@
 <h2>${ $['directive.focus'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">$focus指令的作用</h3>
     <div class="answer">focus指令用于为宿主元素设置焦点。</div>
     <h3 class="question">$focus指令表达式的执行结果</h3>
@@ -13,17 +13,17 @@
       <div class="margin">1. “oneway”，布尔类型。值为true代表当前指令是单向绑定的，用户对宿主元素的操作不会更新关联的作用域数据。</div>
       <div class="margin">2. “prevent”，布尔类型。值为true代表<a target="_blank" href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTMLElement/focus">将阻止获取焦点的元素滚动到当前浏览器视窗中</a>。</div>
       我们来看$focus指令的示例：
-      <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] $focus directive" src="https://codepen.io/dagger8224/embed/abqWRKx?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+      <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] *focus directive" src="https://codepen.io/dagger8224/embed/abqWRKx?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
         See the Pen <a href="https://codepen.io/dagger8224/pen/abqWRKx">
-        [dagger-demo] $focus directive</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
+        [dagger-demo] *focus directive</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
         on <a href="https://codepen.io">CodePen</a>.
       </iframe>
     </div>
   </template>
-  <template $exist="language == 'en-us'">
-    <template $each="$['directive.focus.sections']">
+  <template *exist="language == 'en-us'">
+    <template *each="$['directive.focus.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </template>
 </div>

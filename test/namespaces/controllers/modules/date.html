@@ -36,7 +36,7 @@
       <button +click="date.setUTCSeconds(59)">setUTCSeconds</button>
       <button +click="date.setYear(31)">setYear</button>
       <br/>
-      <input type="datetime-local" $exist="exist" $value="date"><br/>
+      <input type="datetime-local" *exist="exist" *value="date"><br/>
       <span>Current time is ${ date }</span><br/>
     </template>
   </template>

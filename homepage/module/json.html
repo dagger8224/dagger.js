@@ -1,6 +1,6 @@
 <h2>${ $['module.json'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">什么是json模块</h3>
     <div class="answer">json模块是json格式的可复用数据模块。您可以在指令表达式中通过“$module”变量访问json模块的内容。</div>
     <h3 class="question">json模块的type</h3>
@@ -18,10 +18,10 @@
     <h3 class="question">json模块与作用域的差异</h3>
     <div class="answer">json模块内容与<a href="directive/scope">作用域</a>都是对象结构，但json模块内容不具备作用域的响应依赖性，您应该将它作为静态数据（配置项）使用。</div>
   </template>
-  <template $exist="language == 'en-us'">
-    <template $each="$['module.json.sections']">
+  <template *exist="language == 'en-us'">
+    <template *each="$['module.json.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </template>
 </div>

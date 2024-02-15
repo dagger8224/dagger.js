@@ -58,7 +58,7 @@ export default ((context = Symbol('context'), currentController = null, daggerOp
     return template.content;
 }, selectorInjector = (element, selectors) => forEach(element.children, child => {
     if (Object.is(child.tagName, 'TEMPLATE')) {
-        child.getAttribute('$html') && child.setAttribute('dg_scoped_styles', selectors.join(','));
+        child.getAttribute('*html') && child.setAttribute('dg_scoped_styles', selectors.join(','));
         selectorInjector(child.content, selectors);
     } else if (child instanceof HTMLElement) {
         forEach(selectors, selector => child.setAttribute(selector, ''));

@@ -1,4 +1,4 @@
-runner('$each directive nested.string test suite', describe, it, __dirname, $ => {
+runner('*each directive nested.string test suite', describe, it, __dirname, $ => {
     const divs = $('.each-div-layer1');
     return [divs.then(divs => expect(divs.length).toBe(3)), async () => {
         const spans = divs.find('span');

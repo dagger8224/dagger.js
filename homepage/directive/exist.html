@@ -1,6 +1,6 @@
 <h2>${ $['directive.exist'] }</h2>
   <div class="content">
-    <template $exist="language == 'zh-cn'">
+    <template *exist="language == 'zh-cn'">
       <h3 class="question">$exist指令的作用</h3>
       <div class="answer">$exist指令用于切换宿主元素及其子级元素的存在状态。</div>
       <h3 class="question">$exist指令表达式的执行结果</h3>
@@ -10,22 +10,22 @@
       </div>
       <h3 class="question">$exist指令的触发顺序</h3>
       <div class="answer">
-        <div>$exist指令是在宿主元素的创建阶段之前执行的（但是晚于相同宿主元素上声明的“$each”指令执行）。</div>
+        <div>$exist指令是在宿主元素的创建阶段之前执行的（但是晚于相同宿主元素上声明的“*each”指令执行）。</div>
         <div>每当$exist表达式的执行结果状态发生切换时，对应的生命周期方法将会被触发（创建过程“+loading/+loaded”指令执行，销毁过程“+unloading/+unloaded”指令执行）。</div>
       </div>
       <h3 class="question">$exist指令的示例</h3>
       <div class="answer">下面我们来看$exist的例子：
-        <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] $exist directive" src="https://codepen.io/dagger8224/embed/vYdgdVJ?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+        <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] *exist directive" src="https://codepen.io/dagger8224/embed/vYdgdVJ?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
           See the Pen <a href="https://codepen.io/dagger8224/pen/vYdgdVJ">
-          [dagger-demo] $exist directive</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
+          [dagger-demo] *exist directive</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
           on <a href="https://codepen.io">CodePen</a>.
         </iframe>
       </div>
     </template>
-    <template $exist="language == 'en-us'">
-      <template $each="$['directive.exist.sections']">
+    <template *exist="language == 'en-us'">
+      <template *each="$['directive.exist.sections']">
         <h3 class="question">${ item.question }</h3>
-        <div class="answer" $html="item.answer"></div>
+        <div class="answer" *html="item.answer"></div>
       </template>
     </template>
   </div>

@@ -1,18 +1,18 @@
 <h2>${ $['directive.text'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">$text指令的作用</h3>
     <div class="answer">$text指令用于在宿主元素下动态创建文本内容。</div>
     <h3 class="question">$text指令表达式的执行结果</h3>
     <div class="answer">指令表达式的执行结果为字符串。</div>
     <h3 class="question">$text指令与模板字符串的关系</h3>
     <div class="answer">
-      <div>在示例中我们多次使用过原地模板字符串来展示执行结果，通常情况下，模板字符串节点与其父元素上声明的“$text”指令等效。</div>
+      <div>在示例中我们多次使用过原地模板字符串来展示执行结果，通常情况下，模板字符串节点与其父元素上声明的“*text”指令等效。</div>
       <div>对于以下几种特殊情况，二者的处理结果有所差别：
-        <div class="margin">1. 如果宿主元素下既有动态文本内容又包含其他子元素，那么您需要使用原地模板字符串而不能使用“$text”指令（否则宿主元素子级节点将被$text指令的执行结果所覆盖）。</div>
-        <div class="margin">2. 如果宿主元素为template标签，那么您需要使用原地模板字符串而不能使用“$text”指令。</div>
-        <div class="margin">3. 如果指令执行结果是null/undefined/NaN，“$text”指令将结果转为空字符串，而原地模板字符串将打印出对应结果的字符串内容。</div>
-        <div class="margin">4. 如果指令执行结果是一个对象，“$text”指令将结果进行JSON.stringify转换后输出，而原地模板字符串将打印出对象toString之后的结果。</div>
+        <div class="margin">1. 如果宿主元素下既有动态文本内容又包含其他子元素，那么您需要使用原地模板字符串而不能使用“*text”指令（否则宿主元素子级节点将被$text指令的执行结果所覆盖）。</div>
+        <div class="margin">2. 如果宿主元素为template标签，那么您需要使用原地模板字符串而不能使用“*text”指令。</div>
+        <div class="margin">3. 如果指令执行结果是null/undefined/NaN，“*text”指令将结果转为空字符串，而原地模板字符串将打印出对应结果的字符串内容。</div>
+        <div class="margin">4. 如果指令执行结果是一个对象，“*text”指令将结果进行JSON.stringify转换后输出，而原地模板字符串将打印出对象toString之后的结果。</div>
         我们来看$text指令的例子：
         <iframe height="300" style="width: 100%;" scrolling="no" title="Untitled" src="https://codepen.io/dagger8224/embed/poawxye?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
           See the Pen <a href="https://codepen.io/dagger8224/pen/poawxye">
@@ -22,12 +22,12 @@
       </div>
     </div>
     <h3 class="question">$text指令的使用限制</h3>
-    <div class="answer">不要将“$text”指令或者原地模板字符串用于<a href="module/introduction">模块</a>宿主元素。</div>
+    <div class="answer">不要将“*text”指令或者原地模板字符串用于<a href="module/introduction">模块</a>宿主元素。</div>
   </template>
-  <template $exist="language == 'en-us'">
-    <template $each="$['directive.text.sections']">
+  <template *exist="language == 'en-us'">
+    <template *each="$['directive.text.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </template>
 </div>

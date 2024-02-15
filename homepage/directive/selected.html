@@ -1,21 +1,21 @@
 <h2>${ $['directive.selected'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">$selected指令的作用</h3>
     <div class="answer">$selected指令用于绑定宿主元素的选中值，适用于类型为“radio”和“checkbox”的input元素，以及select元素。</div>
     <h3 class="question">$selected指令表达式的执行结果</h3>
     <div class="answer">
       <div>对于radio元素，当$selected指令表达式的执行结果与宿主元素的value相等时，宿主元素被选中。看下面的例子：
-        <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] $selected directive (radio)" src="https://codepen.io/dagger8224/embed/OJQgWZZ?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+        <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] *selected directive (radio)" src="https://codepen.io/dagger8224/embed/OJQgWZZ?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
           See the Pen <a href="https://codepen.io/dagger8224/pen/OJQgWZZ">
-          [dagger-demo] $selected directive (radio)</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
+          [dagger-demo] *selected directive (radio)</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
           on <a href="https://codepen.io">CodePen</a>.
         </iframe>
       </div>
       <div>对于checkbox元素，当$selected指令表达式的执行结果为包含宿主元素value的数组时，宿主元素被选中。看下面的例子：
-        <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] $selected directive (checkbox)" src="https://codepen.io/dagger8224/embed/vYdZzZr?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+        <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] *selected directive (checkbox)" src="https://codepen.io/dagger8224/embed/vYdZzZr?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
           See the Pen <a href="https://codepen.io/dagger8224/pen/vYdZzZr">
-          [dagger-demo] $selected directive (checkbox)</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
+          [dagger-demo] *selected directive (checkbox)</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
           on <a href="https://codepen.io">CodePen</a>.
         </iframe>
       </div>
@@ -37,9 +37,9 @@
     </div>
     <h3 class="question">$selected指令的预定义修饰符</h3>
     <div class="answer">$selected指令支持值为布尔类型的修饰符“oneway”。值为true代表当前指令是单向绑定的，用户对宿主元素的操作不会更新关联的作用域数据。示例如下：
-      <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] $selected directive (oneway decorator)" src="https://codepen.io/dagger8224/embed/MWQvjNb?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+      <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] *selected directive (oneway decorator)" src="https://codepen.io/dagger8224/embed/MWQvjNb?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
         See the Pen <a href="https://codepen.io/dagger8224/pen/MWQvjNb">
-        [dagger-demo] $selected directive (oneway decorator)</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
+        [dagger-demo] *selected directive (oneway decorator)</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
         on <a href="https://codepen.io">CodePen</a>.
       </iframe>
     </div>
@@ -49,10 +49,10 @@
       <div>请注意，不要在一个元素上同时声明$selected指令和$checked指令，否则可能导致元素的选中状态与数据不一致。</div>
     </div>
   </template>
-  <template $exist="language == 'en-us'">
-    <template $each="$['directive.selected.sections']">
+  <template *exist="language == 'en-us'">
+    <template *each="$['directive.selected.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </template>
 </div>

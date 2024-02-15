@@ -1,6 +1,6 @@
 <h2>${ $['directive.decorator'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">指令修饰符的作用</h3>
     <div class="answer">
       <div>指令修饰符（后文中简称为修饰符）用于对指令的工作方式进行约束声明。</div>
@@ -18,7 +18,7 @@
         <div class="code">#key(:true) // 括号内容为修饰符缺省值</div>
       </div>
       <div>在一个指令上可以同时添加多个修饰符：
-        <div class="code">$value#input#trim:false</div>
+        <div class="code">*value#input#trim:false</div>
         上面的代码在指令“value”上声明了两个修饰符：“input”（值为true）和“trim”（值为false）。
       </div>
     </div>
@@ -47,7 +47,7 @@
       </div>
       <div class="margin">2. “name”，字符串类型。您可以使用name修饰符为控制指令和事件处理指令命名。name修饰符主要与remove修饰符配合以动态删除指令。</div>
       <div class="margin">
-        <div>3. “remove”，字符串或者字符串数组类型。您可以使用remove字段指定一个或多个指令的名称（<a href="directive/each">$each</a>指令除外），在当前指令表达式的执行结果为true或其等效值时，dagger.js将动态移除同一个宿主元素上由remove修饰符所指定的指令。我们来看一个示例：
+        <div>3. “remove”，字符串或者字符串数组类型。您可以使用remove字段指定一个或多个指令的名称（<a href="directive/each">*each</a>指令除外），在当前指令表达式的执行结果为true或其等效值时，dagger.js将动态移除同一个宿主元素上由remove修饰符所指定的指令。我们来看一个示例：
           <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] decorator (name/remove decorators)" src="https://codepen.io/dagger8224/embed/poarKmd?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
             See the Pen <a href="https://codepen.io/dagger8224/pen/poarKmd">
             [dagger-demo] decorator (name/remove decorators)</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
@@ -59,10 +59,10 @@
       </div>
     </div>
   </template>
-  <template $exist="language == 'en-us'">
-    <template $each="$['directive.decorator.sections']">
+  <template *exist="language == 'en-us'">
+    <template *each="$['directive.decorator.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </template>
 </div>

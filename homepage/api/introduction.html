@@ -16,9 +16,9 @@
   <template id="view">
     <h2>${ $['api.introduction'] }</h2>
     <div class="content">
-      <template $each="$['api.introduction.sections']">
+      <template *each="$['api.introduction.sections']">
         <h3 class="question">${ item.question }</h3>
-        <div class="answer" $html="item.answer"></div>
+        <div class="answer" *html="item.answer"></div>
       </template>
     </div>
   </template>

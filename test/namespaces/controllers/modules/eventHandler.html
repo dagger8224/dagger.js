@@ -30,16 +30,16 @@
   <template id="view">
     <template +loading="loading()">
       <br/>
-      <button $each="[3, 4, 5, 6, 1]" +click#stop="console.log(`this is button ${ index }, item is ${ item }`);">button ${ index }</button>
-      <template $exist="enabled" +click#target:body="console.log(123)"></template>
-      <!--<textarea id="textarea" $class="enabled ? 'enabled' : 'disabled'" +click#every:["-Shift","-Control"]#capture#once="console.log('clicked')" $value#input="value" rows="4" cols="50" +loaded="resizeObserver = loaded($node, textarea)"></textarea><br/>-->
-      <textarea id="textarea" $class="enabled ? 'enabled' : 'disabled'" +mouseover#every:["__Caps__Lock","!__Shift"]="console.log('mouseover', $event)" +click#on#some:["__Shift","__Control",0,1]#capture="console.warn('clicked')" $value#input="value" rows="4" cols="50" +loaded="resizeObserver = loaded($node, textarea)"></textarea><br/>
-      <div $exist="enabled" +resize#target:window="console.log($event)"></div>
+      <button *each="[3, 4, 5, 6, 1]" +click#stop="console.log(`this is button ${ index }, item is ${ item }`);">button ${ index }</button>
+      <template *exist="enabled" +click#target:body="console.log(123)"></template>
+      <!--<textarea id="textarea" *class="enabled ? 'enabled' : 'disabled'" +click#every:["-Shift","-Control"]#capture#once="console.log('clicked')" *value#input="value" rows="4" cols="50" +loaded="resizeObserver = loaded($node, textarea)"></textarea><br/>-->
+      <textarea id="textarea" *class="enabled ? 'enabled' : 'disabled'" +mouseover#every:["__Caps__Lock","!__Shift"]="console.log('mouseover', $event)" +click#on#some:["__Shift","__Control",0,1]#capture="console.warn('clicked')" *value#input="value" rows="4" cols="50" +loaded="resizeObserver = loaded($node, textarea)"></textarea><br/>
+      <div *exist="enabled" +resize#target:window="console.log($event)"></div>
       <div +custom-event="console.log('custom-event', $event)">
         <span>height is ${ textarea.height }</span><br/>
         <span>value is ${ value }</span><br/>
         <span>Observer ${ enabled ? 'enabled' : 'disabled' }</span><br/>
-        <input type="checkbox" $checked="enabled"><br/>
+        <input type="checkbox" *checked="enabled"><br/>
         <button +click="$event.target.dispatchEvent(new CustomEvent('custom-event', { detail: 'dagger', bubbles: true }))">trigger custom event</button>
       </div>
     </template>

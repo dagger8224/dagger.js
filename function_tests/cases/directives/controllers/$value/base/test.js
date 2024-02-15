@@ -1,4 +1,4 @@
-runner('$value directive base test suite', describe, it, __dirname, async $ => {
+runner('*value directive base test suite', describe, it, __dirname, async $ => {
     const selectors = ['button', 'checkbox', 'color', 'date', 'datetime-local', 'email', 'file', 'hidden', 'image', 'month', 'number', 'password', 'radio', 'range', 'reset', 'search', 'submit', 'tel', 'text', 'time', 'url', 'week'];
     const helper = (selectorValueMapping, defaultValue = '') => Promise.all(selectors.map(selector => $(`#${ selector }`).val().then(value => expect(`${ selector }: ${ value }`).toBe(`${ selector }: ${ Reflect.has(selectorValueMapping, selector) ? selectorValueMapping[selector] : defaultValue }`))));
     await helper({ // default value

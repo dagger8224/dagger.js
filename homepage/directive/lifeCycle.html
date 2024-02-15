@@ -1,4 +1,4 @@
-<template $exist="language == 'zh-cn'">
+<template *exist="language == 'zh-cn'">
   <h2>${ $['directive.lifeCycle'] }</h2>
   <div class="content">
     <h3 class="question">元素的生命周期</h3>
@@ -28,14 +28,14 @@
             <td rowspan="2">加载前</td>
             <td rowspan="2">宿主元素指令解析完成</td>
             <td rowspan="2">未连接</td>
-            <td><a href="directive/each">$each</a></td>
+            <td><a href="directive/each">*each</a></td>
           </tr>
           <tr>
-            <td><a href="directive/exist">$exist</a></td>
+            <td><a href="directive/exist">*exist</a></td>
           </tr>
           <tr>
             <td>加载中</td>
-            <td><a href="directive/each">$each</a>/<a href="directive/exist">$exist</a>未声明或执行完成</td>
+            <td><a href="directive/each">*each</a>/<a href="directive/exist">*exist</a>未声明或执行完成</td>
             <td>未连接</td>
             <td><a href="directive/loading">+loading</a></td>
           </tr>
@@ -78,7 +78,7 @@
           [dagger-demo] lifecycle directives</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
           on <a href="https://codepen.io">CodePen</a>.
         </iframe>
-        <div>为了方便演示，示例中使用了目前尚未讲解到的<a target="directive/controller">控制指令“<a target="directive/exist">$exist</a>”和<a target="directive/eventHandler">事件处理指令</a>“+click”。目前您只要知道这两个指令在本例中用于切换$exist指令宿主元素的存在状态就可以了，这些指令的具体用法将在后续章节中讲解。</div>
+        <div>为了方便演示，示例中使用了目前尚未讲解到的<a target="directive/controller">控制指令“<a target="directive/exist">*exist</a>”和<a target="directive/eventHandler">事件处理指令</a>“+click”。目前您只要知道这两个指令在本例中用于切换$exist指令宿主元素的存在状态就可以了，这些指令的具体用法将在后续章节中讲解。</div>
       </div>
       <div>对于具有包含关系的宿主元素来说：
         <div class="margin">在创建阶段，父级元素的“+loading”指令得到执行结果后子级的“+loading”指令才会触发执行。</div>
@@ -95,12 +95,12 @@
     </div>
   </div>
 </template>
-<template $exist="language == 'en-us'">
+<template *exist="language == 'en-us'">
   <h2>${ $['directive.lifeCycle'] }</h2>
   <div class="content">
-    <template $each="$['directive.lifeCycle.sections']">
+    <template *each="$['directive.lifeCycle.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </div>
 </template>

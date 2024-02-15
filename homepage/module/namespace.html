@@ -13,9 +13,9 @@
   <template id="view">
     <h2>${ $['module.namespace'] }</h2>
     <div class="content">
-      <template $each="$['module.namespace.sections']">
+      <template *each="$['module.namespace.sections']">
         <h3 class="question">${ item.question }</h3>
-        <div class="answer" $html="item.answer"></div>
+        <div class="answer" *html="item.answer"></div>
       </template>
     </div>
   </template>

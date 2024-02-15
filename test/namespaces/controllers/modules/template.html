@@ -18,7 +18,7 @@
     export const loading1 = (content, index) => {
         console.log(content, index);
         return {
-            html: '<div $class="item.content" $text="Math.random()"></div>'
+            html: '<div *class="item.content" *text="Math.random()"></div>'
         };
     };
   </script>
@@ -35,13 +35,13 @@
     <br/>
     <template +loading="loading()">
       <button +click="exist = !exist">toggle exist</button><br/>
-      <span $exist="exist">${ Math.random() }</span><br/>
-      <div class="static" $exist="exist" $html="html">placeholder</div>
-      <template $exist="exist" $html="html">placeholder</template>
-      <template $exist="exist">This is string template: ${ Math.random() }</template>
-      <span $exist="exist">1234</span>
-      <template $exist="exist">abcd</template>
-      <template $exist="item.exist" $each="array" +loading="loading1(item.content, index)" $html="html"></template>
+      <span *exist="exist">${ Math.random() }</span><br/>
+      <div class="static" *exist="exist" *html="html">placeholder</div>
+      <template *exist="exist" *html="html">placeholder</template>
+      <template *exist="exist">This is string template: ${ Math.random() }</template>
+      <span *exist="exist">1234</span>
+      <template *exist="exist">abcd</template>
+      <template *exist="item.exist" *each="array" +loading="loading1(item.content, index)" *html="html"></template>
       <p>end</p>
     </template>
   </template>

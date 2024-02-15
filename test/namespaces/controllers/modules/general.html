@@ -18,7 +18,7 @@
   </style>
   <template id="view">
     <div +loading="{ id: '', placeholder: '' }">
-      <input $id="id" $placeholder="placeholder">
+      <input *id="id" *placeholder="placeholder">
       <button +click="({ id, placeholder } = toggle())">toggle</button>
     </div>
   </template>

@@ -24,9 +24,9 @@
   <template id="view">
     <h2>${ $['router.structure'] }</h2>
     <div class="content">
-      <template $each="$['router.structure.sections']">
+      <template *each="$['router.structure.sections']">
         <h3 class="question">${ item.question }</h3>
-        <div class="answer" $html="item.answer"></div>
+        <div class="answer" *html="item.answer"></div>
       </template>
     </div>
   </template>

@@ -31,9 +31,9 @@
     "label": "hidden",
     "type": "hidden"
 }, {
-    "label": "image (invalid, should use \"$src\" instead)",
+    "label": "image (invalid, should use \"*src\" instead)",
     "type": "image",
-    "extra": "$src='`https://tse2-mm.cn.bing.net/th/id/OIP.PATE_2kcu082sJMYWXFoZgHaEK?w=333&h=187&c=7&o=5&dpr=2&pid=1.7`'"
+    "extra": "*src='`https://tse2-mm.cn.bing.net/th/id/OIP.PATE_2kcu082sJMYWXFoZgHaEK?w=333&h=187&c=7&o=5&dpr=2&pid=1.7`'"
 }, {
     "label": "month #change",
     "type": "month"

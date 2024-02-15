@@ -27,31 +27,31 @@
     <div +loading="loading()" style="margin-top: 20px;">
       <button +click="exist = !exist;">toggle exist</button>
       <form onsubmit="return false;">
-        <span>"$selected" works with "$value" or value</span><br/>
+        <span>"*selected" works with "*value" or value</span><br/>
         <template>
           <span>The selected array is: ${ JSON.stringify(selectedArray) }</span><br/>
           <button +click="selectedArray = array.slice()">check all</button>
           <button +click="selectedArray = []">check none</button>
           <button +click="array[2] = 1">array[2] = 1</button>
           <br/>
-          <template $each="array"><label>${ index + 1 }-${ JSON.stringify(array[index]) }. checkbox:<input type="checkbox" $selected="selectedArray" $value="item" $exist="exist" name="checkbox-group1"></label><br/></template>
+          <template *each="array"><label>${ index + 1 }-${ JSON.stringify(array[index]) }. checkbox:<input type="checkbox" *selected="selectedArray" *value="item" *exist="exist" name="checkbox-group1"></label><br/></template>
         </template>
         <template>
           <span>The selected value is: ${ JSON.stringify(selectedValue) }</span><br/>
           <button +click="selectedValue = '2020-W01';">selected item 1</button><br/>
-          <template $each="array"><label>${ index + 1 }-${ JSON.stringify(array[index]) }. radio selected: ${ item === selectedValue }</label><input type="radio" $selected="selectedValue" $value="item" $exist="exist" $data-index="index" name="radio-group1"><br/></template>
+          <template *each="array"><label>${ index + 1 }-${ JSON.stringify(array[index]) }. radio selected: ${ item === selectedValue }</label><input type="radio" *selected="selectedValue" *value="item" *exist="exist" $data-index="index" name="radio-group1"><br/></template>
         </template>
         <template>
           <span>The selected value is: ${ JSON.stringify(selectedValue) }</span><br/>
-          <select id="select-demo1" $selected="selectedValue">
-            <option $each="array" $value="item">option ${ index + 1 }: ${ JSON.stringify(item) }</option>
+          <select id="select-demo1" *selected="selectedValue">
+            <option *each="array" *value="item">option ${ index + 1 }: ${ JSON.stringify(item) }</option>
           </select>
           <br/>
         </template>
         <template>
           <span>The selected values are: ${ JSON.stringify(selectedArray) }</span><br/>
-          <select id="select-demo2" multiple $selected="selectedArray">
-            <option $each="array" $value="item">option ${ index + 1 }: ${ JSON.stringify(item) }</option>
+          <select id="select-demo2" multiple *selected="selectedArray">
+            <option *each="array" *value="item">option ${ index + 1 }: ${ JSON.stringify(item) }</option>
           </select>
           <br/>
         </template>

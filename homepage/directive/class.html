@@ -1,14 +1,14 @@
 <h2>${ $['directive.class'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">$class指令的作用</h3>
     <div class="answer">$class指令用于绑定宿主元素的class属性。</div>
     <h3 class="question">$class指令表达式的执行结果</h3>
     <div class="answer">
       <div>当$class指令表达式的执行结果为字符串时，字符串的内容将被识别为宿主对象的className。示例如下：
-        <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] $class directive" src="https://codepen.io/dagger8224/embed/jOZyrLP?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+        <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] *class directive" src="https://codepen.io/dagger8224/embed/jOZyrLP?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
           See the Pen <a href="https://codepen.io/dagger8224/pen/jOZyrLP">
-          [dagger-demo] $class directive</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
+          [dagger-demo] *class directive</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
           on <a href="https://codepen.io">CodePen</a>.
         </iframe>
       </div>
@@ -31,10 +31,10 @@
     <h3 class="question">$class指令与class属性的关系</h3>
     <div class="answer">$class指令表达式的计算结果将与宿主元素class属性的内容融合后作为最终的className。</div>
   </template>
-  <template $exist="language == 'en-us'">
-    <template $each="$['directive.class.sections']">
+  <template *exist="language == 'en-us'">
+    <template *each="$['directive.class.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </template>
 </div>

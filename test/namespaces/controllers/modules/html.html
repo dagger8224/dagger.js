@@ -58,7 +58,7 @@
   </style>
   <template id="view">
     <div id="container" +loading="init()">
-      <div id="outerContainer" $html="html">loading...</div>
+      <div id="outerContainer" *html="html">loading...</div>
       <button +click="html = html ? '' : '<inner_template1></inner_template1>'">toggle</button>
     </div>
   </template>

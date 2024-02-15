@@ -68,7 +68,7 @@
     }
   </style>
   <template id="view">
-    <template +loading="loading1()" $watch#1="console.log('watch1', data1)" $watch#2="console.log('watch2', data1.array[1])" $watch#3="watch(data1)" $watch#4="console.warn(data1.number) || (((data1.number < 9) && setTimeout(() => (data1.number += 1), 500)))" $watch#5="console.warn(map)" $watch#6="console.warn(set)">
+    <template +loading="loading1()" *watch#1="console.log('watch1', data1)" *watch#2="console.log('watch2', data1.array[1])" *watch#3="watch(data1)" *watch#4="console.warn(data1.number) || (((data1.number < 9) && setTimeout(() => (data1.number += 1), 500)))" *watch#5="console.warn(map)" *watch#6="console.warn(set)">
       <br/>
       <button +click="exist = !exist">exist</button>
       <button +click="data2 = data1">data2 = data1</button>
@@ -100,22 +100,22 @@
       <button +click="data1.array.fill(10)">data1.array.fill(10)</button>
       <button +click="reference(data1)">reference(data1)</button>
       <br/>
-      <span $exist="exist">data1 is: ${ JSON.stringify(data1) }</span><br/>
-      <span $exist="exist">data2 is: ${ JSON.stringify(data2) }</span><br/>
-      <span $exist="exist">data3 is: ${ JSON.stringify(data3) }</span><br/>
-      <span $exist="exist">map is: ${ JSON.stringify([...map]) }</span><br/>
-      <span $exist="exist">map has 3: ${ map.has(3) }</span><br/>
-      <span $exist="exist">set is: ${ JSON.stringify([...set]) }</span><br/>
-      <span $exist="exist">set has 4: ${ set.has(4) }</span><br/>
-      <span $exist="exist">weakMap has data1: ${ weakMap.has(data1) }</span><br/>
-      <span $exist="exist">weakSet has data1: ${ weakSet.has(data1) }</span><br/>
-      <span $exist="exist">regExp.test(data1.string) is ${ regExp.test(data1.string) }</span><br/>
-      <span $exist="exist">$router is: ${ JSON.stringify($router) }</span><br/>
-      <span $exist="exist">json is: ${ JSON.stringify(json) }</span><br/>
-      <div +loading="loading2(data1)" $watch="$dagger.validator(data4, 'data4', { type: [Array], assert: [() => console.warn('data: ', data1, data4) || true] })">
+      <span *exist="exist">data1 is: ${ JSON.stringify(data1) }</span><br/>
+      <span *exist="exist">data2 is: ${ JSON.stringify(data2) }</span><br/>
+      <span *exist="exist">data3 is: ${ JSON.stringify(data3) }</span><br/>
+      <span *exist="exist">map is: ${ JSON.stringify([...map]) }</span><br/>
+      <span *exist="exist">map has 3: ${ map.has(3) }</span><br/>
+      <span *exist="exist">set is: ${ JSON.stringify([...set]) }</span><br/>
+      <span *exist="exist">set has 4: ${ set.has(4) }</span><br/>
+      <span *exist="exist">weakMap has data1: ${ weakMap.has(data1) }</span><br/>
+      <span *exist="exist">weakSet has data1: ${ weakSet.has(data1) }</span><br/>
+      <span *exist="exist">regExp.test(data1.string) is ${ regExp.test(data1.string) }</span><br/>
+      <span *exist="exist">$router is: ${ JSON.stringify($router) }</span><br/>
+      <span *exist="exist">json is: ${ JSON.stringify(json) }</span><br/>
+      <div +loading="loading2(data1)" *watch="$dagger.validator(data4, 'data4', { type: [Array], assert: [() => console.warn('data: ', data1, data4) || true] })">
         <button +click="data4[1]--">data4[1]--</button>
-        <span $exist="exist">data1 is: ${ JSON.stringify(data1) }</span><br/>
-        <span $exist="exist">data4 is: ${ JSON.stringify(data4) }</span><br/>
+        <span *exist="exist">data1 is: ${ JSON.stringify(data1) }</span><br/>
+        <span *exist="exist">data4 is: ${ JSON.stringify(data4) }</span><br/>
       </div>
     </template>
   </template>

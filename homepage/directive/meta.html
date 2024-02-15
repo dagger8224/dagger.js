@@ -1,15 +1,15 @@
 <h2>${ $['directive.meta'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">什么是元指令</h3>
     <div class="answer">元指令是dagger.js在宿主元素的模板解析阶段触发执行的一组指令的统称，用于为dagger.js解析宿主元素提供“元数据”。</div>
     <h3 class="question">元指令有哪些</h3>
     <div class="answer"><a class="margin" href="directive/raw">@raw</a><a class="margin" href="directive/dynamic">@directive</a></div>
   </template>
-  <template $exist="language == 'en-us'">
-    <template $each="$['directive.controller.sections']">
+  <template *exist="language == 'en-us'">
+    <template *each="$['directive.controller.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </template>
 </div>

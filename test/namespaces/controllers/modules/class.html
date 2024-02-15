@@ -26,7 +26,7 @@
   </style>
   <template id="view">
     <div +loading="$module.loading()">
-      <p class="content" $class="className">class value is "${ className instanceof Object ? JSON.stringify(className) : className }", class content -></p>
+      <p class="content" *class="className">class value is "${ className instanceof Object ? JSON.stringify(className) : className }", class content -></p>
       <button +click="className = $module.onSwitchClass()">switch</button>
     </div>
   </template>

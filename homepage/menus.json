@@ -46,43 +46,43 @@
         "text": "controller",
         "href": "directive/controller"
     }, {
-        "text": "$checked",
+        "text": "*checked",
         "href": "directive/checked"
     }, {
-        "text": "$class",
+        "text": "*class",
         "href": "directive/class"
     }, {
-        "text": "$each",
+        "text": "*each",
         "href": "directive/each"
     }, {
-        "text": "$exist",
+        "text": "*exist",
         "href": "directive/exist"
     }, {
-        "text": "$file",
+        "text": "*file",
         "href": "directive/file"
     }, {
-        "text": "$focus",
+        "text": "*focus",
         "href": "directive/focus"
     }, {
-        "text": "$html",
+        "text": "*html",
         "href": "directive/html"
     }, {
-        "text": "$result",
+        "text": "*result",
         "href": "directive/result"
     }, {
-        "text": "$selected",
+        "text": "*selected",
         "href": "directive/selected"
     }, {
-        "text": "$style",
+        "text": "*style",
         "href": "directive/style"
     }, {
-        "text": "$text",
+        "text": "*text",
         "href": "directive/text"
     }, {
-        "text": "$value",
+        "text": "*value",
         "href": "directive/value"
     }, {
-        "text": "$watch",
+        "text": "*watch",
         "href": "directive/watch"
     }, {
         "text": "boolean",

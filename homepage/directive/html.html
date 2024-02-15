@@ -1,6 +1,6 @@
 <h2>${ $['directive.html'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">$html指令的作用</h3>
     <div class="answer">$html指令用于在宿主元素下动态创建子级元素。</div>
     <h3 class="question">$html指令表达式的执行结果</h3>
@@ -9,9 +9,9 @@
       <div>您同样可以在这些动态创建出的元素上声明各种指令，这些指令表达式中的作用域对象默认指向$html宿主元素的作用域。</div>
       <div>如果有需要，您也可以在动态元素上继续声明$html指令来创建新的动态节点。</div>
       我们来看一个示例：
-      <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] $html directive" src="https://codepen.io/dagger8224/embed/vYdZKgx?default-tab=html%2Cresult&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+      <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] *html directive" src="https://codepen.io/dagger8224/embed/vYdZKgx?default-tab=html%2Cresult&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
         See the Pen <a href="https://codepen.io/dagger8224/pen/vYdZKgx">
-        [dagger-demo] $html directive</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
+        [dagger-demo] *html directive</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
         on <a href="https://codepen.io">CodePen</a>.
       </iframe>
     </div>
@@ -21,10 +21,10 @@
       <div>请注意，不要将$html指令用于<a href="module/introduction">模块</a>宿主元素。</div>
     </div>
   </template>
-  <template $exist="language == 'en-us'">
-    <template $each="$['directive.html.sections']">
+  <template *exist="language == 'en-us'">
+    <template *each="$['directive.html.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </template>
 </div>

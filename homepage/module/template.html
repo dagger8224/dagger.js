@@ -1,6 +1,6 @@
 <h2>${ $['module.template'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">什么是模板模块</h3>
     <div class="answer">
       <div>模板是可复用的html片段。合法的模板模块名称可以包含大小写字母，数字，“-”和“_”，首字符必须是小写字母。</div>
@@ -26,7 +26,7 @@
           href="https://codepen.io/dagger8224">@dagger8224</a>)
         on <a href="https://codepen.io">CodePen</a>.
       </iframe>
-      模板的另一种常见使用场景是与“<a href="directve/html">$html</a>”指令配合使用，实现页面视图内容的动态加载。我们来看例子：
+      模板的另一种常见使用场景是与“<a href="directve/html">*html</a>”指令配合使用，实现页面视图内容的动态加载。我们来看例子：
       <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] template module (static)"
         src="https://codepen.io/dagger8224/embed/OJvyZJP?default-tab=html%2Cresult&editable=true" frameborder="no" loading="lazy"
         allowtransparency="true" allowfullscreen="true">
@@ -46,8 +46,8 @@
     <h3 class="question">在模板元素上使用指令</h3>
     <div class="answer">
       您可以在模板元素上声明<a href="directive/lifeCycle">生命周期指令</a>和<a href="directive/controller">控制指令</a>（除<a
-        href="directive/html">$html</a>、<a href="directive/text">$text</a>、<a href="directive/class">$class</a>和<a
-        href="directive/style">$style</a>之外），但不能使用<a href="directive/controller">事件处理指令</a>（除非使用“target”<a
+        href="directive/html">*html</a>、<a href="directive/text">*text</a>、<a href="directive/class">*class</a>和<a
+        href="directive/style">*style</a>之外），但不能使用<a href="directive/controller">事件处理指令</a>（除非使用“target”<a
         href="directive/decorator">指令修饰符</a>指定其他的实体DOM元素作为事件监听器的目标）。我们来看例子：
       <iframe height="300" style="width: 100%;" scrolling="no" title="Untitled"
         src="https://codepen.io/dagger8224/embed/LYQBxGp?default-tab=html%2Cresult&editable=true&theme-id=dark"
@@ -76,10 +76,10 @@
       上例中，样式模块“style”将仅在“view_module”模板内的元素上生效。样式模块的更多详细内容参见<a href="module/style">相关章节</a>。
     </div>
   </template>
-  <template $exist="language == 'en-us'">
-    <template $each="$['module.template.sections']">
+  <template *exist="language == 'en-us'">
+    <template *each="$['module.template.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </template>
 </div>

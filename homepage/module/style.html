@@ -1,6 +1,6 @@
 <h2>${ $['module.style'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">什么是样式模块</h3>
     <div class="answer">
       <div>样式模块是一组可复用的样式片段。</div>
@@ -15,10 +15,10 @@
       </iframe>
     </div>
   </template>
-  <template $exist="language == 'en-us'">
-    <template $each="$['module.style.sections']">
+  <template *exist="language == 'en-us'">
+    <template *each="$['module.style.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </template>
 </div>

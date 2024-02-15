@@ -1,6 +1,6 @@
 <h2>${ $['directive.expression'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">什么是指令表达式</h3>
     <div class="answer">
       <div>指令等号右侧引号中的内容称为指令表达式（后文中简称表达式）。</div>
@@ -38,10 +38,10 @@
       <div>dagger.js会对指令表达式的执行结果进行后续处理以触发页面或数据更新。</div>
     </div>
   </template>
-  <template $exist="language == 'en-us'">
-    <template $each="$['directive.checked.sections']">
+  <template *exist="language == 'en-us'">
+    <template *each="$['directive.checked.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </template>
 </div>

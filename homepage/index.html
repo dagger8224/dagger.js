@@ -20,35 +20,35 @@
     <script type="dagger/options" src="./options.json"></script>
     <script type="dagger/modules" src="./modules.json"></script>
     <script type="dagger/routers" src="./routers.json"></script>
-    <title $text="$[$router.constants.title] || $router.constants.title">loading...</title>
+    <title *text="$[$router.constants.title] || $router.constants.title">loading...</title>
   </head>
-  <body dg-cloak +loading="{ isMenuClosed: true }" +sentry="sentry($scope, $nextRouter)" $watch#router="console.log('watch router', $module, $router), isLoading = false">
-    <div id="loading-background" $style="`display: ${ isLoading ? 'block' : 'none' }`">
+  <body dg-cloak +loading="{ isMenuClosed: true }" +sentry="sentry($scope, $nextRouter)" *watch#router="console.log('watch router', $module, $router), isLoading = false">
+    <div id="loading-background" *style="`display: ${ isLoading ? 'block' : 'none' }`">
       <img src="./static/loading.gif">
     </div>
     <div id="header">
       <h1>🗡️ dagger.js</h1>
       <a id="github-link" href="https://github.com/dagger8224/dagger.js">${ $.viewOnGithub }</a>
-      <select id="language-select" $selected="language" +change="localStorage.setItem('language', language) || ($ = languages[language])">
-        <option $each="$.languages" $text="item" $value="key"></option>
+      <select id="language-select" *selected="language" +change="localStorage.setItem('language', language) || ($ = languages[language])">
+        <option *each="$.languages" *text="item" *value="key"></option>
       </select>
     </div>
-    <div id="navigator" $class="{ 'closed-menu': isMenuClosed }" +resize#target:window="document.querySelector('#navigator').scrollTo(0, 0);" $watch="isMenuClosed, document.querySelector('#navigator').scrollTo(0, 0)">
+    <div id="navigator" *class="{ 'closed-menu': isMenuClosed }" +resize#target:window="document.querySelector('#navigator').scrollTo(0, 0);" *watch="isMenuClosed, document.querySelector('#navigator').scrollTo(0, 0)">
       <h3>${ $.index }</h3>
-      <ul $each#item:topic="menus" +loading="{ className: ''}" $class="className">
+      <ul *each#item:topic="menus" +loading="{ className: ''}" *class="className">
         <div +click="className = className ? '' : 'hidden'">
           <span class="prefix">${ className ? '+' : '-' }</span><span>${ $[topic.text] || topic.text }</span>
         </div>
-        <li $each#item:section="topic.sections" +click="location.href = `#/${ section.href }`, isMenuClosed = true;" $class="{ active: Object.is(`/${ section.href }`, $router.path), 'sub-directive': section.text.startsWith('$') || section.text.startsWith('+') || section.text.startsWith('@') || ['boolean', 'general'].includes(section.text) }">${ $[section.text] || section.text }</li>
+        <li *each#item:section="topic.sections" +click="location.href = `#/${ section.href }`, isMenuClosed = true;" *class="{ active: Object.is(`/${ section.href }`, $router.path), 'sub-directive': section.text.startsWith('$') || section.text.startsWith('+') || section.text.startsWith('@') || ['boolean', 'general'].includes(section.text) }">${ $[section.text] || section.text }</li>
       </ul>
       <div class="bottom-switcher button" +click="isMenuClosed = !isMenuClosed"><span>${ isMenuClosed ? "》" : "《" }</span></div>
     </div>
     <div id="content">
-      <template $html="$router.constants.template"></template>
+      <template *html="$router.constants.template"></template>
     </div>
-    <div id="footer" $watch="$router.path,document.scrollingElement.scrollTop = 0;">
-      <a $exist="$router.constants.previousLink" $href="$router.constants.previousLink">${ $.previous }</a>
-      <a $exist="$router.constants.nextLink" $href="$router.constants.nextLink">${ $.next }</a>
+    <div id="footer" *watch="$router.path,document.scrollingElement.scrollTop = 0;">
+      <a *exist="$router.constants.previousLink" *href="$router.constants.previousLink">${ $.previous }</a>
+      <a *exist="$router.constants.nextLink" *href="$router.constants.nextLink">${ $.next }</a>
     </div>
   </body>
 </html>

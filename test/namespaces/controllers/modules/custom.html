@@ -43,14 +43,14 @@
         <button +click="object.setType('b')">setType</button>
         <button +click="object.setValue(2)">setValue</button>
         <br/>
-        <span $exist="exist">Current object is ${ JSON.stringify(object) }</span><br/>
-        <span $exist="exist">Current object.type is ${ object.getType() }</span><br/>
-        <span $exist="exist">Current object.type is ${ object.type }</span><br/>
-        <span $exist="exist">Current object.value is ${ object.getValue() }</span><br/>
-        <span $exist="exist">Current object.value is ${ object.value }</span><br/>
+        <span *exist="exist">Current object is ${ JSON.stringify(object) }</span><br/>
+        <span *exist="exist">Current object.type is ${ object.getType() }</span><br/>
+        <span *exist="exist">Current object.type is ${ object.type }</span><br/>
+        <span *exist="exist">Current object.value is ${ object.getValue() }</span><br/>
+        <span *exist="exist">Current object.value is ${ object.value }</span><br/>
         </template>
         <template +loading="loading2()">
-            <template $each="array">
+            <template *each="array">
                 <br/>
                 <button +click="item.setType(Math.random())">setType</button>
                 <button +click="item.setValue(Math.random())">setValue</button>
@@ -63,7 +63,7 @@
             </template>
         </template>
         <template +loading="{ array: [{ a: 1, b: 2 }, { a: 3, b: 4 }] }">
-        <template $each="array">
+        <template *each="array">
             <br/>
             <button +click="item.a++">setType</button>
             <button +click="item.b++">setValue</button>

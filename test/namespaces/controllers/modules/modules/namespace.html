@@ -14,7 +14,7 @@
             "type": "namespace",
             "content": {
                 "inner_template321": {
-                    "content": "<div class='ttee' $html='html'></div>",
+                    "content": "<div class='ttee' *html='html'></div>",
                     "type": "view"
                 }
             }
@@ -61,7 +61,7 @@
             // delete array[1];
             // array.shift();
         }, 1000);
-        return `<span>\${ ${ content } }</span><div id="nnnn" $class="classNames"><div class="inner-test"><div $class="a"></div></div></div>`;
+        return `<span>\${ ${ content } }</span><div id="nnnn" *class="classNames"><div class="inner-test"><div *class="a"></div></div></div>`;
       };
   </script>
 </html>

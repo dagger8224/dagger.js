@@ -1,6 +1,6 @@
 <h2>${ $['directive.dynamic'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">@directive指令的作用</h3>
     <div class="answer">在某些情况下，您可能需要根据不同条件来动态构造指令或指令修饰符的内容，此时您可以使用“@directive”指令。</div>
     <h3 class="question">@directive的执行结果</h3>
@@ -32,10 +32,10 @@
       <div>请注意，元指令本身是不支持动态创建的。这意味着您不能使用“@directive”指令来声明相同宿主元素上的“<a target="_blank" href="directive/raw">@raw</a>”或者另一个“@directive”指令。</div>
     </div>
   </template>
-  <template $exist="language == 'en-us'">
-    <template $each="$['directive.controller.sections']">
+  <template *exist="language == 'en-us'">
+    <template *each="$['directive.controller.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </template>
 </div>

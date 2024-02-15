@@ -38,27 +38,27 @@
                 <button +click="checkedArray.forEach(item => (item.checked = !item.checked));">toggle checked</button>
                 <button +click="checkedArray.forEach(item => (item.checked = null));">set null</button>
                 <br/>
-                <template $each="checkedArray"><label>${ index + 1 }-${ JSON.stringify(array[index]) }. checkbox:<input type="checkbox" $checked#indeterminate="item.checked" $value="item.value" $exist="exist" name="checkbox-group1"></label><br/></template>
+                <template *each="checkedArray"><label>${ index + 1 }-${ JSON.stringify(array[index]) }. checkbox:<input type="checkbox" *checked#indeterminate="item.checked" *value="item.value" *exist="exist" name="checkbox-group1"></label><br/></template>
             </template>
             <template +loading="{ checkedArray: map(array) }">
                 <span>The checked array is: ${ JSON.stringify(checkedArray.map(item => item.checked)) }</span><br/>
                 <span>The checked values are: ${ JSON.stringify(checkedArray.filter(item => item.checked).map(item => item.value)) }</span><br/>
-                <button +click="checkedArray[1].checked = true" $watch="console.log(checkedArray[3].checked)">checked item 1</button><br/>
-                <template $each="checkedArray"><label>${ index + 1 }-${ JSON.stringify(item) }. radio checked: ${ item.checked }</label><input type="radio" $checked="item.checked" $exist="exist" $data-value="item.value" $data-index="index" name="radio-group1"><br/></template>
+                <button +click="checkedArray[1].checked = true" *watch="console.log(checkedArray[3].checked)">checked item 1</button><br/>
+                <template *each="checkedArray"><label>${ index + 1 }-${ JSON.stringify(item) }. radio checked: ${ item.checked }</label><input type="radio" *checked="item.checked" *exist="exist" $data-value="item.value" $data-index="index" name="radio-group1"><br/></template>
             </template>
             <template +loading="{ checkedArray: map(array) }">
                 <span>The selected option value is: ${ JSON.stringify(checkedArray.map(item => item.checked)) }</span><br/>
                 <span>The checked value is: ${ JSON.stringify(checkedArray.filter(item => item.checked).map(item => item.value)) }</span><br/>
-                <select id="select-demo1" $exist="exist">
-                  <option $each="checkedArray" $checked="item.checked" $value="item.value">option ${ index + 1 }: ${ JSON.stringify(item.value) }</option>
+                <select id="select-demo1" *exist="exist">
+                  <option *each="checkedArray" *checked="item.checked" *value="item.value">option ${ index + 1 }: ${ JSON.stringify(item.value) }</option>
                 </select>
                 <br/>
             </template>
             <template +loading="{ checkedArray: map(array) }">
                 <span>The selected option values are: ${ JSON.stringify(checkedArray.map(item => item.checked)) }</span><br/>
                 <span>The checked values are: ${ JSON.stringify(checkedArray.filter(item => item.checked).map(item => item.value)) }</span><br/>
-                <select id="select-demo2" multiple $exist="exist">
-                  <option $each="checkedArray" $checked="item.checked" $value="item.value">option ${ index + 1 }: ${ JSON.stringify(item.value) }</option>
+                <select id="select-demo2" multiple *exist="exist">
+                  <option *each="checkedArray" *checked="item.checked" *value="item.value">option ${ index + 1 }: ${ JSON.stringify(item.value) }</option>
                 </select>
                 <br/>
             </template>

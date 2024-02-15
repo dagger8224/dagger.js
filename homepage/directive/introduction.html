@@ -1,4 +1,4 @@
-<template $exist="language == 'zh-cn'">
+<template *exist="language == 'zh-cn'">
   <h2>${ $['directive.introduction'] }</h2>
   <div class="content">
     <h3 class="question">什么是指令</h3>
@@ -12,7 +12,7 @@
     </div>
     <h3 class="question">指令的结构</h3>
     <div class="answer">一个典型的指令由“ 前缀 + 名称 + <a href="directive/decorator">修饰符</a>（可选）+ <a href="directive/expression">表达式</a> ” 四部分组成，下面的input元素上声明了一个名为“value”的<a href="directive/controller">控制指令</a>：
-      <div class="code">&lt;input $value#number="expression"&gt;</div>
+      <div class="code">&lt;input *value#number="expression"&gt;</div>
       在上面的html片段中，input元素是指令的宿主元素，“$”是指令前缀，“value”是指令名称，“number”是指令修饰符，“expression”是指令表达式。
     </div>
     <h3 class="question">指令的类型</h3>
@@ -43,7 +43,7 @@
           <td>✔️</td>
           <td class="trigger">依赖数据发生变化</td>
           <td>多次</td>
-          <td class="directive"><a href="directive/each">$each</a></td>
+          <td class="directive"><a href="directive/each">*each</a></td>
         </tr>
         <tr>
           <td><a href="directive/eventHandler">事件指令</a></td>
@@ -66,12 +66,12 @@
     上面表格中列举了不同指令之间的差异，方便读者进行直观比较。每种指令的定义和使用方法将在后面的相关章节中进行具体讲解。
   </div>
 </template>
-<template $exist="language == 'en-us'">
+<template *exist="language == 'en-us'">
   <h2>${ $['directive.introduction'] }</h2>
   <div class="content">
-    <template $each="$['directive.introduction.sections']">
+    <template *each="$['directive.introduction.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </div>
 </template>

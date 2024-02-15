@@ -2,5 +2,5 @@
     <span>${ data }</span>
 </div>
 <div +loading="{ array: ['a', 'b', 'c'] }">
-    <span $each#item:slice="array">${ index }. ${ slice }</span>
+    <span *each#item:slice="array">${ index }. ${ slice }</span>
 </div>

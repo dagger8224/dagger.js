@@ -1,6 +1,6 @@
 <h2>${ $['directive.raw'] }</h2>
 <div class="content">
-  <template $exist="language == 'zh-cn'">
+  <template *exist="language == 'zh-cn'">
     <h3 class="question">@raw指令的作用</h3>
     <div class="answer">
       <div>dagger.js将“@raw”指令的宿主元素及其子级元素作为平凡元素处理（无论宿主元素上是否存在其他指令声明），不再进行进一步的解析或执行其他指令。</div>
@@ -14,10 +14,10 @@
       <div>请注意，“@raw”指令没有表达式部分，也不能添加任何修饰符，否则指令将失去作用。</div>
     </div>
   </template>
-  <template $exist="language == 'en-us'">
-    <template $each="$['directive.raw.sections']">
+  <template *exist="language == 'en-us'">
+    <template *each="$['directive.raw.sections']">
       <h3 class="question">${ item.question }</h3>
-      <div class="answer" $html="item.answer"></div>
+      <div class="answer" *html="item.answer"></div>
     </template>
   </template>
 </div>
