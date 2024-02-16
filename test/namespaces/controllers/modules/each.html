@@ -101,7 +101,7 @@
     }
   </style>
   <template id="view">
-    <template +loading="loading()">
+    <template +load="loading()">
       <div class="container" +click="logger($event)">
         <div class="separator"></div>
         <label>loop0 [array]:</label>
@@ -135,7 +135,7 @@
         <button +click="fill(loop2)">fill (3)</button>
         <button +click="copyWithin(loop2)">copyWithin</button>
         <button +click="$module.loop3(loop3)">toggle loop3</button>
-        <div class="test" *class="`each-item${ key }`" *each#xxx#item:slice="loop2" *id="key" *exist="slice.exist" +loading="console.log('loading', index, key)" +loaded="console.log('loaded', index, key)" +unloading="console.log('unloading', index, key)" +unloaded="console.log('unloaded')" loading="$intervalIds.push(setInterval(() => { slice.exist = !slice.exist; }, 3000));">
+        <div class="test" *class="`each-item${ key }`" *each#xxx#item:slice="loop2" *id="key" *exist="slice.exist" +load="console.log('loading', index, key)" +loaded="console.log('loaded', index, key)" +unload="console.log('unloading', index, key)" +unloaded="console.log('unloaded')" loading="$intervalIds.push(setInterval(() => { slice.exist = !slice.exist; }, 3000));">
           <p>index: ${ index }-key: ${ key }-${ slice.content }</p>
         </div>
         <div class="separator"></div>

@@ -37,7 +37,7 @@
     }
   </style>
   <template id="view">
-    <div +loading="loading()" style="margin-top: 20px;">
+    <div +load="loading()" style="margin-top: 20px;">
       <button +click="exist = !exist;">toggle exist</button>
       <button +click="index = toggleValue(array)">toggle value</button>
       <span $name="array[index]" $name0="JSON.stringify(array[index])" $name1="0 + array[index]" $name2="(() => array[index])()">The selected value is: ${ index }. ${ JSON.stringify(array[index]) }</span>

@@ -28,7 +28,7 @@
     }
   </style>
   <template id="view">
-    <template +loading="loading()">
+    <template +load="loading()">
       <br/>
       <button *each="[3, 4, 5, 6, 1]" +click#stop="console.log(`this is button ${ index }, item is ${ item }`);">button ${ index }</button>
       <template *exist="enabled" +click#target:body="console.log(123)"></template>

@@ -15,7 +15,7 @@
     }
   </style>
   <template id="view">
-    <div +loading="$module.loading($router.variables.boolean)">
+    <div +load="$module.loading($router.variables.boolean)">
       <input $disabled="!enabled">
       <br/>
       <button +click="enabled = !enabled">toggle</button>

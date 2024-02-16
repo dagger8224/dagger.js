@@ -24,7 +24,7 @@
     }
   </style>
   <template id="view">
-    <div +loading="loading()" style="margin-top: 20px;">
+    <div +load="loading()" style="margin-top: 20px;">
       <button +click="exist = !exist;">toggle exist</button>
       <form onsubmit="return false;">
         <span>"*selected" works with "*value" or value</span><br/>

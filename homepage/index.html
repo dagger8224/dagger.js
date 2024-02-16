@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html +loading="onLoading(languages)">
+<html +load="onLoading(languages)">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,7 +22,7 @@
     <script type="dagger/routers" src="./routers.json"></script>
     <title *text="$[$router.constants.title] || $router.constants.title">loading...</title>
   </head>
-  <body dg-cloak +loading="{ isMenuClosed: true }" +sentry="sentry($scope, $nextRouter)" *watch#router="console.log('watch router', $module, $router), isLoading = false">
+  <body dg-cloak +load="{ isMenuClosed: true }" +sentry="sentry($scope, $nextRouter)" *watch#router="console.log('watch router', $module, $router), isLoading = false">
     <div id="loading-background" *style="`display: ${ isLoading ? 'block' : 'none' }`">
       <img src="./static/loading.gif">
     </div>
@@ -35,7 +35,7 @@
     </div>
     <div id="navigator" *class="{ 'closed-menu': isMenuClosed }" +resize#target:window="document.querySelector('#navigator').scrollTo(0, 0);" *watch="isMenuClosed, document.querySelector('#navigator').scrollTo(0, 0)">
       <h3>${ $.index }</h3>
-      <ul *each#item:topic="menus" +loading="{ className: ''}" *class="className">
+      <ul *each#item:topic="menus" +load="{ className: ''}" *class="className">
         <div +click="className = className ? '' : 'hidden'">
           <span class="prefix">${ className ? '+' : '-' }</span><span>${ $[topic.text] || topic.text }</span>
         </div>

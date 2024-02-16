@@ -11,7 +11,7 @@
       <h3 class="question">$exist指令的触发顺序</h3>
       <div class="answer">
         <div>$exist指令是在宿主元素的创建阶段之前执行的（但是晚于相同宿主元素上声明的“*each”指令执行）。</div>
-        <div>每当$exist表达式的执行结果状态发生切换时，对应的生命周期方法将会被触发（创建过程“+loading/+loaded”指令执行，销毁过程“+unloading/+unloaded”指令执行）。</div>
+        <div>每当$exist表达式的执行结果状态发生切换时，对应的生命周期方法将会被触发（创建过程“+load/+loaded”指令执行，销毁过程“+unload/+unloaded”指令执行）。</div>
       </div>
       <h3 class="question">$exist指令的示例</h3>
       <div class="answer">下面我们来看$exist的例子：

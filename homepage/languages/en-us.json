@@ -49,7 +49,7 @@
         "answer": "<span>directive is an important concept in dagger.js. Formally, directive is special <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes'>attribute</a> (with specified prefix). At runtime, directives will be converted to expressions under context scopes, and interactive with the related DOM element. In later tutorials, we will see the examples of usage for different directives.</span>"
     }, {
         "question": "The category of directives",
-        "answer": "<span>There are four types of directives: <a href='directive/raw'>meta directive</a> (with symbol \"@\" as prefix, such as \"@raw\"), <a href='directive/lifeCycle'>lifeCycle directives</a> (with symbol \"$\" as prefix, such as \"+loading\"), <a href='directive/controller'>control directives</a> (with symbol \"$\" as prefix, such as \"*value\") and <a href='directive/eventHandler'>event directive</a> (with symbol \"+\" as prefix, such as \"+click\").</span>"
+        "answer": "<span>There are four types of directives: <a href='directive/raw'>meta directive</a> (with symbol \"@\" as prefix, such as \"@raw\"), <a href='directive/lifeCycle'>lifeCycle directives</a> (with symbol \"$\" as prefix, such as \"+load\"), <a href='directive/controller'>control directives</a> (with symbol \"$\" as prefix, such as \"*value\") and <a href='directive/eventHandler'>event directive</a> (with symbol \"+\" as prefix, such as \"+click\").</span>"
     }, {
         "question": "The structure of directives",
         "answer": "<span>A typical directive is composed of </span><span class='format'>\"prefix + name + decorators (optional) + expression\"</span><span>. <a href='directive/decorator'>decorators</a> are a group of key value pairs separated by symbol \"#\", which are used to customize the behavior of directive. The meta directive is composed of </span><span class='format'>\"prefix + name\"</span><span> only.</span>"
@@ -61,7 +61,7 @@
         "answer": "<span>Any legal single javaScript statement could be used as directive expression (no \"return\" before the statement), including sync/async function, or an object literal. To use inline compound statement, please break it down to multiple comma expression or wrap it as an IIFE. In fact, it is better to put the complex code logic inside a <a href='module/script'>script</a> module, and call it in the directive expression.</span>"
     }, {
         "question": "The variable scopes of directive expressions",
-        "answer": "<span>Directive expression works under the runtime scopes. Except of the top layer javaScript <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Glossary/Global_scope'>global scope</a> and the second layer dagger.js <a href='miscellaneous/introduction'>root scope</a>, each element could create context scope dynamically with <a href='directive/loading'>+loading</a> lifeCycle directive. The variable scopes within different layers make up a runtime scope tree, each directive expression could visit the variables defined on the located and upper scopes.</span>"
+        "answer": "<span>Directive expression works under the runtime scopes. Except of the top layer javaScript <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Glossary/Global_scope'>global scope</a> and the second layer dagger.js <a href='miscellaneous/introduction'>root scope</a>, each element could create context scope dynamically with <a href='directive/loading'>+load</a> lifeCycle directive. The variable scopes within different layers make up a runtime scope tree, each directive expression could visit the variables defined on the located and upper scopes.</span>"
     }, {
         "question": "Is directive required or optional",
         "answer": "<span>All directives are optional, an element without any directive is called plain element.</span>"
@@ -80,23 +80,23 @@
         "answer": "<span>The lifeCycle directives are a group of directives triggered when the related DOM element is creating/destroying or connected state changed.</span>"
     }, {
         "question": "The list of lifeCycle directives",
-        "answer": "<span><a href='directive/loading'>+loading</a><a href='directive/loaded'>+loaded</a><a href='directive/unloading'>+unloading</a><a href='directive/unloaded'>+unloaded</a><a href='directive/sentry'>+sentry</a></span>"
+        "answer": "<span><a href='directive/loading'>+load</a><a href='directive/loaded'>+loaded</a><a href='directive/unloading'>+unload</a><a href='directive/unloaded'>+unloaded</a><a href='directive/sentry'>+sentry</a></span>"
     }, {
         "question": "The order of lifeCycle directives when creating elements",
-        "answer": "<span>parent's +loading -> children's +loading -> children's +loaded -> parent's +loaded</span>"
+        "answer": "<span>parent's +load -> children's +load -> children's +loaded -> parent's +loaded</span>"
     }, {
         "question": "The order of lifeCycle directives when destroying elements",
-        "answer": "<span>(global +sentry checking) -> parent's +unloading -> children's +unloading -> children's +unloaded -> parent's +unloaded</span>"
+        "answer": "<span>(global +sentry checking) -> parent's +unload -> children's +unload -> children's +unloaded -> parent's +unloaded</span>"
     }, {
         "question": "The available elements for lifeCycle directives",
         "answer": "<span>Any DOM element could declare lifeCycle directive.</span>"
     }],
-    "directive.loading": "Directive/+loading",
+    "directive.loading": "Directive/+load",
     "directive.loading.sections": [{
-        "question": "The effective of +loading directive",
-        "answer": "<span>The +loading directive is triggered by framework before the related element is created. The main usage of +loading is to create a new variable scope in the context.</span>"
+        "question": "The effective of +load directive",
+        "answer": "<span>The +load directive is triggered by framework before the related element is created. The main usage of +load is to create a new variable scope in the context.</span>"
     }, {
-        "question": "The return value of +loading directive expression",
+        "question": "The return value of +load directive expression",
         "answer": "<span>A context scope would be created based on the return value in case it's a plain object (not include the extended object such as Array), the variables insides the scope could be visited in the other directive expressions (except for the <a href='directive/each'>*each</a> and <a href='directive/exist'>*exist</a> directives) on the related element and all directive expressions of its children. The variables defined in the inner scope will override the variables with the same name defined in outer scopes.</span>"
     }],
     "directive.loaded": "Directive/+loaded",
@@ -107,13 +107,13 @@
         "question": "The return value of +loaded directive expression",
         "answer": "<span>The return value of +loaded directive expression is useless.</span>"
     }],
-    "directive.unloading": "Directive/+unloading",
+    "directive.unloading": "Directive/+unload",
     "directive.unloading.sections": [{
-        "question": "The effective of +unloading directive",
-        "answer": "<span>The +unloading directive is triggered by framework before the related element is removed (the trigger condition is before router changed in case the related element is &lt;html&gt;), which is used to do the cleanup work for the related element of scope variables. A context parameter refers to the related element named \"$node\" is available in the +unloading expression (the parameter name could be customized with <a href='directive/decorator'>directive decorator</a>).</span>"
+        "question": "The effective of +unload directive",
+        "answer": "<span>The +unload directive is triggered by framework before the related element is removed (the trigger condition is before router changed in case the related element is &lt;html&gt;), which is used to do the cleanup work for the related element of scope variables. A context parameter refers to the related element named \"$node\" is available in the +unload expression (the parameter name could be customized with <a href='directive/decorator'>directive decorator</a>).</span>"
     }, {
-        "question": "The return value of +unloading directive expression",
-        "answer": "<span>The return value of +unloading directive expression is useless.</span>"
+        "question": "The return value of +unload directive expression",
+        "answer": "<span>The return value of +unload directive expression is useless.</span>"
     }],
     "directive.unloaded": "Directive/+unloaded",
     "directive.unloaded.sections": [{
@@ -146,7 +146,7 @@
         "answer": "<span>The return value of control directive (except for *watch directive) expression would have specified impact on the property or behavior of the related element.</span>"
     }, {
         "question": "The trigger opportunity of control directive expression",
-        "answer": "<span>Most of the control directives (except for *each and *exist directives) are triggered by framework firstly after the +loading directive (in case there is), and before the +loaded directive (in case there is). The control directives might be triggered multiple times during the lifetime of related element if the dependency variables of directive expression updated. In case there are multiple control directives declared on the same element, the first time trigger order is the same as the order of declaration.</span>"
+        "answer": "<span>Most of the control directives (except for *each and *exist directives) are triggered by framework firstly after the +load directive (in case there is), and before the +loaded directive (in case there is). The control directives might be triggered multiple times during the lifetime of related element if the dependency variables of directive expression updated. In case there are multiple control directives declared on the same element, the first time trigger order is the same as the order of declaration.</span>"
     }, {
         "question": "The available elements to apply control directives",
         "answer": "<span>Unless specified in the document, all DOM elements but &lt;html&gt; tag are available for control directives.</span>"
@@ -193,7 +193,7 @@
         "answer": "<span>The related element will be created in case the directive expression return true or equivalent value, otherwise it will be destroyed.</span>"
     }, {
         "question": "The relationship between *exist directive and lifeCycle directives",
-        "answer": "<span>Each time when the return value of *exist directive expression toggled, the lifeCycle directives will be triggered (\"+loading/+loaded\" for creating, \"+unloading/+unloaded\" for destroying).</span>"
+        "answer": "<span>Each time when the return value of *exist directive expression toggled, the lifeCycle directives will be triggered (\"+load/+loaded\" for creating, \"+unload/+unloaded\" for destroying).</span>"
     }],
     "directive.file": "Directive/*file",
     "directive.file.sections": [{
@@ -335,7 +335,7 @@
         "answer": "<span>The directives work under \"insensitive\" mode by default. That is, during the proceeding of directive expression, any update on variables won't trigger the related directive expressions immediately, instead, the expressions will be pushed into a pending proceeding queue which to be triggered after the proceeding of current directive expression.<br/>You may declare \"sensitive(:true)\" decorator to set the work mode as sensitive, under which the framework will break to proceed the related directive expressions once detecting update on variables, and getting back to the stopped call stack after the process finished.</span>"
     }, {
         "question": "The predefined lifeCycle directive decorator",
-        "answer": "<span>The decorator \"next\" is used to specify the name of callback parameter referring to the target <a href='router/introduction'>router</a> object for \"<a href='directive/sentry'>+sentry</a>\" lifeCycle directive, the default value is \"$nextRouter\"; The decorator \"node\" is used to set the name of callback parameter referring to the related element for \"<a href='directive/loaded'>+loaded</a>\", \"<a href='directive/unloading'>+unloading</a>\", \"<a href='directive/unloaded'>+unloaded</a>\", the default value is \"$node\".</span>"
+        "answer": "<span>The decorator \"next\" is used to specify the name of callback parameter referring to the target <a href='router/introduction'>router</a> object for \"<a href='directive/sentry'>+sentry</a>\" lifeCycle directive, the default value is \"$nextRouter\"; The decorator \"node\" is used to set the name of callback parameter referring to the related element for \"<a href='directive/loaded'>+loaded</a>\", \"<a href='directive/unloading'>+unload</a>\", \"<a href='directive/unloaded'>+unloaded</a>\", the default value is \"$node\".</span>"
     }, {
         "question": "The predefined control directive decorators",
         "answer": "<span>The *value directive supports the following decorators: <div class=\"sub-answer\">1. number, which is used to convert the input string to number;<br/>2. trim, which is used to remove whitespace from both ends of the input string;<br/>3. input, which is used to update the input content to the return value of directive expression right after user input, by default the update is triggered after the input element lost focus (response on \"change\" event).</div>The *each directive supports the following decorators: <div class=\"sub-answer\">1. item, which is used to set the name of the slice variable (the default name is \"item\"); <br/>2. index, which is used to set the name of index (with type number) of the the slice variable (the default name is \"index\"); <br/>3. key, which is used to set the name of field key (with type string) of the the slice variable (the default name is \"key\").</div>The *checked directive supports decorator \"scope\", which is used to specify the parent element selector of the checkable group (by default is the parentNode of related element).<br/>The *focus directive support decorator \"prevent\", which is used to specify <a target='_blank' href='https://developer.mozilla.org/en-US/docs/Web/API/HTMLOrForeignElement/focus'> whether or not the browser should scroll the document to bring the newly-focused element into view</a>.</span>"

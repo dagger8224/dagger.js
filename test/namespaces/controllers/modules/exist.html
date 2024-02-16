@@ -7,10 +7,10 @@
     }
   </script>
   <template id="innerTemplate1">
-    <inner_template2 +loading="outerLoading()" +loaded="outerLoaded()" +unloading="outerUnloading()" +unloaded="outerUnloaded()"></inner_template2>
+    <inner_template2 +load="outerLoading()" +loaded="outerLoaded()" +unload="outerUnloading()" +unloaded="outerUnloaded()"></inner_template2>
   </template>
   <template id="innerTemplate2">
-    <span +loading="innerLoading()" +loaded="innerLoaded()" +unloading="innerUnloading()" +unloaded="innerUnloaded()">The content is: "${ a }" and "${ b }".</span>
+    <span +load="innerLoading()" +loaded="innerLoaded()" +unload="innerUnloading()" +unloaded="innerUnloaded()">The content is: "${ a }" and "${ b }".</span>
   </template>
   <script type="dagger/script">
     export const outerLoading = () => {
@@ -35,7 +35,7 @@
     }
   </style>
   <template id="view">
-    <div +loading="{ exist: true }">
+    <div +load="{ exist: true }">
       <div class="exist" *exist="exist">
           <div class="container1" *html="'inner_template1'"></div>
       </div>

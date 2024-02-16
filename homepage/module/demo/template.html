@@ -1,6 +1,6 @@
-<div +loading="{ data: 'I\m a SPAN.' }">
+<div +load="{ data: 'I\m a SPAN.' }">
     <span>${ data }</span>
 </div>
-<div +loading="{ array: ['a', 'b', 'c'] }">
+<div +load="{ array: ['a', 'b', 'c'] }">
     <span *each#item:slice="array">${ index }. ${ slice }</span>
 </div>

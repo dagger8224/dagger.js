@@ -34,7 +34,7 @@
     }
   </style>
   <template id="view">
-    <template +loading="loading()">
+    <template +load="loading()">
       <br/>
       <span>Current index is: "${ index }"</span><br/>
       <span>Current html is: "${ html }"</span><br/>
@@ -45,17 +45,17 @@
       <button +click="console.log($module), namespace.script1.processor()">namespace.script1.processor()</button><br/>
       <button +click="alert(namespace_embedded.json[1])">alert(namespace_embedded.json[1])</button><br/>
       <button +click="script0.inner2()">script0.inner2()</button><br/>
-      <button +click="++index, html=`<inner_template1 +loading='{ index: 10, html: \`hello world\` }'></inner_template1>`;">++index</button><br/>
+      <button +click="++index, html=`<inner_template1 +load='{ index: 10, html: \`hello world\` }'></inner_template1>`;">++index</button><br/>
       <!--<custom_tag>this is a custom tag ${ index }</custom_tag><br/>-->
       <span>start of inner_template1</span><br/>
       <inner_template1></inner_template1>
       <span>end of inner_template1</span><br/>
-      <inner_template2 +loading="{ index: 3 }"></inner_template2>
-      <!--<inner_template2 +loading="{ index, html }"></inner_template2>-->
+      <inner_template2 +load="{ index: 3 }"></inner_template2>
+      <!--<inner_template2 +load="{ index, html }"></inner_template2>-->
     </template>
   </template>
   <template id="innerTemplate1">
-    <namespace.inner.inner_template321 +loading="{ html: '<span +click#stop=script1.processor()>1234567</span>' }"></namespace.inner.inner_template321>
+    <namespace.inner.inner_template321 +load="{ html: '<span +click#stop=script1.processor()>1234567</span>' }"></namespace.inner.inner_template321>
     <inner_template2 +sentry="console.log($scope, $router, $nextRouter), new Promise((resolve, reject) => setTimeout(() => resolve(true), 2000))"></inner_template2>
     <div class="innerTemplate1_root">
       <div description="should be dashed red">

@@ -114,50 +114,50 @@
                         "title": "directive.lifeCycle",
                         "view": "directive_life-Cycle",
                         "previousLink": "directive/scope",
-                        "nextLink": "directive/loading"
+                        "nextLink": "directive/load"
                     },
                     "modules": {
                         "directive_lifeCycle": "./directive/lifeCycle.html"
                     }
                 }, {
-                    "path": "loading",
+                    "path": "load",
                     "constants": {
-                        "title": "directive.loading",
+                        "title": "directive.load",
                         "view": "directive_loading",
                         "previousLink": "directive/lifeCycle",
                         "nextLink": "directive/loaded"
                     },
                     "modules": {
-                        "directive_loading": "./directive/loading.html"
+                        "directive_loading": "./directive/load.html"
                     }
                 }, {
                     "path": "loaded",
                     "constants": {
                         "title": "directive.loaded",
                         "view": "directive_loaded",
-                        "previousLink": "directive/loading",
-                        "nextLink": "directive/unloading"
+                        "previousLink": "directive/load",
+                        "nextLink": "directive/unload"
                     },
                     "modules": {
                         "directive_loaded": "./directive/loaded.html"
                     }
                 }, {
-                    "path": "unloading",
+                    "path": "unload",
                     "constants": {
-                        "title": "directive.unloading",
+                        "title": "directive.unload",
                         "view": "directive_unloading",
                         "previousLink": "directive/loaded",
                         "nextLink": "directive/unloaded"
                     },
                     "modules": {
-                        "directive_unloading": "./directive/unloading.html"
+                        "directive_unloading": "./directive/unload.html"
                     }
                 }, {
                     "path": "unloaded",
                     "constants": {
                         "title": "directive.unloaded",
                         "view": "directive_unloaded",
-                        "previousLink": "directive/unloading",
+                        "previousLink": "directive/unload",
                         "nextLink": "directive/sentry"
                     },
                     "modules": {

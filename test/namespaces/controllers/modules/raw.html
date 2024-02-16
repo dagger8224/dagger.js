@@ -14,7 +14,7 @@
     }
   </style>
   <template id="view">
-    <div id="raw-content" @raw +loading="$module.loading()">
+    <div id="raw-content" @raw +load="$module.loading()">
       <span>You should see the raw expression "${ Math.random() }", remove "@raw" directive to see what happens.</span>
       <button +click="alert('You should not see this message.')">toggle</button>
     </div>

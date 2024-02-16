@@ -17,7 +17,7 @@
     }
   </style>
   <template id="view">
-    <div +loading="loading($router.variables.index)">
+    <div +load="loading($router.variables.index)">
       <span *text="`The current text content is &#x22;${ text }&#x22;.`">You should not see this content.</span>
       <span>The current text content is "${ text }".</span>
       <br/>

@@ -810,10 +810,10 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     }
     loading () {
         this.state = 'loading';
-        const loading = (this.directives || {}).loading;
-        if (loading) {
-            const { init, plain, root } = loading.decorators;
-            return this.resolvePromise(loading.processor(this.module, root ? rootScope : this.scope, null), scope => {
+        const load = (this.directives || {}).load;
+        if (load) {
+            const { init, plain, root } = load.decorators;
+            return this.resolvePromise(load.processor(this.module, root ? rootScope : this.scope, null), scope => {
                 if (!Object.is(this.state, 'loading')) { return; }
                 if (scope) {
                     const constructor = scope.constructor;
@@ -967,8 +967,8 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                 originalSetDelete.call(sentrySet, this.sentry);
                 this.sentry = null;
             }
-            const unloading = (this.directives || {}).unloading;
-            unloading && unloading.processor(this.module, this.scope, this.node);
+            const unload = (this.directives || {}).unload;
+            unload && unload.processor(this.module, this.scope, this.node);
             const node = this.node;
             isRoot && node && node.remove();
             this.node = null;
@@ -1025,7 +1025,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         }
     })();
     return NodeContext;
-})(), NodeProfile = ((directiveType = { '*': 'controller', '+': 'event' }, interactiveDirectiveNames = hashTableResolver('checked', 'file', 'focus', 'result', 'selected', 'value'), lifeCycleDirectiveNames = hashTableResolver('loading', 'loaded', 'sentry', 'unloading', 'unloaded'), rawElementNames = hashTableResolver('STYLE', 'SCRIPT'), caseResolver = content => content.includes('__') ? content.replace(/__[a-z]/g, string => string[2].toUpperCase()) : content, dataBinder = (directives, value, fields, event) => directives.eventHandlers.push(directiveResolver(`Object.is(${ value }, _$data_) || (${ value } = _$data_)`, Object.assign({ event }, fields), '$node, _$data_')), directiveAttributeResolver = (node, name, value = '') => {
+})(), NodeProfile = ((directiveType = { '*': 'controller', '+': 'event' }, interactiveDirectiveNames = hashTableResolver('checked', 'file', 'focus', 'result', 'selected', 'value'), lifeCycleDirectiveNames = hashTableResolver('load', 'loaded', 'sentry', 'unload', 'unloaded'), rawElementNames = hashTableResolver('STYLE', 'SCRIPT'), caseResolver = content => content.includes('__') ? content.replace(/__[a-z]/g, string => string[2].toUpperCase()) : content, dataBinder = (directives, value, fields, event) => directives.eventHandlers.push(directiveResolver(`Object.is(${ value }, _$data_) || (${ value } = _$data_)`, Object.assign({ event }, fields), '$node, _$data_')), directiveAttributeResolver = (node, name, value = '') => {
     daggerOptions.debugDirective && node.setAttribute(`${ directiveType[name[0]] || 'meta' }-${ decodeURIComponent(name.substring(1)).trim().replace(/\#/g, '__').replace(/:/g, '_').replace(/[^\w]/g, '-') }-debug`, value);
 }, directiveResolver = ((baseSignature = '$module, $scope') => (expression, fields = {}, signature = '$node') => {
     const { clear, debug } = fields.decorators || {};

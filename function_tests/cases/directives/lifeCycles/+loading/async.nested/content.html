@@ -1,5 +1,5 @@
-<div +loading="new Promise(resolve => setTimeout(() => resolve({ text: 'text1', number1: 1 }), 300))">
-    <div +loading="new Promise(resolve => setTimeout(() => resolve({ text: 'text2', number2: 2 }), 200))">
+<div +load="new Promise(resolve => setTimeout(() => resolve({ text: 'text1', number1: 1 }), 300))">
+    <div +load="new Promise(resolve => setTimeout(() => resolve({ text: 'text2', number2: 2 }), 200))">
         <span id="span1">${ text }</span>
         <span id="span2">${ number1 }</span>
         <span id="span3">${ number2 }</span>

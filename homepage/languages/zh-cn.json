@@ -17,7 +17,7 @@
     "directive.introduction": "指令/介绍",
     "directive.lifeCycle": "指令/生命周期指令",
     "directive.scope": "指令/作用域",
-    "directive.loading": "指令/+loading",
+    "directive.loading": "指令/+load",
     "lifeCycle": "生命周期指令",
     "eventHandler": "事件处理指令",
     "index": "目录",
@@ -55,7 +55,7 @@
         "answer": "<span>任何DOM元素都可以使用@raw指令。</span>"
     }],
     "directive.loaded": "指令/+loaded",
-    "directive.unloading": "指令/+unloading",
+    "directive.unloading": "指令/+unload",
     "directive.unloaded": "指令/+unloaded",
     "directive.sentry": "指令/+sentry",
     "directive.controller": "指令/控制指令",

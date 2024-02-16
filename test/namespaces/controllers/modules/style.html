@@ -24,7 +24,7 @@
     }
   </style>
   <template id="view">
-    <div +loading="$module.loading()">
+    <div +load="$module.loading()">
       <button +click="style = $module.onSwitchStyle()">switch</button><br/>
       <p style="border: 1px solid black; display: inline !important;" *style="style">style value is "${ style instanceof Object ? JSON.stringify(style) : style }"</p>
     </div>

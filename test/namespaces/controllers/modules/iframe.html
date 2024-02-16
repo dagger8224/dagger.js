@@ -16,7 +16,7 @@
   </style>
   <template id="view">
     <br/>
-    <template +loading="loading()">
+    <template +load="loading()">
       <button +click="src = onSwitch()">switch</button><br/>
       <iframe *src="src" style="width: 100%; height: 100%"></iframe>
     </template>

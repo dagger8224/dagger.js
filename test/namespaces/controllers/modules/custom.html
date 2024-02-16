@@ -37,7 +37,7 @@
     }
     </style>
     <template id="view">
-        <template +loading="loading()">
+        <template +load="loading()">
         <br/>
         <button +click="exist = !exist"> exist</button>
         <button +click="object.setType('b')">setType</button>
@@ -49,7 +49,7 @@
         <span *exist="exist">Current object.value is ${ object.getValue() }</span><br/>
         <span *exist="exist">Current object.value is ${ object.value }</span><br/>
         </template>
-        <template +loading="loading2()">
+        <template +load="loading2()">
             <template *each="array">
                 <br/>
                 <button +click="item.setType(Math.random())">setType</button>
@@ -62,7 +62,7 @@
                 <span>${ index }. Current item.value is ${ item.value }</span><br/>
             </template>
         </template>
-        <template +loading="{ array: [{ a: 1, b: 2 }, { a: 3, b: 4 }] }">
+        <template +load="{ array: [{ a: 1, b: 2 }, { a: 3, b: 4 }] }">
         <template *each="array">
             <br/>
             <button +click="item.a++">setType</button>

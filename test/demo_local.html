@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html +loading="{ $: 'hello dagger', item: 123 }">
+<html +load="{ $: 'hello dagger', item: 123 }">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,7 +16,7 @@
     <template id="index_template">
         <div id="plain-previous-sibling"></div>
         <div id="plain-wrapper">
-            <div id="index" +loading="content">
+            <div id="index" +load="content">
                 <a *each#item:slice="array" *href="`controllers/${ slice.path }${ slice.query ? `?${ slice.query }` : '' }`" $title="`${ slice.path } demo`">${ index + 1 }. ${ slice.path } demo</a>
                 <br/>
             </div>
@@ -30,7 +30,7 @@
       <template @slot></template>
       <button @slot="1">c1</button>
       <button @slot="2">c2</button>
-      <div class="ssss"><template +loading="{ item: 0 }" @slot>hello ${ item }</template></div>
+      <div class="ssss"><template +load="{ item: 0 }" @slot>hello ${ item }</template></div>
       <div class="prefix-raw">prefix</div>
       <div class="prefix-plain">prefix-${ item }</div>
       <div *class="`prefix-${ item }`">prefix-${ item }</div>
@@ -74,7 +74,7 @@
     </style>
   </head>
   <body dg-cloak +click="console.log('body click bubble', $event.currentTarget)" +click#capture="console.log('body click capture', $event.currentTarget)">
-    <prefix +loading#init="{ html: '<button>click</button>'}">
+    <prefix +load#init="{ html: '<button>click</button>'}">
       <!--<template @slot="1">${ item }</template>
       <template @slot="1">abcd</template>
       <div @slot="2">default1</div>-->
@@ -92,7 +92,7 @@
     <a *exist="true" href="mailto://dagger8224@gmail.com">mail to author</a>
     <div +click#stop="console.log('div click bubble', $event.currentTarget, $event.target)">
       <!--<button +click#outside="console.log('button click bubble/outside', $event.currentTarget, $event.target)">click</button>-->
-      <div class="mountPoint1" +loading="{ item: 'default-item' }" *html#router="$router.constants.template"></div>
+      <div class="mountPoint1" +load="{ item: 'default-item' }" *html#router="$router.constants.template"></div>
       <span>This the end!</span>
     </div>
     <div style="height: 2000px"></div>

@@ -28,13 +28,13 @@
         "text": "lifeCycle",
         "href": "directive/lifeCycle"
     }, {
-        "text": "+loading",
+        "text": "+load",
         "href": "directive/loading"
     }, {
         "text": "+loaded",
         "href": "directive/loaded"
     }, {
-        "text": "+unloading",
+        "text": "+unload",
         "href": "directive/unloading"
     }, {
         "text": "+unloaded",

@@ -11,7 +11,7 @@
         on <a href="https://codepen.io">CodePen</a>.
       </iframe>
       <h3 class="question">自定义作用域</h3>
-      <div class="answer"><div>可以通过<a href="directive/loading">+loading</a>和<a href="directive/each">*each</a>指令创建新的作用域对象实例。</div><div>由指令创建出的作用域称为自定义作用域，创建出自定义作用域的指令称为该作用域的源指令。</div><div>如果在某条指令的宿主元素或其上层元素的指令中创建过自定义作用域，那么该指令表达式中的“$scope”将指向其最近层级元素上的源指令所创建出的作用域对象。</div></div>
+      <div class="answer"><div>可以通过<a href="directive/loading">+load</a>和<a href="directive/each">*each</a>指令创建新的作用域对象实例。</div><div>由指令创建出的作用域称为自定义作用域，创建出自定义作用域的指令称为该作用域的源指令。</div><div>如果在某条指令的宿主元素或其上层元素的指令中创建过自定义作用域，那么该指令表达式中的“$scope”将指向其最近层级元素上的源指令所创建出的作用域对象。</div></div>
       <h3 class="question">如何销毁作用域</h3>
       <div class="answer">自定义作用域对象在其源指令的宿主元素被销毁时自动销毁。根作用域在页面的生存期内永远不会被销毁。</div>
       <h3 class="question">作用域的工作方式</h3>

@@ -1,0 +1,22 @@
+<h2>${ $['directive.unloading'] }</h2>
+<div class="content">
+  <template *exist="language == 'zh-cn'">
+    <h3 class="question">+unloading指令的作用</h3>
+    <div class="answer">“+unload”指令在宿主元素从DOM树移除之前（卸载中阶段）由框架触发调用，用于对宿主元素或者作用域变量进行清理操作（清除不再需要的定时器ID等）。</div>
+    <h3 class="question">+unloading指令的执行结果</h3>
+    <div class="answer">dagger.js不会对“+unload”指令表达式的执行结果进行进一步处理。请注意，与“+load”指令不同，请不要通过返回Promise的方式来延迟宿主元素的卸载过程，框架始终将“+unload”指令表达式作为同步方法执行。我们来看示例：
+      <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] +unload directive" src="https://codepen.io/dagger8224/embed/PoQbJWQ?default-tab=html%2Cresult&editable=true&theme-id=dark" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+        See the Pen <a href="https://codepen.io/dagger8224/pen/PoQbJWQ">
+        [dagger-demo] +unload directive</a> by Tony Peakman (<a href="https://codepen.io/dagger8224">@dagger8224</a>)
+        on <a href="https://codepen.io">CodePen</a>.
+      </iframe>
+    </div>
+  </template>
+  <template *exist="language == 'en-us'">
+    <template *each="$['directive.unloading.sections']">
+      <h3 class="question">${ item.question }</h3>
+      <div class="answer" *html="item.answer"></div>
+    </template>
+  </template>
+</div>
+

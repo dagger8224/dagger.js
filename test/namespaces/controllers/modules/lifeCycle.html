@@ -6,7 +6,7 @@
       }
   </script>
   <template id="innerTemplate">
-    <span id="innerContainer" +loading="loading()" +loaded="loaded($node)" +unloading="unloading($node)" +unloaded="console.log('unloaded')">random number: "${ Math.floor(Math.random() * 100) }", please see console.log for the usage of lifeCycle callbacks.</span>
+    <span id="innerContainer" +load="loading()" +loaded="loaded($node)" +unload="unloading($node)" +unloaded="console.log('unloaded')">random number: "${ Math.floor(Math.random() * 100) }", please see console.log for the usage of lifeCycle callbacks.</span>
   </template>
   <script type="dagger/script">
     export const init = () => {
@@ -32,7 +32,7 @@
     }
   </style>
   <template id="view">
-    <div id="container" +loading="init()">
+    <div id="container" +load="init()">
       <div id="outerContainer" *html="html">loading...</div>
       <button +click="html = html ? '' : '<inner_template></inner_template>'">toggle</button>
     </div>

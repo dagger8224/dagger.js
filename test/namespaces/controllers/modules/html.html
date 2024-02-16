@@ -7,12 +7,12 @@
       }
   </script>
   <template id="innerTemplate1">
-    <div id="innerContainer1" +loading#recycle="loading1()" +loaded="loaded($node, string)" +unloading="unloading($node, 'inner_template1')" +unloaded="unloaded($node, 'inner_template1')">
-      <inner_template2 +loading="{ string: 'override string' }"></inner_template2>
+    <div id="innerContainer1" +load#recycle="loading1()" +loaded="loaded($node, string)" +unload="unloading($node, 'inner_template1')" +unloaded="unloaded($node, 'inner_template1')">
+      <inner_template2 +load="{ string: 'override string' }"></inner_template2>
     </div>
   </template>
   <template id="innerTemplate2">
-    <span id="innerContainer2" +loading="Promise.resolve(loading2(number, string, array))" +loaded="loaded($node, string)" +unloading="unloading($node, 'inner_template2')" +unloaded="unloaded($node, 'inner_template2')">random number: "${ Math.floor(Math.random() * 100) }", please see console.log for the usage of lifeCycle callbacks.</span>
+    <span id="innerContainer2" +load="Promise.resolve(loading2(number, string, array))" +loaded="loaded($node, string)" +unload="unloading($node, 'inner_template2')" +unloaded="unloaded($node, 'inner_template2')">random number: "${ Math.floor(Math.random() * 100) }", please see console.log for the usage of lifeCycle callbacks.</span>
   </template>
   <script type="dagger/script">
     export const init = () => {
@@ -57,7 +57,7 @@
     }
   </style>
   <template id="view">
-    <div id="container" +loading="init()">
+    <div id="container" +load="init()">
       <div id="outerContainer" *html="html">loading...</div>
       <button +click="html = html ? '' : '<inner_template1></inner_template1>'">toggle</button>
     </div>

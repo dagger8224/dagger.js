@@ -687,10 +687,10 @@ export default ((context = Symbol('context'), currentController = null, directiv
     }
     loading () {
         this.state = 'loading';
-        const loading = (this.directives || {}).loading;
-        if (loading) {
-            const { init, plain, root } = loading.decorators;
-            return this.resolvePromise(loading.processor(this.module, root ? rootScope : this.scope, null), scope => {
+        const load = (this.directives || {}).load;
+        if (load) {
+            const { init, plain, root } = load.decorators;
+            return this.resolvePromise(load.processor(this.module, root ? rootScope : this.scope, null), scope => {
                 if (!Object.is(this.state, 'loading')) { return; }
                 if (scope) {
                     const constructor = scope.constructor;
@@ -843,8 +843,8 @@ export default ((context = Symbol('context'), currentController = null, directiv
                 originalSetDelete.call(sentrySet, this.sentry);
                 this.sentry = null;
             }
-            const unloading = (this.directives || {}).unloading;
-            unloading && unloading.processor(this.module, this.scope, this.node);
+            const unload = (this.directives || {}).unload;
+            unload && unload.processor(this.module, this.scope, this.node);
             const node = this.node;
             isRoot && node && node.remove();
             this.node = null;
@@ -900,7 +900,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
         }
     })();
     return NodeContext;
-})(), NodeProfile = ((directiveType = { '*': 'controller', '+': 'event' }, interactiveDirectiveNames = hashTableResolver('checked', 'file', 'focus', 'result', 'selected', 'value'), lifeCycleDirectiveNames = hashTableResolver('loading', 'loaded', 'sentry', 'unloading', 'unloaded'), rawElementNames = hashTableResolver('STYLE', 'SCRIPT'), caseResolver = content => content.includes('__') ? content.replace(/__[a-z]/g, string => string[2].toUpperCase()) : content, dataBinder = (directives, value, fields, event) => directives.eventHandlers.push(directiveResolver(`Object.is(${ value }, _$data_) || (${ value } = _$data_)`, Object.assign({ event }, fields), '$node, _$data_')), directiveResolver = ((baseSignature = '$module, $scope') => (expression, fields = {}, signature = '$node') => {
+})(), NodeProfile = ((directiveType = { '*': 'controller', '+': 'event' }, interactiveDirectiveNames = hashTableResolver('checked', 'file', 'focus', 'result', 'selected', 'value'), lifeCycleDirectiveNames = hashTableResolver('load', 'loaded', 'sentry', 'unload', 'unloaded'), rawElementNames = hashTableResolver('STYLE', 'SCRIPT'), caseResolver = content => content.includes('__') ? content.replace(/__[a-z]/g, string => string[2].toUpperCase()) : content, dataBinder = (directives, value, fields, event) => directives.eventHandlers.push(directiveResolver(`Object.is(${ value }, _$data_) || (${ value } = _$data_)`, Object.assign({ event }, fields), '$node, _$data_')), directiveResolver = ((baseSignature = '$module, $scope') => (expression, fields = {}, signature = '$node') => {
     expression = `${ signature ? `(${ baseSignature }, ${ signature })` : `(${ baseSignature })` } => { with ($module) with ($scope) return (() => { 'use strict';\n return ${ expression }; })(); }`;
     const processor = processorCaches[expression], directive = Object.assign({}, fields, { processor: processor || expression });
     processor || directiveQueue.push(directive);

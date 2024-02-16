@@ -37,11 +37,11 @@
             <td>加载中</td>
             <td><a href="directive/each">*each</a>/<a href="directive/exist">*exist</a>未声明或执行完成</td>
             <td>未连接</td>
-            <td><a href="directive/loading">+loading</a></td>
+            <td><a href="directive/loading">+load</a></td>
           </tr>
           <tr>
             <td rowspan="2">加载完成</td>
-            <td rowspan="2"><a href="directive/loading">+loading</a>未声明或执行完成</td>
+            <td rowspan="2"><a href="directive/loading">+load</a>未声明或执行完成</td>
             <td rowspan="2">已连接</td>
             <td><a href="directive/loaded">+loaded</a></td>
           </tr>
@@ -52,11 +52,11 @@
             <td>销毁中</td>
             <td>当前元素即将从DOM移除</td>
             <td>已连接</td>
-            <td><a href="directive/unloading">+unloading</a></td>
+            <td><a href="directive/unloading">+unload</a></td>
           </tr>
           <tr>
             <td>已销毁</td>
-            <td><a href="directive/unloading">+unloading</a>未声明或执行完成</td>
+            <td><a href="directive/unloading">+unload</a>未声明或执行完成</td>
             <td>未连接</td>
             <td><a href="directive/unloaded">+unloaded</a></td>
           </tr>
@@ -66,12 +66,12 @@
     <h3 class="question">什么是生命周期指令</h3>
     <div class="answer">生命周期指令是在宿主元素的创建或销毁阶段触发执行的一组指令的统称。</div>
     <h3 class="question">生命周期指令列表</h3>
-    <div class="answer"><a class="margin" href="directive/loading">+loading</a><a class="margin" href="directive/loaded">+loaded</a><a class="margin" href="directive/unloading">+unloading</a><a class="margin" href="directive/unloaded">+unloaded</a><a class="margin" href="directive/sentry">+sentry</a></div>
+    <div class="answer"><a class="margin" href="directive/loading">+load</a><a class="margin" href="directive/loaded">+loaded</a><a class="margin" href="directive/unloading">+unload</a><a class="margin" href="directive/unloaded">+unloaded</a><a class="margin" href="directive/sentry">+sentry</a></div>
     <h3 class="question">生命周期指令的执行顺序</h3>
     <div class="answer">
       <div>对于同一个宿主元素来说：
-        <div class="margin">在创建阶段，“+loading”指令首先执行，“+loaded”指令在“+loading”指令得到执行结果且宿主元素挂载到DOM树上之后执行。请注意，如果“+loading”指令表达式的返回值是一个Promise，那么“+loaded”将在这个Promise对象处于已兑现（fulfilled）状态之后执行。</div>
-        <div class="margin">在销毁阶段，“+unloading”指令首先执行，“+unloaded”指令在“+unloading”指令执行完成且宿主元素从DOM树上移除之后执行。“+unloading”和“+unloaded”指令都是作为同步函数执行的。</div>
+        <div class="margin">在创建阶段，“+load”指令首先执行，“+loaded”指令在“+load”指令得到执行结果且宿主元素挂载到DOM树上之后执行。请注意，如果“+load”指令表达式的返回值是一个Promise，那么“+loaded”将在这个Promise对象处于已兑现（fulfilled）状态之后执行。</div>
+        <div class="margin">在销毁阶段，“+unload”指令首先执行，“+unloaded”指令在“+unload”指令执行完成且宿主元素从DOM树上移除之后执行。“+unload”和“+unloaded”指令都是作为同步函数执行的。</div>
         我们来看一个示例：
         <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] lifecycle directives" src="https://codepen.io/dagger8224/embed/MWVWwVJ?default-tab=html%2Cresult&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
           See the Pen <a href="https://codepen.io/dagger8224/pen/MWVWwVJ">
@@ -81,8 +81,8 @@
         <div>为了方便演示，示例中使用了目前尚未讲解到的<a target="directive/controller">控制指令“<a target="directive/exist">*exist</a>”和<a target="directive/eventHandler">事件处理指令</a>“+click”。目前您只要知道这两个指令在本例中用于切换$exist指令宿主元素的存在状态就可以了，这些指令的具体用法将在后续章节中讲解。</div>
       </div>
       <div>对于具有包含关系的宿主元素来说：
-        <div class="margin">在创建阶段，父级元素的“+loading”指令得到执行结果后子级的“+loading”指令才会触发执行。</div>
-        <div class="margin">在销毁阶段，父级元素的“+unloading”指令执行完成后再依次执行子级元素的“+unloading”和“+unloaded”指令，最后执行父级元素的“+unloaded”指令。</div>
+        <div class="margin">在创建阶段，父级元素的“+load”指令得到执行结果后子级的“+load”指令才会触发执行。</div>
+        <div class="margin">在销毁阶段，父级元素的“+unload”指令执行完成后再依次执行子级元素的“+unload”和“+unloaded”指令，最后执行父级元素的“+unloaded”指令。</div>
         我们来看一个示例：
         <iframe height="300" style="width: 100%;" scrolling="no" title="[dagger-demo] the execute order of life-cycle directives" src="https://codepen.io/dagger8224/embed/YzeGqbJ?default-tab=html%2Cresult&editable=true" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
           See the Pen <a href="https://codepen.io/dagger8224/pen/YzeGqbJ">
