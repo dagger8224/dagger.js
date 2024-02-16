@@ -688,17 +688,20 @@ export default ((context = Symbol('context'), currentController = null, directiv
     loading () {
         this.state = 'loading';
         const loading = (this.directives || {}).loading;
-        loading ? this.resolvePromise(loading.processor(this.module, this.scope, null), scope => {
-            if (!Object.is(this.state, 'loading')) { return; }
-            if (scope) {
-                const constructor = scope.constructor;
-                if (Object.is(constructor, Object) || (!constructor && Object.is(typeof scope, 'object'))) {
-                    const { init, plain, root } = loading.decorators;
-                    this.resolveScope(scope, plain, root, init);
+        if (loading) {
+            const { init, plain, root } = loading.decorators;
+            return this.resolvePromise(loading.processor(this.module, root ? rootScope : this.scope, null), scope => {
+                if (!Object.is(this.state, 'loading')) { return; }
+                if (scope) {
+                    const constructor = scope.constructor;
+                    if (Object.is(constructor, Object) || (!constructor && Object.is(typeof scope, 'object'))) {
+                        this.resolveScope(scope, plain, root, init);
+                    }
                 }
-            }
-            this.initialize();
-        }) : this.initialize();
+                this.initialize();
+            });
+        }
+        this.initialize();
     }
     postLoaded () {
         this.state = 'loaded';
