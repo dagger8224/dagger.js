@@ -74,7 +74,7 @@
     </style>
   </head>
   <body dg-cloak +click="console.log('body click bubble', $event.currentTarget)" +click#capture="console.log('body click capture', $event.currentTarget)">
-    <prefix +load#init="{ html: '<button>click</button>'}">
+    <prefix +load#init>
       <!--<template @slot="1">${ item }</template>
       <template @slot="1">abcd</template>
       <div @slot="2">default1</div>-->

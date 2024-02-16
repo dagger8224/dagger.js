@@ -9,7 +9,8 @@
     "root_style": "#root_style",
     "prefix": {
         "uri": "#prefix",
-        "initScope": {
+        "init": {
+            "html": "<button>click123</button>",
             "a": "str",
             "b": [1, 2, 3]
         }
@@ -54,7 +55,7 @@
     "selected": "http://localhost:8283/modules/selected.html",
     "modules": {
         "uri": "http://localhost:8283/modules/modules.html",
-        "integrity": "5pWhhDj869mTm7mqm4PCDcbs0/QrftpyWM8cJDdRdxk="
+        "integrity": "BP6+c3n4FBVRxqPQLs6xbJnIs9GlvA5CbSjRzYwyiuA="
     },
     "module_component": {
         "name": "component",

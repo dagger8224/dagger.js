@@ -820,6 +820,8 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                     if (Object.is(constructor, Object) || (!constructor && Object.is(typeof scope, 'object'))) {
                         this.resolveScope(scope, plain, root, init);
                     }
+                } else if (init) {
+                    this.resolveScope(scope, plain, root, init);
                 }
                 this.initialize();
             });
@@ -944,7 +946,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                 const initScope = moduleProfile.config.init;
                 if (initScope) {
                     this.resolveScope(initScope, plain, root);
-                    return this.resolveScope(scope, plain);
+                    return scope && this.resolveScope(scope, plain);
                 }
             }
         }
