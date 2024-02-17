@@ -230,7 +230,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         sheet.insertRule(rule.cssText, iterator.index++);
         rule.name = originalName;
     }
-    if ((rule.cssRules || []).length) {
+    if (rule.cssRules?.length) {
         forEach(rule.cssRules, rule => scopedRuleResolver(sheet, rule, name, iterator));
     } else if (rule.selectorText) {
         const style = rule.style, originalAnimationName = style.animationName;
@@ -251,7 +251,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     constructor (config = {}, base = '', name = '', parent = null) {
         name = name.trim();
         asserter(`The module name should be valid string matched RegExp "${ moduleNameRegExp.toString() }" instead of "${ name }"`, !parent || moduleNameRegExp.test(name));
-        this.layer = name ? (((parent || {}).layer || 0) + 1) : 0, this.space = new Array(this.layer * 4).fill(' ').join(''), this.name = name, this.state = 'unresolved', this.valid = true, this.module = this.integrity = this.parent = this.children = this.type = this.content = this.resolvedContent = null;
+        this.layer = name ? ((parent?.layer || 0) + 1) : 0, this.space = new Array(this.layer * 4).fill(' ').join(''), this.name = name, this.state = 'unresolved', this.valid = true, this.module = this.integrity = this.parent = this.children = this.type = this.content = this.resolvedContent = null;
         if (parent) {
             this.parent = parent, this.path = parent.path ? `${ parent.path }.${ name }` : name, this.tags = [...parent.tags, this.path.replace(/\./g, '__')], this.baseElement = parent.baseElement;
         } else {
@@ -271,7 +271,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
             asserter([`${ this.space }Failed to parse the config "%o" for module "${ this.path }" as there is no valid "content" or "uri" definition`, config]);
         }
         this.integrity = integrity;
-        this.config = config, this.promise = new Promise(resolver => (this.resolver = resolver)), this.base = new URL(config.base || base, (parent || {}).base || document.baseURI).href;
+        this.config = config, this.promise = new Promise(resolver => (this.resolver = resolver)), this.base = new URL(config.base || base, parent?.base || document.baseURI).href;
         config.prefetch && this.resolve();
     }
     fetch (paths) {
@@ -280,7 +280,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         return moduleProfile.fetch(paths);
     }
     fetchChild (name, ignoreMismatch = false) {
-        const childModuleProfile = (this.children || []).find(child => Object.is(child.name, name) && child.valid);
+        const childModuleProfile = this.children?.find(child => Object.is(child.name, name) && child.valid);
         if (!childModuleProfile && ignoreMismatch) { return; }
         asserter(`${ this.space }Failed to fetch module "${ name }" within ${ this.path ? `namespace "${ this.path }"` : 'the root namespace' }`, !Object.is(childModuleProfile));
         return childModuleProfile;
@@ -646,7 +646,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     result: (data, node) => asserter([`The data bound to directive "*result" of element "%o" should be "object${ node.multiple ? ' array' : '' }" instead of "%o"`, node, data], !data || (node.multiple ? (Array.isArray(data) && data.every(file => (file instanceof Object))) : (data instanceof Object))),
     selected: ((selectedResolver = (node, data, multiple) => {
         const value = valueResolver(node);
-        return multiple ? (data || []).some(item => Object.is(item, value)) : Object.is(data, value);
+        return multiple ? data?.some(item => Object.is(item, value)) : Object.is(data, value);
     }) => (data, node) => {
         const { type, tagName } = node, isSelect = Object.is(tagName, 'SELECT');
         if (isSelect || (Object.is(tagName, 'INPUT') && (Object.is(type, 'checkbox') || Object.is(type, 'radio')))) {
@@ -745,7 +745,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         } else if (text) {
             this.resolveNode(() => (this.controller = this.resolveController(text)));
         } else {
-            const each = (this.directives || {}).each;
+            const each = this.directives?.each;
             (each || profile.virtual) && this.resolveLandmark(sliceScope);
             if (sliceScope) {
                 const { plain, root } = each.decorators;
@@ -774,7 +774,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                 });
                 processorResolver();
             }
-            const exist = (this.directives || {}).exist;
+            const exist = this.directives?.exist;
             if (exist) {
                 this.lanmark || this.resolveLandmark(sliceScope);
                 this.state = 'unloaded';
@@ -793,7 +793,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                 this.upperBoundary && this.upperBoundary.remove();
             }
             this.existController && this.removeController(this.existController);
-            const siblings = (this.parent || {}).children;
+            const siblings = this.parent?.children;
             if (isRoot && siblings) {
                 forEach(siblings, (sibling, siblingIndex) => (siblingIndex > this.index) && (sibling.index--));
                 siblings.splice(this.index, 1);
@@ -804,13 +804,13 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     initialize () {
         const { html, virtual } = this.profile;
         html ? (this.node = html) : (virtual || this.resolveNode());
-        const loaded = (this.directives || {}).loaded;
+        const loaded = this.directives?.loaded;
         this.resolvePromise(loaded && loaded.processor(this.module, this.scope, this.node), () => this.postLoaded());
         html || this.resolveChildren();
     }
     loading () {
         this.state = 'loading';
-        const load = (this.directives || {}).load;
+        const load = this.directives?.load;
         if (load) {
             const { init, plain, root } = load.decorators;
             return this.resolvePromise(load.processor(this.module, root ? rootScope : this.scope, null), scope => {
@@ -869,7 +869,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                 }
             }
         }
-        if ((this.children || []).length) {
+        if (this.children?.length) {
             forEach(this.children, child => child && child.destructor(false));
             this.children.length = 0;
         }
@@ -888,7 +888,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         directivesRemover(targetNames, this.eventHandlers, eventHandlerRemover);
     }
     resolveChildren () {
-        const children = this.profile.children, child = (this.directives || {}).child;
+        const children = this.profile.children, child = this.directives?.child;
         !this.children && (children || (child && Object.is(child.name, 'html'))) && (this.children = []);
         child ? (this.childrenController = this.resolveController(child)) : forEach(children, (child, index) => new NodeContext(child, this, index));
     }
@@ -924,7 +924,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         } else {
             this.landmark = landmark;
         }
-        (virtual || (this.directives || {}).each) && (this.upperBoundary = parentNode.insertBefore(textNode.cloneNode(false), this.landmark));
+        (virtual || this.directives?.each) && (this.upperBoundary = parentNode.insertBefore(textNode.cloneNode(false), this.landmark));
     }
     resolveNode (callback) {
         const { node: baseNode, unique, raw } = this.profile, node = unique ? baseNode : baseNode.cloneNode(raw);
@@ -969,14 +969,14 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                 originalSetDelete.call(sentrySet, this.sentry);
                 this.sentry = null;
             }
-            const unload = (this.directives || {}).unload;
+            const unload = this.directives?.unload;
             unload && unload.processor(this.module, this.scope, this.node);
             const node = this.node;
             isRoot && node && node.remove();
             this.node = null;
             this.removeChildren(isRoot);
-            this.scope = this.sliceScope || (this.parent || {}).scope || rootScope;
-            const unloaded = (this.directives || {}).unloaded;
+            this.scope = this.sliceScope || this.parent?.scope || rootScope;
+            const unloaded = this.directives?.unloaded;
             unloaded && unloaded.processor(this.module, this.scope, null);
             this.state = 'unloaded';
         }
@@ -1037,7 +1037,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     return directive;
 })(), NodeProfile = class {
     constructor (node, namespace = rootNamespace, rootNodeProfiles = null, parent = null, unique = false, defaultSlotScope = null) {
-        this.node = node, this.namespace = namespace, this.unique = unique, this.defaultSlotScope = defaultSlotScope || (parent || {}).defaultSlotScope || null, this.dynamic = this.plain = this.raw = this.virtual = false, this.text = this.inlineStyle = this.styles = this.directives = this.landmark = this.children = this.classNames = this.html = this.slotScope = this.moduleProfile = null;
+        this.node = node, this.namespace = namespace, this.unique = unique, this.defaultSlotScope = defaultSlotScope || parent?.defaultSlotScope || null, this.dynamic = this.plain = this.raw = this.virtual = false, this.text = this.inlineStyle = this.styles = this.directives = this.landmark = this.children = this.classNames = this.html = this.slotScope = this.moduleProfile = null;
         const type = node.nodeType;
         if (Object.is(type, Node.TEXT_NODE)) {
             const resolvedTextContent = node.textContent.trim();
@@ -1295,7 +1295,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     }
 }, routingChangeResolver = ((routerChangeResolver = ((resolver = nextRouter => {
     groupEnder(`resolving modules of the router "${ nextRouter.path || '/' }"`);
-    logger(`\u2705 router has changed from "${ (rootScope.$router || {}).path || '/' }" to "${ nextRouter.path || '/' }"`);
+    logger(`\u2705 router has changed from "${ rootScope.$router?.path || '/' }" to "${ nextRouter.path || '/' }"`);
     processorResolver();
     const currentStyleModuleSet = rootScope.$router && styleModuleCache[rootScope.$router.path];
     isRouterWritable = true;
@@ -1311,7 +1311,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     }
     anchorResolver(nextRouter.anchor);
 }) => nextRouter => {
-    logger(`\u23f3 router is changing from "${ (rootScope.$router || {}).path || '/' }" to "${ nextRouter.path || '/' }"...`);
+    logger(`\u23f3 router is changing from "${ rootScope.$router?.path || '/' }" to "${ nextRouter.path || '/' }"...`);
     const path = nextRouter.path;
     styleModuleSet = styleModuleCache[path] || (styleModuleCache[path] = new Set);
     groupStarter(`resolving modules of the router "${ nextRouter.path }"`);
@@ -1327,7 +1327,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         logger('\ud83e\udd98 router alias matched');
     } else if (rootRouter.match(routers, scenarios, paths)) {
         routers.reverse();
-        redirectPath = (routers.find(router => router.redirectPath || Object.is(router.redirectPath, '')) || {}).redirectPath;
+        redirectPath = routers.find(router => router.redirectPath || Object.is(router.redirectPath, ''))?.redirectPath;
     } else if (Reflect.has(routerConfigs, 'default')) {
         asserter(`The router "${ path }" is invalid`, !Object.is(routerConfigs.default, path));
         warner(`\u274e The router "${ path }" is invalid`);
@@ -1352,9 +1352,9 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         }
     });
     const nextRouter = { url: location.href, mode, prefix, path, paths, modules: new Set(routers.map(router => router.modules).flat()), query, queries, scenarios, variables, constants, anchor };
-    logger(`\u23f3 resolving sentries within router "${ (rootScope.$router || {}).path || '/' }"...`);
+    logger(`\u23f3 resolving sentries within router "${ rootScope.$router?.path || '/' }"...`);
     Promise.all([...sentrySet].map(sentry => Promise.resolve(sentry.processor(nextRouter)).then(prevent => ({ sentry, prevent })))).then(results => {
-        logger(`\u2705 resolved sentries within router "${ (rootScope.$router || {}).path || '/' }"`);
+        logger(`\u2705 resolved sentries within router "${ rootScope.$router?.path || '/' }"`);
         const matchedOwners = results.filter(result => result.prevent).map(result => result.sentry.owner);
         matchedOwners.length ? forEach(matchedOwners, owner => warner(['\u274e The router redirect is prevented by the "$sentry" directive declared on the "%o" element', owner.node || owner.profile.node])) || originalPushState.call(history, null, '', rootScope.$router.url) : routerChangeResolver(nextRouter);
     });
@@ -1383,7 +1383,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
             asserter([`${ space }The router's "children" field should be "array" instead of "%o"`, children], Array.isArray(children));
             this.children = children.map(child => new Router(child, this));
         }
-        this.tailable = tailable || !(this.children || []).length;
+        this.tailable = tailable || !this.children?.length;
         logger(`${ space }\u2705 resolved the ${ this.path ? `router with path "${ this.path }"` : 'root router' }`);
     }
     match (routers, scenarios, paths, length = paths.length, start = 0) {
@@ -1396,12 +1396,12 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
             }
         })) {
             start += scenarioLength;
-            return ((Object.is(length, start) && this.tailable) || (this.children || []).find(child => child.match(routers, scenarios, paths, length, start))) && routers.push(this);
+            return ((Object.is(length, start) && this.tailable) || this.children?.find(child => child.match(routers, scenarios, paths, length, start))) && routers.push(this);
         }
     }
 }) => {
     const register = ((resolver = (prototype, name) => {
-        const method = (prototype || {})[name];
+        const method = prototype?.[name];
         asserter([`"${ name }" is not a valid method name of prototype object "%o"`, prototype], method && (method instanceof Function));
         const resolvedMethod = function (...parameters) {
             const result = method.apply(this, parameters);
@@ -1437,7 +1437,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     JSON.stringify = processorWrapper(JSON.stringify);
     forEach(['concat', 'copyWithin', 'fill', 'find', 'findIndex', 'lastIndexOf', 'pop', 'push', 'reverse', 'shift', 'unshift', 'slice', 'sort', 'splice', 'includes', 'indexOf', 'join', 'keys', 'entries', 'values', 'forEach', 'filter', 'flat', 'flatMap', 'map', 'every', 'some', 'reduce', 'reduceRight', 'toLocaleString', 'toString', 'at'], key => (Array.prototype[key] = processorWrapper(Array.prototype[key])));
     const stateResolver = (method, parameters) => {
-        const url = (parameters || [])[2], prefix = routerConfigs.prefix;
+        const url = parameters?.[2], prefix = routerConfigs.prefix;
         url && !url.startsWith(prefix) && (parameters[2] = `${ prefix }${ url }`);
         method.apply(history, parameters);
         routingChangeResolver();
@@ -1446,7 +1446,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     history.replaceState = (...parameters) => stateResolver(originalReplaceState, parameters);
     window.$dagger = Object.freeze(Object.assign(emptier(), { register, version: '1.0.0-RC-debug', validator: (data, path, { type, assert, required } = {}) => {
         if ((data == null) || Number.isNaN(data)) { asserter([`The data "${ path }" should be assigned a valid value instead of "%o" before using`, data], !required); }
-        type && (Array.isArray(type) ? asserter([`The type of data "${ path }" should be one of "%o" instead of "%o"`, type, (data.constructor || {}).name], type.some(type => (data instanceof type))) : asserter([`The type of data "${ path }" should be "%o" instead of "%o"`, type, (data.constructor || {}).name], data instanceof type));
+        type && (Array.isArray(type) ? asserter([`The type of data "${ path }" should be one of "%o" instead of "%o"`, type, data.constructor?.name], type.some(type => (data instanceof type))) : asserter([`The type of data "${ path }" should be "%o" instead of "%o"`, type, data.constructor?.name], data instanceof type));
         if (!assert) { return; }
         if (assert instanceof Function) {
             asserter(`The assert of "${ path }" is falsy`, assert(data));

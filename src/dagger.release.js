@@ -184,7 +184,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
         sheet.insertRule(rule.cssText, iterator.index++);
         rule.name = originalName;
     }
-    if ((rule.cssRules || []).length) {
+    if (rule.cssRules?.length) {
         forEach(rule.cssRules, rule => scopedRuleResolver(sheet, rule, name, iterator));
     } else if (rule.selectorText) {
         const style = rule.style, originalAnimationName = style.animationName;
@@ -218,7 +218,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
             this.URIs = uri;
         }
         this.integrity = integrity;
-        this.config = config, this.promise = new Promise(resolver => (this.resolver = resolver)), this.base = new URL(config.base || base, (parent || {}).base || document.baseURI).href;
+        this.config = config, this.promise = new Promise(resolver => (this.resolver = resolver)), this.base = new URL(config.base || base, parent?.base || document.baseURI).href;
         config.prefetch && this.resolve();
     }
     fetch (paths) {
@@ -227,7 +227,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
         return moduleProfile.fetch(paths);
     }
     fetchChild (name) {
-        return (this.children || []).find(child => Object.is(child.name, name) && child.valid);
+        return this.children?.find(child => Object.is(child.name, name) && child.valid);
     }
     fetchViewModule (name) {
         return this.fetchChild(name) || this.parent.fetchChild(name);
@@ -530,7 +530,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
     result: () => {},
     selected: ((selectedResolver = (node, data, multiple) => {
         const value = valueResolver(node);
-        return multiple ? (data || []).some(item => Object.is(item, value)) : Object.is(data, value);
+        return multiple ? data?.some(item => Object.is(item, value)) : Object.is(data, value);
     }) => (data, node) => {
         const { type, tagName } = node, isSelect = Object.is(tagName, 'SELECT');
         if (isSelect || (Object.is(tagName, 'INPUT') && (Object.is(type, 'checkbox') || Object.is(type, 'radio')))) {
@@ -626,7 +626,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
         } else if (text) {
             this.resolveNode(() => (this.controller = this.resolveController(text)));
         } else {
-            const each = (this.directives || {}).each;
+            const each = this.directives?.each;
             (each || profile.virtual) && this.resolveLandmark(sliceScope);
             if (sliceScope) {
                 const { plain, root } = each.decorators;
@@ -651,7 +651,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
                 });
                 processorResolver();
             }
-            const exist = (this.directives || {}).exist;
+            const exist = this.directives?.exist;
             if (exist) {
                 this.lanmark || this.resolveLandmark(sliceScope);
                 this.state = 'unloaded';
@@ -670,7 +670,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
                 this.upperBoundary && this.upperBoundary.remove();
             }
             this.existController && this.removeController(this.existController);
-            const siblings = (this.parent || {}).children;
+            const siblings = this.parent?.children;
             if (isRoot && siblings) {
                 forEach(siblings, (sibling, siblingIndex) => (siblingIndex > this.index) && (sibling.index--));
                 siblings.splice(this.index, 1);
@@ -681,13 +681,13 @@ export default ((context = Symbol('context'), currentController = null, directiv
     initialize () {
         const { html, virtual } = this.profile;
         html ? (this.node = html) : (virtual || this.resolveNode());
-        const loaded = (this.directives || {}).loaded;
+        const loaded = this.directives?.loaded;
         this.resolvePromise(loaded && loaded.processor(this.module, this.scope, this.node), () => this.postLoaded());
         html || this.resolveChildren();
     }
     loading () {
         this.state = 'loading';
-        const load = (this.directives || {}).load;
+        const load = this.directives?.load;
         if (load) {
             const { init, plain, root } = load.decorators;
             return this.resolvePromise(load.processor(this.module, root ? rootScope : this.scope, null), scope => {
@@ -745,7 +745,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
                 }
             }
         }
-        if ((this.children || []).length) {
+        if (this.children?.length) {
             forEach(this.children, child => child && child.destructor(false));
             this.children.length = 0;
         }
@@ -764,7 +764,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
         directivesRemover(targetNames, this.eventHandlers, eventHandlerRemover);
     }
     resolveChildren () {
-        const children = this.profile.children, child = (this.directives || {}).child;
+        const children = this.profile.children, child = this.directives?.child;
         !this.children && (children || (child && Object.is(child.name, 'html'))) && (this.children = []);
         child ? (this.childrenController = this.resolveController(child)) : forEach(children, (child, index) => new NodeContext(child, this, index));
     }
@@ -800,7 +800,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
         } else {
             this.landmark = landmark;
         }
-        (virtual || (this.directives || {}).each) && (this.upperBoundary = parentNode.insertBefore(textNode.cloneNode(false), this.landmark));
+        (virtual || this.directives?.each) && (this.upperBoundary = parentNode.insertBefore(textNode.cloneNode(false), this.landmark));
     }
     resolveNode (callback) {
         const { node: baseNode, unique, raw } = this.profile, node = unique ? baseNode : baseNode.cloneNode(raw);
@@ -845,14 +845,14 @@ export default ((context = Symbol('context'), currentController = null, directiv
                 originalSetDelete.call(sentrySet, this.sentry);
                 this.sentry = null;
             }
-            const unload = (this.directives || {}).unload;
+            const unload = this.directives?.unload;
             unload && unload.processor(this.module, this.scope, this.node);
             const node = this.node;
             isRoot && node && node.remove();
             this.node = null;
             this.removeChildren(isRoot);
-            this.scope = this.sliceScope || (this.parent || {}).scope || rootScope;
-            const unloaded = (this.directives || {}).unloaded;
+            this.scope = this.sliceScope || this.parent?.scope || rootScope;
+            const unloaded = this.directives?.unloaded;
             unloaded && unloaded.processor(this.module, this.scope, null);
             this.state = 'unloaded';
         }
@@ -909,7 +909,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
     return directive;
 })(), NodeProfile = class {
     constructor (node, namespace = rootNamespace, rootNodeProfiles = null, parent = null, unique = false, defaultSlotScope = null) {
-        this.node = node, this.namespace = namespace, this.unique = unique, this.defaultSlotScope = defaultSlotScope || (parent || {}).defaultSlotScope || null, this.dynamic = this.plain = this.raw = this.virtual = false, this.text = this.inlineStyle = this.styles = this.directives = this.landmark = this.children = this.classNames = this.html = this.slotScope = this.moduleProfile = null;
+        this.node = node, this.namespace = namespace, this.unique = unique, this.defaultSlotScope = defaultSlotScope || parent?.defaultSlotScope || null, this.dynamic = this.plain = this.raw = this.virtual = false, this.text = this.inlineStyle = this.styles = this.directives = this.landmark = this.children = this.classNames = this.html = this.slotScope = this.moduleProfile = null;
         const type = node.nodeType;
         if (Object.is(type, Node.TEXT_NODE)) {
             const resolvedTextContent = node.textContent.trim();
@@ -1178,7 +1178,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
         redirectPath = aliases[path];
     } else if (rootRouter.match(routers, scenarios, paths)) {
         routers.reverse();
-        redirectPath = (routers.find(router => router.redirectPath || Object.is(router.redirectPath, '')) || {}).redirectPath;
+        redirectPath = routers.find(router => router.redirectPath || Object.is(router.redirectPath, ''))?.redirectPath;
     } else if (Reflect.has(routerConfigs, 'default')) {
         redirectPath = routerConfigs.default;
     } else {
@@ -1219,7 +1219,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
         }
         this.constants = constants, this.variables = variables, this.children = null, this.parent = parent, this.scenarios = (path instanceof Object) ? Object.keys(path).map(scenario => ({ scenario, regExp: new RegExp(path[scenario] || '^$') })) : [{ scenario: path, regExp: new RegExp(`^${ path }$`) }];
         children && (this.children = children.map(child => new Router(child, this)));
-        this.tailable = tailable || !(this.children || []).length;
+        this.tailable = tailable || !this.children?.length;
     }
     match (routers, scenarios, paths, length = paths.length, start = 0) {
         const scenarioLength = this.scenarios.length;
@@ -1231,12 +1231,12 @@ export default ((context = Symbol('context'), currentController = null, directiv
             }
         })) {
             start += scenarioLength;
-            return ((Object.is(length, start) && this.tailable) || (this.children || []).find(child => child.match(routers, scenarios, paths, length, start))) && routers.push(this);
+            return ((Object.is(length, start) && this.tailable) || this.children?.find(child => child.match(routers, scenarios, paths, length, start))) && routers.push(this);
         }
     }
 }) => {
     const register = ((resolver = (prototype, name) => {
-        const method = (prototype || {})[name];
+        const method = prototype?.[name];
         const resolvedMethod = function (...parameters) {
             const result = method.apply(this, parameters);
             this[meta] && this[meta].forEach(topology => topology.dispatch());
@@ -1267,7 +1267,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
     JSON.stringify = processorWrapper(JSON.stringify);
     forEach(['concat', 'copyWithin', 'fill', 'find', 'findIndex', 'lastIndexOf', 'pop', 'push', 'reverse', 'shift', 'unshift', 'slice', 'sort', 'splice', 'includes', 'indexOf', 'join', 'keys', 'entries', 'values', 'forEach', 'filter', 'flat', 'flatMap', 'map', 'every', 'some', 'reduce', 'reduceRight', 'toLocaleString', 'toString', 'at'], key => (Array.prototype[key] = processorWrapper(Array.prototype[key])));
     const stateResolver = (method, parameters) => {
-        const url = (parameters || [])[2], prefix = routerConfigs.prefix;
+        const url = parameters?.[2], prefix = routerConfigs.prefix;
         url && !url.startsWith(prefix) && (parameters[2] = `${ prefix }${ url }`);
         method.apply(history, parameters);
         routingChangeResolver();
