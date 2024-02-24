@@ -47,8 +47,13 @@
         export const clear = () => console.clear();
     </script>
     <style id="root_style" type="dagger/style">
-      div {
-        color: blue;
+      div, span {
+        color: red;
+      }
+      @media (width <= 600px) {
+        div, span {
+          color: blue;
+        }
       }
     </style>
     <style id="index_style" type="dagger/style">
