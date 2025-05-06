@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[shoelace-dagger-demo] sl-popup (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <script type="module" src="https://assets.codepen.io/5782383/dagger-1.0.0-RC.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "_": "./script.js",
+        "style": "./style.css"
+      }
+    </script>
+</head>
+
+<body>
+    <p>Note: This is the "<a href="https://shoelace.style/components/popup" target="_blank">sl-popup</a>" web
+        component demo of <a href="https://shoelace.style/" target="_blank">shoelace</a>, the demo is implemented with
+        <a href="https://daggerjs.org" target="_blank">dagger.js</a>. Please comment for any issue or suggestion,
+        thanks.</p>
+    <div class="popup-section" dg-cloak +load="load()">
+        <h3>The parameters part:</h3>
+        <sl-select label="Placement" *value="placement" class="popup-overview-select">
+            <sl-option
+                *each="['top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'right', 'right-start', 'right-end', 'left', 'left-start', 'left-end']"
+                *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-select label="Arrow Placement" *value="arrowPlacement">
+            <sl-option *each="['anchor', 'start', 'end', 'center']" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-select label="Sync" *value="sync">
+            <sl-option *each="['width', 'height', 'both', '']" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-input type="number" min="-50" max="50" step="1" *value="distance" label="Distance"></sl-input>
+        <sl-input type="number" min="-50" max="50" step="1" *value="skidding" label="Skidding"></sl-input>
+        <sl-input type="number" min="-50" max="50" step="1" *value="arrowPadding" label="ArowPadding"></sl-input>
+        <sl-input type="number" min="-50" max="50" step="1" *value="autoSizePadding" label="AutoSizePadding"></sl-input>
+        <sl-input type="number" min="-50" max="50" step="1" *value="shiftPadding" label="ShiftPadding"></sl-input>
+        <sl-input type="number" min="-50" max="50" step="1" *value="flipPadding" label="FlipPadding"></sl-input>
+        <sl-select multiple label="FlipFallbackPlacements" *value="flipFallbackPlacements">
+            <sl-option *each="['top', 'bottom', 'left', 'right']" *value="item">${ item }</sl-option>
+        </sl-select>
+        <br>
+        <sl-switch *checked="active">Active</sl-switch>
+        <sl-switch *checked="arrow">Arrow</sl-switch>
+        <sl-switch *checked="flip">Flip</sl-switch>
+        <sl-switch *checked="autoSize">AutoSize</sl-switch>
+        <sl-switch *checked="hoverBridge">HoverBridge</sl-switch>
+        <sl-switch *checked="shift">Shift</sl-switch>
+        <sl-radio-group label="Strategy" *value="strategy">
+            <sl-radio value="absolute">absolute</sl-radio>
+            <sl-radio value="fixed">fixed</sl-radio>
+        </sl-radio-group>
+        <sl-radio-group label="AutoSize" *value="autoSize">
+            <sl-radio value="horizontal">horizontal</sl-radio>
+            <sl-radio value="vertical">vertical</sl-radio>
+            <sl-radio value="both">both</sl-radio>
+        </sl-radio-group>
+        <sl-radio-group label="Sync" *value="sync">
+            <sl-radio value="width">width</sl-radio>
+            <sl-radio value="height">height</sl-radio>
+            <sl-radio value="both">both</sl-radio>
+        </sl-radio-group>
+        <sl-radio-group label="FlipFallbackStrategy" *value="flipFallbackStrategy">
+            <sl-radio value="best-fit">best-fit</sl-radio>
+            <sl-radio value="initial">initial</sl-radio>
+        </sl-radio-group>
+        <h3>The state part:</h3>
+        <span>The event triggered: ${ eventType }</span>
+        <h3>The demonstration part:</h3>
+        <sl-button +click="popupElement.reposition()">reposition</sl-button>
+        <div class="popup-overview">
+            <div class="overflow">
+                <sl-popup id="popupElement" *active *placement *strategy *distance *skidding *arrow *arrow-placement
+                    *arrow-padding *flip *flip-fallback-placements="flipFallbackPlacements.join(' ')"
+                    *flip-fallback-strategy *flip-padding *shift *shift-padding *auto-size *sync *auto-size-padding
+                    *hover-bridge +sl-reposition="eventType = $event.type">
+                    <span slot="anchor"></span>
+                    <div class="box"></div>
+                </sl-popup>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

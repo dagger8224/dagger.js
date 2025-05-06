@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[shoelace-dagger-demo] sl-button-group (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <script type="module" src="https://assets.codepen.io/5782383/dagger-1.0.0-RC.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "_": "./script.js",
+        "style": "./style.css"
+      }
+    </script>
+</head>
+
+<body>
+    <p>Note: This is the "<a href="https://shoelace.style/components/button-group" target="_blank">sl-button-group</a>"
+        web component demo of <a href="https://shoelace.style/" target="_blank">shoelace</a>, the demo is implemented
+        with <a href="https://daggerjs.org" target="_blank">dagger.js</a>. Please comment for any issue or suggestion,
+        thanks.</p>
+    <div class="button-group-section" dg-cloak +load="load()">
+        <h3>The parameters part:</h3>
+        <sl-select label="Variant" *value="variant">
+            <sl-option *each="['default', 'primary', 'success', 'neutral', 'warning', 'danger', 'text']"
+                *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-select label="Size" *value="size">
+            <sl-option *each="['small', 'medium', 'large']" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-select label="Type" *value="type">
+            <sl-option *each="['button', 'submit', 'reset']" *value="item">${ item }</sl-option>
+        </sl-select>
+        <br>
+        <sl-switch *checked="outline">Outline</sl-switch>
+        <sl-switch *checked="pill">Pill</sl-switch>
+        <sl-switch *checked="circle">Circle</sl-switch>
+        <sl-switch *checked="caret">Caret</sl-switch>
+        <sl-switch *checked="loading">Loading</sl-switch>
+        <sl-switch *checked="disabled">Disabled</sl-switch>
+        <sl-switch *checked="focus" disabled>Focus</sl-switch>
+        <h3>The demonstration part:</h3>
+        <sl-button-group label="Alignment">
+            <sl-button *each="['left', 'center', 'right']" *type *variant *size *outline *pill *circle *caret *loading
+                *disabled *focus +sl-blur="eventType = $event.type" +sl-focus="eventType = $event.type"
+                +sl-invalid="eventType = $event.type">
+                ${ item[0].toUpperCase() }${ item.slice(1) }
+            </sl-button>
+        </sl-button-group>
+    </div>
+</body>
+
+</html>

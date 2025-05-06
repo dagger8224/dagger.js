@@ -1,0 +1,30 @@
+body {
+  padding: 30px;
+}
+
+:not(:defined) {
+  visibility: hidden;
+}
+
+sl-input,
+sl-select,
+sl-radio-group,
+sl-button,
+sl-alert {
+  margin-bottom: 15px;
+}
+
+sl-radio-group {
+  display: inline-block;
+  margin-left: 20px;
+  vertical-align: top;
+}
+
+sl-switch {
+  margin-left: 20px;
+}
+
+sl-include {
+  padding: 20px;
+  border: 2px dashed #aaaaaa;
+}

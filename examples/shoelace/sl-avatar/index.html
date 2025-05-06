@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[shoelace-dagger-demo] sl-avatar (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <script type="module" src="https://assets.codepen.io/5782383/dagger-1.0.0-RC.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "_": "./script.js",
+        "style": "./style.css",
+        "icons": "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/assets/icons/icons.json"
+      }
+    </script>
+</head>
+
+<body>
+    <p>Note: This is the "<a href="https://shoelace.style/components/avatar" target="_blank">sl-avatar</a>" web
+        component demo of <a href="https://shoelace.style/" target="_blank">shoelace</a>, the demo is implemented with
+        <a href="https://daggerjs.org" target="_blank">dagger.js</a>. Please comment for any issue or suggestion,
+        thanks.</p>
+    <div class="avatar-section" dg-cloak +load="load(icons)">
+        <h3>The parameters part:</h3>
+        <sl-select label="Avatar Names" *value="avatarName" placeholder="select the avatar's source name" clearable>
+            <sl-option *each="Object.keys(avatarList)" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-select label="Slot Icon" *value="icon" placeholder="select the slot icon" clearable>
+            <sl-option *each="icons" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-input label="Initials (2 characters suggested)" *value="initials"></sl-input>
+        <br>
+        <sl-radio-group label="Shape" *value="shape">
+            <sl-radio *each="['circle', 'square', 'rounded']" *value="item">${ item }</sl-radio>
+        </sl-radio-group>
+        <sl-radio-group label="Loading" *value="loading">
+            <sl-radio value="eager">eager</sl-radio>
+            <sl-radio value="lazy">lazy</sl-radio>
+        </sl-radio-group>
+        <h3>The state part:</h3>
+        <span>The event triggered: ${ eventType }</span>
+        <h3>The demonstration part:</h3>
+        <sl-avatar *initials *label="avatarList[avatarName]?.label" *image="avatarList[avatarName]?.image" *shape
+            *loading +sl-load="eventType = $event.type" +sl-error="eventType = $event.type">
+            <sl-icon slot="icon" *name="icon"></sl-icon>
+        </sl-avatar>
+    </div>
+</body>
+
+</html>

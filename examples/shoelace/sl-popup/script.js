@@ -1,0 +1,22 @@
+export const load = icons => Promise.all(['sl-popup', 'sl-button', 'sl-select', 'sl-switch', 'sl-radio-group'].map(tagName => customElements.whenDefined(tagName))).then(() => ({
+  // anchor: 'anchorElement1',
+  active: true,
+  placement: 'top',
+  strategy: 'absolute',
+  distance: 0,
+  skidding: 0,
+  arrow: true,
+  arrowPlacement: 'anchor',
+  arrowPadding: 0,
+  flip: false,
+  flipFallbackPlacements: ['right', 'bottom'],
+  flipFallbackStrategy: 'best-fit',
+  flipPadding: 0,
+  shift: true,
+  shiftPadding: 0,
+  autoSize: 'both',
+  sync: 'width',
+  autoSizePadding: 0,
+  hoverBridge: true,
+  eventType: "N/A"
+}));

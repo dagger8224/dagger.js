@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[shoelace-dagger-demo] sl-details (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <script type="module" src="https://assets.codepen.io/5782383/dagger-1.0.0-RC.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "_": "./script.js",
+        "style": "./style.css",
+        "icons": "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/assets/icons/icons.json"
+      }
+    </script>
+</head>
+
+<body>
+    <p>Note: This is the "<a href="https://shoelace.style/components/details" target="_blank">sl-details</a>" web
+        component demo of <a href="https://shoelace.style/" target="_blank">shoelace</a>, the demo is implemented with
+        <a href="https://daggerjs.org" target="_blank">dagger.js</a>. Please comment for any issue or suggestion,
+        thanks.</p>
+    <div class="details-section" dg-cloak +load="load(icons)">
+        <h3>The parameters part:</h3>
+        <sl-select label="Expand Icon" *value="expandIcon" placeholder="select the expand icon">
+            <sl-option *each="icons" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-select label="Collapse Icon" *value="collapseIcon" placeholder="select the collapse icon">
+            <sl-option *each="icons" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-input label="Summary" *value="summary"></sl-input>
+        <br>
+        <sl-switch *checked="disabled">Disabled</sl-switch>
+        <sl-switch *checked="open">Open</sl-switch>
+        <h3>The state part:</h3>
+        <span>The event triggered: ${ eventType }</span>
+        <h3>The demonstration part:</h3>
+        <sl-button +click="detailsElement.show()">show</sl-button>
+        <sl-button +click="disabled || (open = true)">open</sl-button>
+        <sl-button +click="detailsElement.hide()">hide</sl-button>
+        <sl-button +click="disabled || (open = false)">close</sl-button>
+        <br>
+        <sl-details id="detailsElement" *disabled *open *summary +loaded="loaded($node, $scope)">
+            <sl-icon slot="expand-icon" *name="expandIcon"></sl-icon>
+            <sl-icon slot="collapse-icon" *name="collapseIcon"></sl-icon>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna
+            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat.
+        </sl-details>
+    </div>
+</body>
+
+</html>

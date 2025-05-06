@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[shoelace-dagger-demo] sl-alert (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <script type="module" src="http://localhost:5500/src/dagger.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "_": "./script.js",
+        "style": "./style.css",
+        "icons": "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/assets/icons/icons.json"
+      }
+    </script>
+</head>
+
+<body>
+    <p>
+        Note: This is the "<a href="https://shoelace.style/components/alert" target="_blank">sl-alert</a>" web component
+        demo of
+        <a href="https://shoelace.style/" target="_blank">shoelace</a>, the demo
+        is implemented with
+        <a href="https://daggerjs.org" target="_blank">dagger.js</a>. Please
+        comment for any issue or suggestion, thanks.
+    </p>
+    <div class="alert-toast" dg-cloak +load="load(icons)" +loaded="html = htmlList[0]"
+        +sl-show="updateEventType($event, $scope)" +sl-after-show="updateEventType($event, $scope)"
+        +sl-hide="updateEventType($event, $scope)" +sl-after-hide="updateEventType($event, $scope)">
+        <h3>The parameters part:</h3>
+        <sl-select label="Variant" *value="variant">
+            <sl-option *each="['default', 'primary', 'success', 'neutral', 'warning', 'danger']" *value="item">${ item
+                }</sl-option>
+        </sl-select>
+        <sl-select label="Icon" *value="icon">
+            <sl-option *each="icons" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-select label="Duration" *value="duration">
+            <sl-option *each="['3000', '5000', '10000', '30000', 'Infinity']" *value="item">${ item }</sl-option>
+        </sl-select>
+        <br />
+        <sl-switch *checked="open">Open</sl-switch>
+        <sl-switch *checked="closable">Closable</sl-switch>
+        <br />
+        <sl-radio-group label="ContentSlot" *value="html">
+            <sl-radio *each="htmlList" *value="item">${ item }</sl-radio>
+        </sl-radio-group>
+        <h3>The state part:</h3>
+        <span>The event triggered: ${ eventType }</span>
+        <h3>The demonstration part:</h3>
+        <span>Click to trigger alert with the show method:</span>
+        <sl-button *variant +click="showAlertElement.show()">${ variant[0].toUpperCase() }${ variant.slice(1)
+            }</sl-button>
+        <sl-alert id="showAlertElement" *open *variant *duration *closable>
+            <sl-icon slot="icon" *name="icon"></sl-icon>
+            <template *html></template>
+        </sl-alert>
+        <br />
+        <span>Click to trigger alert with the toast method:</span>
+        <sl-button *variant +click="$toastAlertElement.toast()">${ variant[0].toUpperCase() }${ variant.slice(1)
+            }</sl-button>
+        <sl-alert *variant *duration *closable +loaded="$toastAlertElement = $node">
+            <sl-icon slot="icon" *name="icon"></sl-icon>
+            <template *html></template>
+        </sl-alert>
+    </div>
+</body>
+
+</html>

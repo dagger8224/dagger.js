@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[shoelace-dagger-demo] sl-animation (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <script type="module" src="https://assets.codepen.io/5782383/dagger-1.0.0-RC.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "_": "./script.js",
+        "style": "./style.css"
+      }
+    </script>
+</head>
+
+<body>
+    <p>Note: This is the "<a href="https://shoelace.style/components/animation" target="_blank">sl-animation</a>" web
+        component demo of <a href="https://shoelace.style/" target="_blank">shoelace</a>, the demo is implemented with
+        <a href="https://daggerjs.org" target="_blank">dagger.js</a>. Please comment for any issue or suggestion,
+        thanks.</p>
+    <div class="animation-section" dg-cloak +load="load()">
+        <h3>The parameters part:</h3>
+        <sl-select label="Animation" *value="animation" placeholder="select the animation name">
+            <sl-option *each="animations" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-select label="Easing" *value="easing" placeholder="select the easing name">
+            <sl-option *each="easings" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-select label="Iterations" *value="iterations" placeholder="select the animation iterations">
+            <sl-option *each="['1', '3', '5', 'Infinity']" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-select label="Direction" *value="direction" placeholder="select the animation direction">
+            <sl-option *each="['normal', 'reverse', 'alternate', 'alternate-reverse']" *value="item">${ item
+                }</sl-option>
+        </sl-select>
+        <sl-select label="Fill" *value="fill" placeholder="select the animation fill mode">
+            <sl-option *each="['none', 'forwards', 'backwards', 'both']" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-input label="Duration" type="number" min="500" max="10000" step="100" *value="duration"></sl-input>
+        <sl-input label="Delay" type="number" min="0" max="1000" step="100" *value="delay"></sl-input>
+        <sl-input label="EndDelay" type="number" min="0" max="1000" step="100" *value="endDelay"></sl-input>
+        <sl-input label="Playback Rate" type="number" min="0" max="2" step=".25" *value="rate"></sl-input>
+        <sl-input label="IterationStart" type="number" min="0" max="1" step=".1" *value="iterationStart"></sl-input>
+        <br>
+        <sl-switch *checked="play">Play</sl-switch>
+        <h3>The state part:</h3>
+        <span>The event triggered: ${ eventType }</span>
+        <h3>The demonstration part:</h3>
+        <sl-button +click="animationElement.cancel()">Cancel</sl-button>
+        <sl-button +click="animationElement.finish()">Finish</sl-button>
+        <br>
+        <sl-animation id="animationElement" *name="animation" *easing *direction *fill *duration *iterations *delay
+            *end-delay *iteration-start *playback-rate="rate" *play +sl-cancel="eventType = $event.type"
+            +sl-finish="eventType = $event.type" +sl-start="eventType = $event.type">
+            <div class="box" +observe-intersection#threshold:0.5="observer($entries)"></div>
+        </sl-animation>
+    </div>
+</body>
+
+</html>

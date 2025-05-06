@@ -1,0 +1,41 @@
+body {
+  padding: 30px;
+}
+
+:not(:defined) {
+  visibility: hidden;
+}
+
+sl-input,
+sl-select,
+sl-radio-group,
+sl-button,
+sl-alert {
+  margin-bottom: 15px;
+}
+
+sl-switch {
+  margin-left: 20px;
+}
+
+sl-radio-group {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  margin-left: 20px;
+  vertical-align: top;
+}
+
+sl-select,
+sl-input {
+  display: inline-block;
+  margin-left: 20px;
+  width: 250px;
+}
+
+.container {
+  position: relative;
+  padding: 5px;
+  border: 2px dashed #999999;
+  overflow: hidden;
+}

@@ -1,0 +1,103 @@
+body {
+  padding: 30px;
+}
+
+:not(:defined) {
+  visibility: hidden;
+}
+
+sl-input,
+sl-select,
+sl-radio-group,
+sl-button,
+sl-alert {
+  margin-bottom: 15px;
+}
+
+sl-switch {
+  margin-left: 20px;
+}
+
+sl-radio-group {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  margin-left: 20px;
+  vertical-align: top;
+}
+
+sl-select,
+sl-input {
+  display: inline-block;
+  margin-left: 20px;
+  width: 250px;
+}
+
+.popup-overview {
+  margin-top: 60px;
+  border: 2px dashed #aaaaaa;
+}
+
+.popup-overview sl-popup {
+  --arrow-color: var(--sl-color-primary-600);
+}
+
+.popup-overview span[slot="anchor"] {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  border: dashed 2px var(--sl-color-neutral-600);
+  margin: 250px 50px 100px 50px;
+}
+
+.popup-overview .box {
+  width: 100px;
+  height: 50px;
+  background: var(--sl-color-primary-600);
+  border-radius: var(--sl-border-radius-medium);
+}
+
+.popup-overview-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 1rem;
+}
+
+.popup-overview-options sl-select {
+  width: 160px;
+}
+
+.popup-overview-options sl-input {
+  width: 100px;
+}
+
+.popup-overview-options + .popup-overview-options {
+  margin-top: 1rem;
+}
+
+sl-popup::part(hover-bridge) {
+  background: tomato;
+  opacity: 0.5;
+}
+
+.popup-overview .overflow {
+  position: relative;
+  height: 300px;
+  border: solid 2px var(--sl-color-neutral-200);
+  overflow: auto;
+}
+
+.popup-overview .box {
+  background: var(--sl-color-primary-600);
+  border-radius: var(--sl-border-radius-medium);
+
+  /* This sets the preferred size of the popup's content */
+  width: 100px;
+  height: 200px;
+
+  /* This sets the maximum dimensions and allows scrolling when auto-size kicks in */
+  max-width: var(--auto-size-available-width);
+  max-height: var(--auto-size-available-height);
+  overflow: auto;
+}

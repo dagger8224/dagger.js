@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[shoelace-dagger-demo] sl-include (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <script type="module" src="https://assets.codepen.io/5782383/dagger-1.0.0-RC.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "_": "./script.js",
+        "style": "./style.css"
+      }
+    </script>
+</head>
+
+<body>
+    <p>Note: This is the "<a href="https://shoelace.style/components/include" target="_blank">sl-include</a>" web
+        component demo of <a href="https://shoelace.style/" target="_blank">shoelace</a>, the demo is implemented with
+        <a href="https://daggerjs.org" target="_blank">dagger.js</a>. Please comment for any issue or suggestion,
+        thanks.</p>
+    <div class="include-section" dg-cloak +load="load()">
+        <h3>The parameters part:</h3>
+        <sl-input label="Source" *value="src"></sl-input>
+        <br>
+        <sl-radio-group label="Mode" *value="mode">
+            <sl-radio value="cors">cors</sl-radio>
+            <sl-radio value="no-cors">no-cors</sl-radio>
+            <sl-radio value="same-origin">same-origin</sl-radio>
+        </sl-radio-group>
+        <sl-switch *checked="allowScripts">AllowScripts</sl-switch>
+        <h3>The state part:</h3>
+        <span>The event triggered: ${ eventType }</span>
+        <h3>The demonstration part:</h3>
+        <sl-include *src *mode *allow-scripts +sl-load="eventType = $event.type"
+            +sl-error="eventType = $event.type"></sl-include>
+    </div>
+</body>
+
+</html>

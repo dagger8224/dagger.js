@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[shoelace-dagger-demo] sl-dialog (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <script type="module" src="https://assets.codepen.io/5782383/dagger-1.0.0-RC.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "_": "./script.js",
+        "style": "./style.css",
+        "icons": "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/assets/icons/icons.json"
+      }
+    </script>
+</head>
+
+<body>
+    <p>Note: This is the "<a href="https://shoelace.style/components/dialog" target="_blank">sl-dialog</a>" web
+        component demo of <a href="https://shoelace.style/" target="_blank">shoelace</a>, the demo is implemented with
+        <a href="https://daggerjs.org" target="_blank">dagger.js</a>. Please comment for any issue or suggestion,
+        thanks.</p>
+    <div class="dialog-section" dg-cloak +load="load(icons)">
+        <h3>The parameters part:</h3>
+        <sl-input label="Label" *value="label"></sl-input>
+        <sl-select label="Variant" *value="variant">
+            <sl-option *each="['default', 'primary', 'success', 'neutral', 'warning', 'danger']" *value="item">${ item
+                }</sl-option>
+        </sl-select>
+        <sl-select *each="headerActions" *label="`Header Actions ${ index + 1 }`" *value="headerActions[index]">
+            <sl-option *each="icons" *value="item">${ item }</sl-option>
+        </sl-select>
+        <br>
+        <sl-switch *checked="open">Open</sl-switch>
+        <sl-switch *checked="autofocus">Auto Focus</sl-switch>
+        <sl-switch *checked="noHeader">No Header</sl-switch>
+        <h3>The state part:</h3>
+        <span>The dialog is "${ open ? 'opened' : 'closed' }"</span>
+        <br>
+        <span>The event triggered: ${ eventType }</span>
+        <h3>The demonstration part:</h3>
+        <sl-button +click="dialogElement.show()">show dialog</sl-button>
+        <sl-button +click="open = true">open dialog</sl-button>
+        <sl-dialog id="dialogElement" *label *open *no-header +loaded="loaded($node, $scope)"
+            +sl-request-close#prevent:["overlay"]>
+            <sl-icon-button slot="header-actions" *each="headerActions" *name="item"
+                +click="index ? window.open('https://shoelace.style/components/dialog') : alert('hello world')"></sl-icon-button>
+            <sl-input *autofocus#bool placeholder="I will have focus when the dialog is opened"></sl-input>
+            <br>
+            Something else.
+            <sl-button slot="footer" *variant +click="open = false">Close</sl-button>
+        </sl-dialog>
+    </div>
+</body>
+
+</html>

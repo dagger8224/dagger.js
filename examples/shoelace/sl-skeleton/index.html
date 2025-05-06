@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[shoelace-dagger-demo] sl-skeleton (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <script type="module" src="https://assets.codepen.io/5782383/dagger-1.0.0-RC.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "_": "./script.js",
+        "style": "./style.css",
+        "icons": "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/assets/icons/icons.json"
+      }
+    </script>
+</head>
+
+<body>
+    <p>Note: This is the "<a href="https://shoelace.style/components/skeleton" target="_blank">sl-skeleton</a>" web
+        component demo of <a href="https://shoelace.style/" target="_blank">shoelace</a>, the demo is implemented with
+        <a href="https://daggerjs.org" target="_blank">dagger.js</a>. Please comment for any issue or suggestion,
+        thanks.</p>
+    <div class="skeleton-section" dg-cloak +load="load()">
+        <h3>The parameters part:</h3>
+        <sl-input type="number" label="Radius" *value="radius" min="0" max="15" step="1"></sl-input>
+        <br>
+        <sl-radio-group label="Effect" *value="effect">
+            <sl-radio value="none">none</sl-radio>
+            <sl-radio value="pulse">pulse</sl-radio>
+            <sl-radio value="sheen">sheen</sl-radio>
+        </sl-radio-group>
+        <sl-tooltip content="Color">
+            <sl-color-picker label="Color" *value="color" opacity></sl-color-picker>
+        </sl-tooltip>
+        <sl-tooltip content="SheenColor">
+            <sl-color-picker label="SheenColor" *value="sheenColor" opacity></sl-color-picker>
+        </sl-tooltip>
+        <h3>The demonstration part:</h3>
+        <sl-skeleton *each="[1, 2, 3]" *effect
+            *style="`--color: ${ color }; --sheen-color: ${ sheenColor }; --border-radius: ${ radius }px;`"></sl-skeleton>
+    </div>
+</body>
+
+</html>

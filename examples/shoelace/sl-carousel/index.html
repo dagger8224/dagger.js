@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[shoelace-dagger-demo] sl-carousel (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <script type="module" src="https://assets.codepen.io/5782383/dagger-1.0.0-RC.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "_": "./script.js",
+        "style": "./style.css",
+        "icons": "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/assets/icons/icons.json"
+      }
+    </script>
+</head>
+
+<body>
+    <p>Note: This is the "<a href="https://shoelace.style/components/carousel" target="_blank">sl-carousel</a>" web
+        component demo of <a href="https://shoelace.style/" target="_blank">shoelace</a>, the demo is implemented with
+        <a href="https://daggerjs.org" target="_blank">dagger.js</a>. Please comment for any issue or suggestion,
+        thanks.</p>
+    <div class="carousel-section" dg-cloak +load="load(icons)">
+        <h3>The parameters part:</h3>
+        <sl-input label="slides-per-page" type="number" min="1" max="3" step="1" *value="slidesPerPage"></sl-input>
+        <sl-input label="slides-per-move" type="number" min="1" max="3" step="1" *value="slidesPerMove"></sl-input>
+        <sl-input label="Autoplay Interval" type="number" *value="autoplayInterval" min="1000" max="10000"
+            step="100"></sl-input>
+        <sl-select label="Previous Icon" *value="prevIcon" placeholder="select the previous icon name" clearable>
+            <sl-option *each="icons" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-select label="Next Icon" *value="nextIcon" placeholder="select the next icon name" clearable>
+            <sl-option *each="icons" *value="item">${ item }</sl-option>
+        </sl-select>
+        <br>
+        <sl-switch *checked="pagination">Pagination</sl-switch>
+        <sl-switch *checked="navigation">Navigation</sl-switch>
+        <sl-switch *checked="loop">Loop</sl-switch>
+        <sl-switch *checked="autoplay">Autoplay</sl-switch>
+        <sl-switch *checked="mouseDragging">MouseDragging</sl-switch>
+        <br>
+        <sl-radio-group label="Orientation" *value="orientation">
+            <sl-radio value="horizontal">horizontal</sl-radio>
+            <sl-radio value="vertical">vertical</sl-radio>
+        </sl-radio-group>
+        <sl-radio-group label="Aspect Ratio" *value="ratio">
+            <sl-radio value="1/1">1/1</sl-radio>
+            <sl-radio value="3/2">3/2</sl-radio>
+            <sl-radio value="16/9">16/9</sl-radio>
+        </sl-radio-group>
+        <sl-radio-group label="Scroll Hint" *value="hint">
+            <sl-radio value="0">0%</sl-radio>
+            <sl-radio value="10">10%</sl-radio>
+            <sl-radio value="20">20%</sl-radio>
+            <sl-radio value="50">50%</sl-radio>
+        </sl-radio-group>
+        <h3>The state part:</h3>
+        <span>The event triggered: ${ eventType }</span>
+        <h3>The demonstration part:</h3>
+        <sl-button +click="items.push({
+    text: Math.random()            
+  })">Add slide</sl-button>
+        <sl-button *disabled="!items.length" +click="items.pop()">Remove slide</sl-button>
+        <sl-button +click="items.length = 0">Clear slide</sl-button>
+        <sl-button +click="carouselElement.previous()">previous</sl-button>
+        <sl-button +click="carouselElement.next()">next</sl-button>
+        <sl-button +click="carouselElement.goToSlide(2)">goToSlide(2)</sl-button>
+        <sl-carousel id="carouselElement" *pagination *navigation *loop *autoplay *mouse-dragging *slides-per-page
+            *slides-per-move *autoplay-interval *orientation
+            *style="`--aspect-ratio: ${ ratio }; --scroll-hint: ${ hint }%;`"
+            +sl-slide-change="eventType = $event.type">
+            <sl-icon slot="previous-icon" *name="prevIcon"></sl-icon>
+            <sl-icon slot="next-icon" *name="nextIcon"></sl-icon>
+            <sl-carousel-item *each="items" *style="`--aspect-ratio: ${ ratio };`">
+                <template
+                    *html="item.src ? `<img *alt='item.alt' *src='item.src' />` : `<span>${ item.text }</span>`"></template>
+            </sl-carousel-item>
+        </sl-carousel>
+    </div>
+</body>
+
+</html>

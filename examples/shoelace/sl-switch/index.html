@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[shoelace-dagger-demo] sl-switch (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <script type="module" src="https://assets.codepen.io/5782383/dagger-1.0.0-RC.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "_": "./script.js",
+        "style": "./style.css"
+      }
+    </script>
+</head>
+
+<body>
+    <p>Note: This is the "<a href="https://shoelace.style/components/switch" target="_blank">sl-switch</a>" web
+        component demo of <a href="https://shoelace.style/" target="_blank">shoelace</a>, the demo is implemented with
+        <a href="https://daggerjs.org" target="_blank">dagger.js</a>. Please comment for any issue or suggestion,
+        thanks.</p>
+    <div class="switch-section" dg-cloak +load="load()">
+        <h3>The parameters part:</h3>
+        <sl-input label="Help Text" *value="helpText"></sl-input>
+        <sl-select label="Size" *value="size">
+            <sl-option *each="['small', 'medium', 'large']" *value="item">${ item }</sl-option>
+        </sl-select>
+        <br>
+        <sl-switch *checked="checked">Checked</sl-switch>
+        <sl-switch *checked="disabled">Disabled</sl-switch>
+        <sl-switch *checked="focus" disabled>Focus</sl-switch>
+        <h3>The state part:</h3>
+        <span>The event triggered: ${ eventType }</span>
+        <h3>The demonstration part:</h3>
+        <sl-button +click="switchElement.click()">click</sl-button>
+        <sl-button +click="switchElement.focus()">focus</sl-button>
+        <sl-button +click="switchElement.blur()">blur</sl-button>
+        <sl-button +click="validity = switchElement.checkValidity()">checkValidity</sl-button>
+        <sl-button +click="switchElement.getForm()">getForm</sl-button>
+        <sl-button +click="switchElement.setCustomValidity('Invalid state')">setCustomValidity</sl-button>
+        <sl-button +click="switchElement.reportValidity()">reportValidity</sl-button>
+        <br>
+        <sl-switch id="switchElement" *checked *disabled *focus *size *help-text
+            +loaded="loaded($node, $scope)">Switch</sl-switch>
+    </div>
+</body>
+
+</html>

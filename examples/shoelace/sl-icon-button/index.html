@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[shoelace-dagger-demo] sl-icon-button (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <script type="module" src="https://assets.codepen.io/5782383/dagger-1.0.0-RC.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "_": "./script.js",
+        "style": "./style.css",
+        "icons": "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/assets/icons/icons.json"
+      }
+    </script>
+</head>
+
+<body>
+    <p>Note: This is the "<a href="https://shoelace.style/components/icon-button" target="_blank">sl-icon-button</a>"
+        web component demo of <a href="https://shoelace.style/" target="_blank">shoelace</a>, the demo is implemented
+        with <a href="https://daggerjs.org" target="_blank">dagger.js</a>. Please comment for any issue or suggestion,
+        thanks.</p>
+    <div class="icon-button-section" dg-cloak +load="load(icons)">
+        <h3>The parameters part:</h3>
+        <sl-select label="Name" *value="name" placeholder="select the icon name">
+            <sl-option *each="icons" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-input type="number" label="Font Size" *value="size" min="16" max="64" step="1"></sl-input>
+        <label>Color</label>
+        <sl-color-picker *value="color" opacity></sl-color-picker>
+        <br>
+        <sl-switch *checked="disabled">Disabled</sl-switch>
+        <sl-switch *checked="focus" disabled>Focus</sl-switch>
+        <h3>The state part:</h3>
+        <span>The event triggered: ${ eventType }</span>
+        <h3>The demonstration part:</h3>
+        <sl-button +click="iconButtonElement.click()">click</sl-button>
+        <sl-button +click="iconButtonElement.focus()">focus</sl-button>
+        <sl-button +click="iconButtonElement.blur()">blur</sl-button>
+        <br>
+        <sl-tooltip content="normal button">
+            <sl-icon-button id="iconButtonElement" *name *label="name"
+                *style="`color: ${ color }; font-size: ${ size }px`" *disabled *focus +sl-blur="eventType = $event.type"
+                +sl-focus="eventType = $event.type"></sl-icon-button>
+        </sl-tooltip>
+        <sl-tooltip content="link button">
+            <sl-icon-button *name *label="name" *style="`color: ${ color }; font-size: ${ size }px`"
+                href="https://example.com" target="_blank" *disabled></sl-icon-button>
+        </sl-tooltip>
+    </div>
+</body>
+
+</html>

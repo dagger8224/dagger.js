@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[shoelace-dagger-demo] sl-tab-group (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <script type="module" src="https://assets.codepen.io/5782383/dagger-1.0.0-RC.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "_": "./script.js",
+        "style": "./style.css"
+      }
+    </script>
+</head>
+
+<body>
+    <p>Note: This is the "<a href="https://shoelace.style/components/tab-group" target="_blank">sl-tab-group</a>" web
+        component demo of <a href="https://shoelace.style/" target="_blank">shoelace</a>, the demo is implemented with
+        <a href="https://daggerjs.org" target="_blank">dagger.js</a>. Please comment for any issue or suggestion,
+        thanks.</p>
+    <div class="tab-group-section" dg-cloak +load="load()">
+        <h3>The parameters part:</h3>
+        <sl-input type="number" label="TrackWidth" *value="trackWidth" min="0" max="30" step="1"></sl-input>
+        <sl-input type="number" label="Padding" *value="padding" min="0" max="30" step="1"></sl-input>
+        <br>
+        <sl-tooltip content="IndicatorColor">
+            <sl-color-picker label="IndicatorColor" *value="indicatorColor" opacity></sl-color-picker>
+        </sl-tooltip>
+        <sl-tooltip content="TrackColor">
+            <sl-color-picker label="TrackColor" *value="trackColor" opacity></sl-color-picker>
+        </sl-tooltip>
+        <sl-radio-group label="Placement" *value="placement">
+            <sl-radio *each="['top', 'bottom', 'start', 'end']" *value="item">${ item }</sl-radio>
+        </sl-radio-group>
+        <sl-radio-group label="Activation" *value="activation">
+            <sl-radio value="auto">auto</sl-radio>
+            <sl-radio value="manual">manual</sl-radio>
+        </sl-radio-group>
+        <sl-switch *checked="disabled">Disabled</sl-switch>
+        <sl-switch *checked="closable">Closable</sl-switch>
+        <sl-switch *checked="noScrollControls">NoScrollControls</sl-switch>
+        <sl-switch *checked="fixedScrollControls">FixedScrollControls</sl-switch>
+        <h3>The state part:</h3>
+        <span>The active tab is: ${ panel }</span>
+        <br>
+        <span>The event triggered: ${ eventType }</span>
+        <h3>The demonstration part:</h3>
+        <sl-button +click="tabGroupElement.show('tab5')">show</sl-button>
+        <sl-tab-group id="tabGroupElement" *closable *placement *activation *no-scroll-controls *fixed-scroll-controls
+            *style="`--indicator-color: ${ indicatorColor }; --track-color: ${ trackColor }; --track-width: ${ trackWidth }px;`"
+            +sl-tab-show="onTabShow($event, $scope)" +sl-tab-hide="eventType = $event.type">
+            <sl-tab slot="nav" *each="tabs" *panel="item.name" *active="item.active" *disabled *closable
+                +sl-close="onClose(index, $event, $scope)">${ item.name }</sl-tab>
+            <sl-tab-panel *each="tabs" *name="item.name" *style="`--padding: ${ padding }px;`">This is the ${ item.name
+                } tab panel.</sl-tab-panel>
+        </sl-tab-group>
+    </div>
+</body>
+
+</html>

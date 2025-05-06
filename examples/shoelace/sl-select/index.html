@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[shoelace-dagger-demo] sl-select (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <script type="module" src="https://assets.codepen.io/5782383/dagger-1.0.0-RC.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "_": "./script.js",
+        "style": "./style.css",
+        "icons": "https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/assets/icons/icons.json"
+      }
+    </script>
+</head>
+
+<body>
+    <p>Note: This is the "<a href="https://shoelace.style/components/select" target="_blank">sl-select</a>" web
+        component demo of <a href="https://shoelace.style/" target="_blank">shoelace</a>, the demo is implemented with
+        <a href="https://daggerjs.org" target="_blank">dagger.js</a>. Please comment for any issue or suggestion,
+        thanks.</p>
+    <div class="select-section" dg-cloak +load="load(icons)">
+        <h3>The parameters part:</h3>
+        <sl-input label="Name" *value="name"></sl-input>
+        <sl-input label="Label" *value="label"></sl-input>
+        <sl-input label="Help Text" *value="helpText"></sl-input>
+        <sl-input label="Placeholder" *value="placeholder"></sl-input>
+        <sl-input label="Suffix Badge Text" *value="suffix"></sl-input>
+        <sl-input label="maxOptionsVisible" type="number" *value="maxOptionsVisible"></sl-input>
+        <sl-select label="Prefix Icon" *value="prefix" placeholder="select the prefix icon" clearable>
+            <sl-option *each="icons" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-select label="Clear Icon" *value="clearIcon" placeholder="select the clear icon" clearable>
+            <sl-option *each="icons" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-select label="Expand Icon" *value="expandIcon" placeholder="select the expand icon" clearable>
+            <sl-option *each="icons" *value="item">${ item }</sl-option>
+        </sl-select>
+        <sl-input label="Value" *value></sl-input>
+        <br>
+        <sl-switch *checked="clearable">Clearable</sl-switch>
+        <sl-switch *checked="filled">Filled</sl-switch>
+        <sl-switch *checked="pill">Pill</sl-switch>
+        <sl-switch *checked="disabled">Disabled</sl-switch>
+        <sl-switch *checked="focus" disabled>Focus</sl-switch>
+        <sl-switch *checked="multiple">Multiple</sl-switch>
+        <br>
+        <sl-radio-group label="Size" *value="size">
+            <sl-radio value="small">small</sl-radio>
+            <sl-radio value="medium">medium</sl-radio>
+            <sl-radio value="large">large</sl-radio>
+        </sl-radio-group>
+        <sl-radio-group label="Placement" *value="placement">
+            <sl-radio value="top">top</sl-radio>
+            <sl-radio value="bottom">bottom</sl-radio>
+        </sl-radio-group>
+        <!--<sl-radio-group label="Open" *value="open">
+    <sl-radio *value="true">Yes</sl-radio>
+    <sl-radio *value="false">No</sl-radio>
+  </sl-radio-group>-->
+        <h3>The state part:</h3>
+        <div class="statePanel">
+            <span>The "${ name }" element is "${ validity ? 'valid' : 'invalid' }" now.</span>
+            <span>The "${ name }" element's panel is "${ open ? 'opened' : 'closed' }" now.</span>
+            <span>The "${ name }" element is "${ focus ? 'focused' : 'blurred' }" now.</span>
+            <span>The value of "${ name }" is: "${ value }"</span>
+            <span>The event triggered: ${ eventType }</span>
+        </div>
+        <h3>The demonstration part:</h3>
+        <sl-button +click="addOption(options)">Add option</sl-button>
+        <sl-button +click="clearOptions(options)">Clear options in Section 2</sl-button>
+        <sl-button +click="selectElement.show()">Show</sl-button>
+        <sl-button +click="selectElement.hide()">Hide</sl-button>
+        <sl-button +click="validity = selectElement.checkValidity()">CheckValidity</sl-button>
+        <sl-button +click="selectElement.getForm()">GetForm</sl-button>
+        <sl-button +click="selectElement.setCustomValidity('Invalid state')">SetCustomValidity</sl-button>
+        <sl-button +click="selectElement.reportValidity()">ReportValidity</sl-button>
+        <sl-button +click="selectElement.focus()">Focus</sl-button>
+        <sl-button +click="selectElement.blur()">Blur</sl-button>
+        <br>
+        <sl-select id="selectElement" *name *value *label *help-text *placeholder *clearable *filled *pill *disabled
+            *multiple *size *placement *max-options-visible *open *validity *focus +loaded="loaded($node, $scope)">
+            <sl-icon *exist="prefix" *name="prefix" slot="prefix"></sl-icon>
+            <sl-icon *exist="clearIcon" *name="clearIcon" slot="clear-icon"></sl-icon>
+            <sl-icon *exist="expandIcon" *name="expandIcon" slot="expand-icon"></sl-icon>
+            <sl-badge *exist="suffix" slot="suffix">${ suffix }</sl-badge>
+            <small>Section 1</small>
+            <sl-option value="option_1">Option 1</sl-option>
+            <sl-option value="option_2">Option 2</sl-option>
+            <sl-option value="option_3">Option 3</sl-option>
+            <sl-divider></sl-divider>
+            <small>Section 2</small>
+            <sl-option *each="options" *value="`option_${ item }`">Option ${ item }</sl-option>
+        </sl-select>
+    </div>
+</body>
+
+</html>
