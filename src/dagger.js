@@ -555,7 +555,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         }
         return trim && isString(value) ? value.trim() : value;
     }
-}, nameFilters = ['draggable'], generalUpdater = (data, node, _, { name }) => {
+}, nameFilters = ['draggable'], targetOnlyEventNames = hashTableResolver('blur', 'focus', 'mouseenter', 'mouseleave', 'resize', 'scroll', 'error', 'select'), generalUpdater = (data, node, _, { name }) => {
     if (isShoelace(node.tagName) && isObject(data)) {
         node[attributeNameResolver(name)] = data;
     } else {
@@ -700,6 +700,8 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
             } else {
                 data = textResolver(data, trim);
             }
+        } else if (Object.is(tagName, 'TEXTAREA')) {
+            nodeUpdater.text(data, node);
         } else if (Object.is(tagName, 'SL-INPUT')) {
             if (data instanceof Date) {
                 data = data.toISOString().replace('Z', '');
@@ -867,7 +869,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                 originalSetAdd.call(sentrySet, this.sentry);
             }
             eventHandlers && (this.eventHandlers = eventHandlers.map(({ event, decorators = {}, processor, name }) => {
-                const { capture, outside, once, passive, target } = decorators, resolvedTarget = target ? (window[target] || querySelector(document, target)) : this.node, currentTarget = outside ? window : resolvedTarget, handler = event => this.updateEventHandler(event, name, processor.bind(null, this.module, this.scope), decorators, resolvedTarget);
+                const { capture, outside, once, passive, target, undelegate } = decorators, resolvedTarget = target ? (window[target] || querySelector(document, target)) : this.node, currentTarget = outside ? window : resolvedTarget, handler = event => this.updateEventHandler(event, name, processor.bind(null, this.module, this.scope), decorators, resolvedTarget);
                 asserter([`The target of "+${ event }" directive declared on element "%o" is invalid`, this.node || this.profile.node], resolvedTarget);
                 if (observerEventHandlerNames[event]) {
                     let constructor = null;
@@ -890,7 +892,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                     const observer = new constructor(entries => processor(this.module, this.scope, this.node, entries), options);
                     observer.observe(resolvedTarget);
                     return { target: currentTarget, event, observer, options };
-                } else if (once || passive) {
+                } else if (once || passive || undelegate || targetOnlyEventNames[event]) {
                     const options = { capture, once, passive };
                     currentTarget.addEventListener(event, handler, options);
                     return { target: currentTarget, event, handler, options };
@@ -1033,7 +1035,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
             const { on, inside, outside, every, some, prevent, stop, stopImmediate } = decorators, { type, target, currentTarget } = event, isCurrent = Object.is(target, currentTarget);
             warner([`\u274e Please avoid using "on", "inside" or "outside" decorators together on "+${ type }" directive on element "%o".`, currentTarget], !!on + !!inside + !!outside < 2);
             if (!((!(on || inside || outside) || (outside && bindingTarget.contains && !bindingTarget.contains(target)) || (on && isCurrent) || (inside && (!currentTarget.contains || (currentTarget.contains(target) && !isCurrent)))) && modifierResolver(event, every, 'every') && modifierResolver(event, some, 'some'))) { return; }
-            prevent && (Object.is(prevent, true) || arrayWrapper(prevent).some(source => Object.is(event.detail?.source, source))) && event.preventDefault();
+            prevent && ([true, 'prevent'].includes(prevent) || arrayWrapper(prevent).some(source => Object.is(event.detail?.source, source))) && event.preventDefault();
             stop && event.stopPropagation();
             stopImmediate && event.stopImmediatePropagation();
         }
@@ -1110,7 +1112,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     'SL-TEXTAREA': { value: slUpdate },
     'SL-TOOLTIP': { open: slShow },
     'SL-TREE-ITEM': { expanded: ['sl-expand', 'sl-collapse'] } // selected
-}))(), caseResolver = content => content.includes('__') ? content.replace(/__[a-z]/g, string => string[2].toUpperCase()) : content, dataBinder = (directives, value, fields, event) => directives.eventHandlers.push(directiveResolver(`Object.is(${ value }, _$data_) || (${ value } = _$data_)`, Object.assign({ event }, fields), '$node, _$data_')), directiveAttributeResolver = (node, name, value = '') => {
+}))(), dataBinder = (directives, value, fields, event) => directives.eventHandlers.push(directiveResolver(`Object.is(${ value }, _$data_) || (${ value } = _$data_)`, Object.assign({ event }, fields), '$node, _$data_')), directiveAttributeResolver = (node, name, value = '') => {
     daggerOptions.debugDirective && node.setAttribute(`${ directiveType[name[0]] || 'meta' }-${ decodeURIComponent(name.substring(1)).trim().replace(/\#/g, '__').replace(/:/g, '_').replace(/[^\w]/g, '-') }-debug`, value);
 }, directiveResolver = ((baseSignature = '$module, $scope') => (expression, fields = {}, signature = '$node') => {
     const { clear, debug } = fields.decorators || {};
@@ -1143,7 +1145,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                 }
                 rootNodeProfiles && node.removeAttribute(cloak);
             } else {
-                const controllers = [], eventHandlers = [], directives = { controllers, eventHandlers }, name = caseResolver(tagName.toLowerCase()), moduleProfile = Object.is(node.constructor, HTMLUnknownElement) && namespace.fetchViewModule(name.split('.')[0]), resolved = Object.is(moduleProfile.state, 'resolved'), dynamicDirective = '@directive', dynamic = attributes[dynamicDirective], slotDirective = '@slot';
+                const controllers = [], eventHandlers = [], directives = { controllers, eventHandlers }, name = tagName.includes('__') ? tagName.toLowerCase().replace(/__[a-z]/g, string => string[2].toUpperCase()) : tagName.toLowerCase(), moduleProfile = Object.is(node.constructor, HTMLUnknownElement) && namespace.fetchViewModule(name.split('.')[0]), resolved = Object.is(moduleProfile.state, 'resolved'), dynamicDirective = '@directive', dynamic = attributes[dynamicDirective], slotDirective = '@slot';
                 moduleProfile && asserter(`It is illegal to use "*html" or "*text" directive on view module "${ name }"`, !node.hasAttribute('*html') && !node.hasAttribute('*text'));
                 if (moduleProfile) {
                     this.virtual = true;
@@ -1223,9 +1225,9 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         const { node } = this;
         directiveAttributeResolver(node, attributeName, value);
         node.removeAttribute(attributeName);
-        const [name, ...rawDecorators] = caseResolver(attributeName.substring(1)).split('#'), decorators = emptier(), fields = { decorators };
+        const [name, ...rawDecorators] = attributeName.substring(1).split('#'), decorators = emptier(), fields = { decorators };
         forEach(rawDecorators.filter(decorator => decorator), decorator => {
-            const [name, value] = decorator.split(':').map(content => decodeURIComponent(content).trim());
+            const [name, value] = decorator.split(':').map(content => decodeURIComponent(attributeNameResolver(content)).trim());
             try {
                 decorators[name] = value ? JSON.parse(value) : name;
             } catch (error) {
@@ -1282,7 +1284,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                             let eventNames = [];
                             if (isShoelace(tagName)) {
                                 eventNames = change ? ['sl-change'] : table;
-                            } else if (table[node.type] || table['*']) {
+                            } else if (Object.is(table, true) || table[node.type] || table['*']) {
                                 eventNames = Object.is(name, 'focus') ? ['blur', 'focus'] : [change ? 'change' : 'input'];
                             }
                             if (eventNames.length) {
@@ -1401,10 +1403,13 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     }
     anchorResolver(nextRoute.anchor);
 }) => nextRoute => {
-    logger(`\u23f3 route is changing from "${ rootScope.$route?.path || '/' }" to "${ nextRoute.path || '/' }"...`);
     const { path } = nextRoute;
+    if (Object.is(rootScope.$route?.path, path)) {
+        return;
+    }
+    logger(`\u23f3 route is changing from "${ rootScope.$route?.path || '' }" to "${ path || '/' }"...`);
     styleModuleSet = styleModuleCache[path] || (styleModuleCache[path] = new Set);
-    groupStarter(`resolving modules of the route "${ nextRoute.path }"`);
+    groupStarter(`resolving modules of the route "${ nextRoute.path || '/' }"`);
     return rootNamespace.resolve(nextRoute.modules).then(() => resolver(nextRoute));
 })()) => () => {
     const slash = '/', anchorIndex = location.hash.lastIndexOf('#@'), anchor = (anchorIndex >= 0) ? location.hash.substring(anchorIndex + 2) : '';
@@ -1412,9 +1417,8 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     fullPath.startsWith(slash) || (fullPath = `${ slash }${ fullPath }`);
     const { mode, aliases, prefix } = routerConfigs, [rawPath = '', query = ''] = fullPath.split('?'), path = rawPath.substring(1), params = {}, paths = Object.is(rawPath, slash) ? [''] : rawPath.split(slash), routes = [];
     !Object.is(rawPath, slash) && rawPath.endsWith(slash) && paths.splice(paths.length - 1, 1);
-    let redirectPath = null;
-    if (Reflect.has(aliases, path)) {
-        redirectPath = aliases[path];
+    let redirectPath = aliases[path];
+    if (!Object.is(redirectPath)) {
         logger('\ud83e\udd98 route alias matched');
     } else if (rootRouter.match(routes, params, paths)) {
         routes.reverse();
@@ -1447,7 +1451,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     Promise.all([...sentrySet].map(sentry => Promise.resolve(sentry.processor(nextRoute)).then(prevent => ({ sentry, prevent })))).then(results => {
         logger(`\u2705 resolved sentries within route "${ rootScope.$route?.path || '/' }"`);
         const matchedOwners = results.filter(result => result.prevent).map(result => result.sentry.owner);
-        matchedOwners.length ? forEach(matchedOwners, owner => warner(['\u274e The route redirect is prevented by the "$sentry" directive declared on the "%o" element', owner.node || owner.profile.node])) || originalPushState.call(history, null, '', rootScope.$route.url) : routerChangeResolver(nextRoute);
+        matchedOwners.length ? forEach(matchedOwners, owner => warner(['\u274e The route redirect is prevented by the "+sentry" directive declared on the "%o" element', owner.node || owner.profile.node])) || originalPushState.call(history, null, '', rootScope.$route.url) : routerChangeResolver(nextRoute);
     });
 })(), Router = class {
     constructor (route, parent = null) {
@@ -1467,7 +1471,8 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         }
         logger(`${ space }\u23f3 resolving the ${ this.path ? `route with path "${ this.path }"` : 'root route' }`);
         if (redirect) {
-            this.redirectPath = isFunction(redirect) ? redirect(rootScope, rootNamespace.module) : functionResolver(`($module, $scope) => { with ($module) with ($scope) return (() => { 'use strict'; return ${ redirect }; })() }`)(rootNamespace.module, rootScope);
+            asserter([`${ space }The "redirect" field of route should be either "string" or "function" instead of "%o"`, redirect], isString(redirect) || isFunction(redirect));
+            this.redirectPath = isFunction(redirect) ? redirect(rootScope, rootNamespace.module) : redirect;
         }
         this.constants = constants, this.variables = variables, this.children = null, this.parent = parent, this.params = isObject(path) ? Object.keys(path).map(param => ({ param, regExp: new RegExp(path[param] || '^.+$') })) : path.split('/').map(subPath => {
             subPath = subPath.trim();
@@ -1528,7 +1533,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
             history.pushState(null, '', href);
         }
     }, true);
-    const resetToken = { detail: true }, changeEvent = new CustomEvent('change', resetToken), inputEvent = new CustomEvent('input', resetToken);
+    const resetToken = { bubbles: true, detail: true }, changeEvent = new CustomEvent('change', resetToken), inputEvent = new CustomEvent('input', resetToken);
     eventDelegator('reset', window, () => event => Object.is(event.target.tagName, 'FORM') && forEach(querySelector(document.body, 'input, textarea', true, true), child => {
         child.dispatchEvent(inputEvent);
         child.dispatchEvent(changeEvent);

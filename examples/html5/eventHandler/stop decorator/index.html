@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[html5-dagger-demo] stop decorator (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <script type="module" src="http://localhost:5500/src/dagger.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "style": "./style.css"
+      }
+    </script>
+</head>
+
+<body>
+    <p>
+      <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation">stop</a> decorator is used to prevent further propagation of the current event in the capturing and bubbling phases.
+    </p>
+    <div dg-cloak +click="alert('The div is clicked!')">
+      <button +click#stop="alert('#1 The button is clicked!')">click me (stopPropagation)</button>
+      <button +click="alert('#2 The button is clicked!')">click me</button>
+    </div>
+</body>
+
+</html>

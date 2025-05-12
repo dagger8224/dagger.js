@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[html5-dagger-demo] undelegate decorator (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <script type="module" src="http://localhost:5500/src/dagger.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "style": "./style.css"
+      }
+    </script>
+</head>
+
+<body>
+    <p>
+      undelegate decorator is used to add event listener to the element itself but not window object (the default behavior).
+    </p>
+    <div dg-cloak +load="{ name: '', inName: 'click me', outName: 'hover please', alertMessage: 'You click the botton!' }">
+      <button +loaded="name = outName" +mouseenter="name = inName" +mouseleave#undelegate="name = outName" +click=alert(alertMessage)>${ name }</button>
+    </div>
+</body>
+
+</html>

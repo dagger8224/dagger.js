@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[html5-dagger-demo] stop-immediate decorator (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <script type="module" src="http://localhost:5500/src/dagger.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "style": "./style.css"
+      }
+    </script>
+</head>
+
+<body>
+    <p>
+      <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation">stop-immediate</a> decorator is used to prevent other listeners of the same event from being called.
+    </p>
+    <div dg-cloak +click="alert('The div is clicked!')">
+      <button +click#stop-immediate="alert('#1 The button is clicked!')" +click#2="alert('#2 The button is clicked!')">click me</button>
+    </div>
+</body>
+
+</html>

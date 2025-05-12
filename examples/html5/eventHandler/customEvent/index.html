@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>[html5-dagger-demo] custom event (V1.0.0-RC1) demo</title>
+    <style>
+        [dg-cloak] {
+            display: none !important;
+        }
+    </style>
+    <script type="module" src="http://localhost:5500/src/dagger.js" defer></script>
+    <script type="dagger/options">
+      {
+        debugDirective: false
+      }
+    </script>
+    <script type="dagger/modules">
+      {
+        "style": "./style.css"
+      }
+    </script>
+</head>
+
+<body>
+    <p>
+        Note: This is the "<a href="https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent" target="_blank">custom
+            event</a>"
+        demo, the demo is implemented with <a href="https://daggerjs.org" target="_blank">dagger.js</a>. Please comment
+        for any issue or suggestion, thanks.
+    </p>
+    <div id="div1" dg-cloak +my_custom_event="alert($event.detail)">
+        <div +load="{ bubbles: true, value: 'some message' }">
+            <label>do not forget adding bubbles property for custom event<input type="checkbox"
+                    *checked="bubbles"></label>
+            <br>
+            <button +click="div1.dispatchEvent(new CustomEvent('my_custom_event', { bubbles, detail: value }))">click to
+                trigger custom event</button>
+        </div>
+    </div>
+</body>
+
+</html>

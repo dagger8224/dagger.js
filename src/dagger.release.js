@@ -437,7 +437,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
         }
         return trim && isString(value) ? value.trim() : value;
     }
-}, nameFilters = ['draggable'], generalUpdater = (data, node, _, { name }) => {
+}, nameFilters = ['draggable'], targetOnlyEventNames = hashTableResolver('blur', 'focus', 'mouseenter', 'mouseleave', 'resize', 'scroll', 'error', 'select'), generalUpdater = (data, node, _, { name }) => {
     if (isShoelace(node.tagName) && isObject(data)) {
         node[attributeNameResolver(name)] = data;
     } else {
@@ -579,6 +579,8 @@ export default ((context = Symbol('context'), currentController = null, directiv
             } else {
                 data = textResolver(data, trim);
             }
+        } else if (Object.is(tagName, 'TEXTAREA')) {
+            nodeUpdater.text(data, node);
         } else if (Object.is(tagName, 'SL-INPUT')) {
             if (data instanceof Date) {
                 data = data.toISOString().replace('Z', '');
@@ -741,7 +743,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
                 originalSetAdd.call(sentrySet, this.sentry);
             }
             eventHandlers && (this.eventHandlers = eventHandlers.map(({ event, decorators = {}, processor, name }) => {
-                const { capture, outside, once, passive, target } = decorators, resolvedTarget = target ? (window[target] || querySelector(document, target)) : this.node, currentTarget = outside ? window : resolvedTarget, handler = event => this.updateEventHandler(event, name, processor.bind(null, this.module, this.scope), decorators, resolvedTarget);
+                const { capture, outside, once, passive, target, undelegate } = decorators, resolvedTarget = target ? (window[target] || querySelector(document, target)) : this.node, currentTarget = outside ? window : resolvedTarget, handler = event => this.updateEventHandler(event, name, processor.bind(null, this.module, this.scope), decorators, resolvedTarget);
                 if (observerEventHandlerNames[event]) {
                     let constructor = null;
                     const options = {};
@@ -763,7 +765,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
                     const observer = new constructor(entries => processor(this.module, this.scope, this.node, entries), options);
                     observer.observe(resolvedTarget);
                     return { target: currentTarget, event, observer, options };
-                } else if (once || passive) {
+                } else if (once || passive || undelegate || targetOnlyEventNames[event]) {
                     const options = { capture, once, passive };
                     currentTarget.addEventListener(event, handler, options);
                     return { target: currentTarget, event, handler, options };
@@ -905,7 +907,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
         if (!name) {
             const { on, inside, outside, every, some, prevent, stop, stopImmediate } = decorators, { type, target, currentTarget } = event, isCurrent = Object.is(target, currentTarget);
             if (!((!(on || inside || outside) || (outside && bindingTarget.contains && !bindingTarget.contains(target)) || (on && isCurrent) || (inside && (!currentTarget.contains || (currentTarget.contains(target) && !isCurrent)))) && modifierResolver(event, every, 'every') && modifierResolver(event, some, 'some'))) { return; }
-            prevent && (Object.is(prevent, true) || arrayWrapper(prevent).some(source => Object.is(event.detail?.source, source))) && event.preventDefault();
+            prevent && ([true, 'prevent'].includes(prevent) || arrayWrapper(prevent).some(source => Object.is(event.detail?.source, source))) && event.preventDefault();
             stop && event.stopPropagation();
             stopImmediate && event.stopImmediatePropagation();
         }
@@ -982,7 +984,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
     'SL-TEXTAREA': { value: slUpdate },
     'SL-TOOLTIP': { open: slShow },
     'SL-TREE-ITEM': { expanded: ['sl-expand', 'sl-collapse'] } // selected
-}))(), caseResolver = content => content.includes('__') ? content.replace(/__[a-z]/g, string => string[2].toUpperCase()) : content, dataBinder = (directives, value, fields, event) => directives.eventHandlers.push(directiveResolver(`Object.is(${ value }, _$data_) || (${ value } = _$data_)`, Object.assign({ event }, fields), '$node, _$data_')), directiveResolver = ((baseSignature = '$module, $scope') => (expression, fields = {}, signature = '$node') => {
+}))(), dataBinder = (directives, value, fields, event) => directives.eventHandlers.push(directiveResolver(`Object.is(${ value }, _$data_) || (${ value } = _$data_)`, Object.assign({ event }, fields), '$node, _$data_')), directiveResolver = ((baseSignature = '$module, $scope') => (expression, fields = {}, signature = '$node') => {
     expression = `${ signature ? `(${ baseSignature }, ${ signature })` : `(${ baseSignature })` } => { with ($module) with ($scope) return (() => { 'use strict';\n return ${ expression }; })(); }`;
     const processor = processorCaches[expression], directive = Object.assign({}, fields, { processor: processor || expression });
     processor || directiveQueue.push(directive);
@@ -1009,7 +1011,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
                 raw && node.removeAttribute(rawDirective);
                 rootNodeProfiles && node.removeAttribute(cloak);
             } else {
-                const controllers = [], eventHandlers = [], directives = { controllers, eventHandlers }, name = caseResolver(tagName.toLowerCase()), moduleProfile = Object.is(node.constructor, HTMLUnknownElement) && namespace.fetchViewModule(name.split('.')[0]), resolved = Object.is(moduleProfile.state, 'resolved'), dynamicDirective = '@directive', dynamic = attributes[dynamicDirective], slotDirective = '@slot';
+                const controllers = [], eventHandlers = [], directives = { controllers, eventHandlers }, name = tagName.includes('__') ? tagName.toLowerCase().replace(/__[a-z]/g, string => string[2].toUpperCase()) : tagName.toLowerCase(), moduleProfile = Object.is(node.constructor, HTMLUnknownElement) && namespace.fetchViewModule(name.split('.')[0]), resolved = Object.is(moduleProfile.state, 'resolved'), dynamicDirective = '@directive', dynamic = attributes[dynamicDirective], slotDirective = '@slot';
                 if (moduleProfile) {
                     this.virtual = true;
                     this.resolveLandmark(node);
@@ -1083,9 +1085,9 @@ export default ((context = Symbol('context'), currentController = null, directiv
         if (!resolvedType) { return; }
         const { node } = this;
         node.removeAttribute(attributeName);
-        const [name, ...rawDecorators] = caseResolver(attributeName.substring(1)).split('#'), decorators = emptier(), fields = { decorators };
+        const [name, ...rawDecorators] = attributeName.substring(1).split('#'), decorators = emptier(), fields = { decorators };
         forEach(rawDecorators.filter(decorator => decorator), decorator => {
-            const [name, value] = decorator.split(':').map(content => decodeURIComponent(content).trim());
+            const [name, value] = decorator.split(':').map(content => decodeURIComponent(attributeNameResolver(content)).trim());
             try {
                 decorators[name] = value ? JSON.parse(value) : name;
             } catch (error) {
@@ -1140,7 +1142,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
                             let eventNames = [];
                             if (isShoelace(tagName)) {
                                 eventNames = change ? ['sl-change'] : table;
-                            } else if (table[node.type] || table['*']) {
+                            } else if (Object.is(table, true) || table[node.type] || table['*']) {
                                 eventNames = Object.is(name, 'focus') ? ['blur', 'focus'] : [change ? 'change' : 'input'];
                             }
                             if (eventNames.length) {
@@ -1253,6 +1255,9 @@ export default ((context = Symbol('context'), currentController = null, directiv
     anchorResolver(nextRoute.anchor);
 }) => nextRoute => {
     const { path } = nextRoute;
+    if (Object.is(rootScope.$route?.path, path)) {
+        return;
+    }
     styleModuleSet = styleModuleCache[path] || (styleModuleCache[path] = new Set);
     return rootNamespace.resolve(nextRoute.modules).then(() => resolver(nextRoute));
 })()) => () => {
@@ -1261,16 +1266,16 @@ export default ((context = Symbol('context'), currentController = null, directiv
     fullPath.startsWith(slash) || (fullPath = `${ slash }${ fullPath }`);
     const { mode, aliases, prefix } = routerConfigs, [rawPath = '', query = ''] = fullPath.split('?'), path = rawPath.substring(1), params = {}, paths = Object.is(rawPath, slash) ? [''] : rawPath.split(slash), routes = [];
     !Object.is(rawPath, slash) && rawPath.endsWith(slash) && paths.splice(paths.length - 1, 1);
-    let redirectPath = null;
-    if (Reflect.has(aliases, path)) {
-        redirectPath = aliases[path];
-    } else if (rootRouter.match(routes, params, paths)) {
-        routes.reverse();
-        redirectPath = routes.find(route => route.redirectPath || Object.is(route.redirectPath, ''))?.redirectPath;
-    } else if (Reflect.has(routerConfigs, 'default')) {
-        redirectPath = routerConfigs.default;
-    } else {
-        return;
+    let redirectPath = aliases[path];
+    if (Object.is(redirectPath)) {
+        if (rootRouter.match(routes, params, paths)) {
+            routes.reverse();
+            redirectPath = routes.find(route => route.redirectPath || Object.is(route.redirectPath, ''))?.redirectPath;
+        } else if (Reflect.has(routerConfigs, 'default')) {
+            redirectPath = routerConfigs.default;
+        } else {
+            return;
+        }
     }
     if (redirectPath != null) {
         return history.replaceState(null, '', `${ query ? `${ redirectPath }?${ query }` : redirectPath }${ anchor }` || routerConfigs.prefix);
@@ -1303,7 +1308,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
             this.path = '';
         }
         if (redirect) {
-            this.redirectPath = isFunction(redirect) ? redirect(rootScope, rootNamespace.module) : functionResolver(`($module, $scope) => { with ($module) with ($scope) return (() => { 'use strict'; return ${ redirect }; })() }`)(rootNamespace.module, rootScope);
+            this.redirectPath = isFunction(redirect) ? redirect(rootScope, rootNamespace.module) : redirect;
         }
         this.constants = constants, this.variables = variables, this.children = null, this.parent = parent, this.params = isObject(path) ? Object.keys(path).map(param => ({ param, regExp: new RegExp(path[param] || '^.+$') })) : path.split('/').map(subPath => {
             subPath = subPath.trim();
@@ -1355,7 +1360,7 @@ export default ((context = Symbol('context'), currentController = null, directiv
             history.pushState(null, '', href);
         }
     }, true);
-    const resetToken = { detail: true }, changeEvent = new CustomEvent('change', resetToken), inputEvent = new CustomEvent('input', resetToken);
+    const resetToken = { bubbles: true, detail: true }, changeEvent = new CustomEvent('change', resetToken), inputEvent = new CustomEvent('input', resetToken);
     eventDelegator('reset', window, () => event => Object.is(event.target.tagName, 'FORM') && forEach(querySelector(document.body, 'input, textarea', true, true), child => {
         child.dispatchEvent(inputEvent);
         child.dispatchEvent(changeEvent);
