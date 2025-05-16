@@ -1131,7 +1131,7 @@ export default ((context = Symbol('context'), currentController = null, daggerCh
         } else {
             value || (value = attributeNameResolver(name)); // shorthand
             if (Object.is(name, 'watch')) {
-                decorators.lazy && (value = `${ value.substring(value.indexOf('(') + 1, value.indexOf(')')).trim() || 'null' }, $node => { 'use strict';\n ${ decorators.debug ? 'debugger;\n\r' : '' }return ${ value }; }`);
+                decorators.lazy && (value = `${ value.substring(value.indexOf('(') + 1, value.indexOf(')')).trim() || 'null' }, $node => { 'use strict';\n return ${ value }; }`);
             } else {
                 fields.name = name;
             }
