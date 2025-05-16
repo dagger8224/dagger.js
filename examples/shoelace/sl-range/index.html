@@ -51,7 +51,7 @@
             <sl-radio *each="['top', 'bottom', 'none']" *value="item">${ item }</sl-radio>
         </sl-radio-group>
         <sl-switch *checked="disabled">Disabled</sl-switch>
-        <sl-switch *checked="focus">Focus</sl-switch>
+        <sl-switch *checked="focus" disabled>Focus</sl-switch>
         <h3>The state part:</h3>
         <span>The current value is: ${ value }</span>
         <br>

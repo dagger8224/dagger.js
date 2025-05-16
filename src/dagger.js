@@ -36,7 +36,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     warner: (messages, condition) => daggerOptions.warning && vendor(messages, condition, console.warn, daggerOptions.warningPlainStyle, daggerOptions.warningHighlightStyle),
     groupStarter: label => daggerOptions.log && console.group(label),
     groupEnder: label => daggerOptions.log && console.groupEnd(label)
-}))(), context = Symbol('context'), currentController = null, daggerOptions = { integrity: true }, directiveQueue = [], dispatchSource = { bubble: 'bubble', self: 'self', mutation: 'mutation' }, isRouterWritable = false, moduleNameRegExp = /^[_a-z]{1}[\w]*$/, plainRootScope = null, remoteUrlRegExp = /^(http:\/\/|https:\/\/|\/|\.\/|\.\.\/)/i, rootNamespace = null, rootScope = null, rootScopeCallback = null, rootNodeProfiles = [], arrayWrapper = target => Array.isArray(target) ? target : [target], emptier = () => Object.create(null), processorCaches = emptier(), styleModuleSet = new Set, eventDelegator = ((bubbleSet = new Set, captureSet = new Set, handler = (event, capture, targets, index = 0) => {
+}))(), context = Symbol('context'), currentController = null, daggerChangeEventName = 'dg-change', daggerOptions = { integrity: true }, directiveQueue = [], dispatchSource = { bubble: 'bubble', self: 'self', mutation: 'mutation' }, isRouterWritable = false, moduleNameRegExp = /^[_a-z]{1}[\w]*$/, plainRootScope = null, remoteUrlRegExp = /^(http:\/\/|https:\/\/|\/|\.\/|\.\.\/)/i, rootNamespace = null, rootScope = null, rootScopeCallback = null, rootNodeProfiles = [], arrayWrapper = target => Array.isArray(target) ? target : [target], emptier = () => Object.create(null), processorCaches = emptier(), styleModuleSet = new Set, eventDelegator = ((bubbleSet = new Set, captureSet = new Set, handler = (event, capture, targets, index = 0) => {
     const currentTarget = targets[index++];
     if (!currentTarget) { return; }
     const eventListenerSet = currentTarget.$eventListenerMap && currentTarget.$eventListenerMap[event.type], eventListeners = eventListenerSet ? [...eventListenerSet].filter(listener => Object.is(listener.decorators.capture, capture)) : [];
@@ -58,11 +58,11 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     if ((capture && captureSet.has(eventName)) || (!capture && bubbleSet.has(eventName))) { return; }
     (capture ? captureSet : bubbleSet).add(eventName);
     window.addEventListener(eventName, event => handler(event, capture, capture ? event.composedPath().reverse() : event.composedPath(), 0), capture);
-})(), forEach = (iterators, processor) => {
+})(), attributeNameResolver = name => name.replace(/-[a-z]/g, string => string[1].toUpperCase()), forEach = (iterators, processor) => {
     if (!iterators) { return; }
     const length = iterators.length || 0;
     for (let index = 0; index < length; ++index) { processor(iterators[index], index); }
-}, attributeNameResolver = name => name.replace(/-[a-z]/g, string => string[1].toUpperCase()), hashTableResolver = (...array) => {
+}, hashTableResolver = (...array) => {
     const hashTable = emptier();
     return forEach(array, key => (hashTable[key] = true)) || hashTable;
 }, meta = Symbol('meta'), moduleType = { json: 'json', namespace: 'namespace', script: 'script', style: 'style', string: 'string', view: 'view' }, promisor = Promise.resolve(), routerTopology = null, sentrySet = new Set, textNode = document.createTextNode(''), observerEventHandlerNames = hashTableResolver('observe-intersection', 'observe-mutation', 'observe-resize'), configResolver = ((defaultConfigContent = { options: { debugDirective: true, integrity: false, log: true, warning: true, logPlainStyle: 'color: #337ab7', logHighlightStyle: 'color: #9442d0', warningPlainStyle: 'color: #ff0000', warningHighlightStyle: 'color: #b22222', errorPlainStyle: 'color: #ff0000', errorHighlightStyle: 'color: #b22222', rootSelectors: ['title', 'body'] }, modules: { view: { uri: ['template#view'], type: moduleType.view, optional: true }, script: { uri: ['script[type="dagger/script"]'], type: moduleType.script, anonymous: true, optional: true }, style: { uri: ['style[type="dagger/style"]'], type: moduleType.style, scoped: true, optional: true } }, routers: { mode: 'hash', prefix: '', aliases: {}, default: '', routing: null } }, resolver = (base, content, type, extendsDefaultConfig) => ({ base, content: extendsDefaultConfig ? Object.assign({}, defaultConfigContent[type], content) : content })) => (baseElement, base, type = 'modules') => {
@@ -561,16 +561,20 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     } else {
         (data == null) ? node.removeAttribute(name) : node.setAttribute(name, textResolver(data));
     }
-}, nodeUpdater = ((changeEvent = new Event('change')) => ({
+}, nodeUpdater = {
     $boolean: (data, node, _, { name }) => node.toggleAttribute(name, !!data),
     checked: (data, node, _, { decorators }) => {
-        const { tagName, type } = node, isCheckbox = Object.is(type, 'checkbox');
-        if (Object.is(tagName, 'INPUT') && (isCheckbox || Object.is(type, 'radio'))) {
-            let nodes = null;
-            isCheckbox && decorators.indeterminate && (node.indeterminate = data == null);
-            node.indeterminate || (node.checked = data);
-            isCheckbox || (data && (nodes = querySelector(document.body, `input[type="radio"][name="${ node.name }"]`, true)));
-            nodes && promisor.then(() => forEach(nodes, node => node.dispatchEvent(changeEvent)));
+        const { tagName, type } = node;
+        if (Object.is(tagName, 'INPUT')) {
+            if (Object.is(type, 'checkbox')) {
+                decorators.indeterminate && (node.indeterminate = data == null);
+                node.indeterminate || (node.checked = data);
+            } else if (Object.is(type, 'radio')) {
+                node.checked = !!data;
+                node.name && promisor.then(() => forEach(querySelector(document.body, `input[type="radio"][name="${ node.name }"]`, true), radio => Object.is(radio, node) || radio.dispatchEvent(new Event('input'))));
+            } else {
+                generalUpdater(data, node, null, { name: 'checked' });
+            }
         } else if (['SL-CHECKBOX', 'SL-SWITCH'].includes(tagName)) {
             nodeUpdater.$boolean(data, node, null, { name: 'checked' });
         } else {
@@ -650,7 +654,21 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         }
         node ? node.appendChild(fragment) : nodeContext.parentNode.insertBefore(fragment, nodeContext.landmark);
     },
-    result: (data, node) => asserter([`The data bound to directive "*result" of element "%o" should be "object${ node.multiple ? ' array' : '' }" instead of "%o"`, node, data], !data || (node.multiple ? (Array.isArray(data) && data.every(isObject)) : isObject(data))),
+    result: (data, node) => {
+        if (Object.is(node.tagName, 'INPUT') && Object.is(node.type, 'file')) {
+            asserter([`The data bound to directive "*result" of element "%o" should be "object${ node.multiple ? ' array' : '' }" instead of "%o"`, node, data], !data || (node.multiple ? (Array.isArray(data) && data.every(isObject)) : isObject(data)));
+        } else {
+            generalUpdater(data, node, null, { name: 'result' });
+        }
+    },
+    selected: (data, node) => {
+        if (Object.is(node.tagName, 'OPTION')) {
+            node.selected = !!data;
+            node.parentElement.dispatchEvent(new Event('input'));
+        } else {
+            generalUpdater(data, node, null, { name: 'selected' });
+        }
+    },
     style: ((styleUpdater = (resolvedStyles, content) => {
         if (!content) { return; }
         const [key, value = ''] = content.split(':').map(item => item.trim());
@@ -710,15 +728,20 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                     data = date;
                 } else if (Object.is(type, 'time')) {
                     data = time;
-                } 
+                }
             } else {
                 data = textResolver(data, trim);
             }
-        /* } else if (['OPTION', 'SL-OPTION'].includes(tagName)) {
+        } else if (Object.is(tagName, 'OPTION')) { // 'SL-OPTION'
             const select = node.parentNode;
-            if (select && select.selectedOptions) {
-                select[context].value = select.multiple ? [...select.selectedOptions].map(node => valueResolver(node)) : valueResolver(select.selectedOptions[0]);
-            } */
+            if (select) {
+                const { multiple } = select;
+                const selectedValue = valueResolver(select);
+                forEach(select.children, option => {
+                    const value = valueResolver(option);
+                    option.selected = multiple ? selectedValue.includes(value) : Object.is(selectedValue, value);
+                });
+            }
         } else if (['SELECT', 'SL-SELECT'].includes(tagName)) {
             const { multiple } = node;
             multiple && asserter(['The data bound to directive "*value" of element "%o" should be "array" instead of "%o"', node, data], (data == null) || Array.isArray(data));
@@ -727,7 +750,11 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                 const value = valueResolver(option);
                 option.selected = multiple ? data.includes(value) : Object.is(data, value);
             });
-            isSlSelect && !multiple && node.selectionChanged?.();
+            if (isSlSelect) {
+                multiple || node.selectionChanged?.();
+            } else {
+                return;
+            }
         } else if (Object.is(tagName, 'SL-RADIO-GROUP')) {
             forEach(node.children, radio => {
                 radio.checked = Object.is(data, valueResolver(radio));
@@ -737,7 +764,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         }
         node[fieldName] = data;
     })()
-}))(), modifierResolver = ((resolver = (event, modifier) => {
+}, modifierResolver = ((resolver = (event, modifier) => {
     modifier = String(modifier);
     const positive = !modifier.startsWith('!');
     positive || (modifier = modifier.substring(1));
@@ -876,7 +903,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                     const options = {};
                     if (Object.is(event, 'observe-intersection')) { // IntersectionObserver
                         const { root, margin, threshold } = decorators;
-                        root && (options.root = window[root] || querySelector(querySelector(document, root)));
+                        root && (options.root = window[root] || querySelector(document, root));
                         margin && (options.rootMargin = margin);
                         threshold && (options.threshold = threshold);
                         constructor = IntersectionObserver;
@@ -899,7 +926,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                 } else { // use event delegate
                     const listener = { decorators, handler };
                     eventDelegator(event, currentTarget, listener, capture);
-                    return { target: currentTarget, event, listener };
+                    return { target: currentTarget, event, decorators, listener };
                 }
             }));
             controllers && (this.controllers = controllers.map(controller => this.resolveController(controller)).filter(controller => controller));
@@ -1081,13 +1108,15 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     return NodeContext;
 })(), NodeProfile = ((directiveType = { '*': 'controller', '+': 'event' }, lifeCycleDirectiveNames = hashTableResolver('load', 'loaded', 'sentry', 'unload', 'unloaded'), rawElementNames = hashTableResolver('STYLE', 'SCRIPT'), twoWayDataBindingTable = ((slChange = ['sl-change'], slUpdate = ['sl-change', 'sl-input'], slFocus = ['sl-blur', 'sl-focus'], slShow = ['sl-show', 'sl-hide']) => ({
     'INPUT': {
+        checked: { checkbox: true, radio: true },
+        focus: { '*': true },
         value: { '*': true }, // TODO: assert for file type
         file: { file: true },
-        result: { file: true },
-        checked: { checkbox: true, radio: true }
+        result: { file: true }
     },
+    'OPTION': { selected: daggerChangeEventName },
     'SELECT': { value: true },
-    'TEXTAREA': { value: true },
+    'TEXTAREA': { focus: true, value: true },
     'SL-ALERT': { open: slShow },
     'SL-ANIMATION': { play: ['sl-start', 'sl-finish', 'sl-cancel'] },
     // 'SL-ANIMATED-IMAGE': { play: true },
@@ -1282,7 +1311,9 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                         const table = directiveNameTable[name];
                         if (table) {
                             let eventNames = [];
-                            if (isShoelace(tagName)) {
+                            if (Object.is(table, daggerChangeEventName)) {
+                                eventNames = [daggerChangeEventName];
+                            } else if (isShoelace(tagName)) {
                                 eventNames = change ? ['sl-change'] : table;
                             } else if (Object.is(table, true) || table[node.type] || table['*']) {
                                 eventNames = Object.is(name, 'focus') ? ['blur', 'focus'] : [change ? 'change' : 'input'];
@@ -1376,7 +1407,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     }
 }) => styleResolver('[dg-cloak] { display: none !important; }', 'dg-global-style', false) && document.addEventListener('DOMContentLoaded', () => Promise.all(['options', 'modules', 'routers'].map(type => configResolver(document, document.baseURI, type))).then(((base = '', originalPushState = history.pushState, originalReplaceState = history.replaceState, rootRouter = null, routerConfigs = null, styleModuleCache = { '': styleModuleSet }, anchorResolver = (anchor, event = null) => {
     try {
-        const anchorElement = document.getElementById(anchor) || querySelector(document, `a[name=${ anchor }]`, false, true);
+        const anchorElement = anchor && (document.getElementById(anchor) || querySelector(document, `a[name=${ anchor }]`, false, true));
         if(!anchorElement) { return; }
         event && event.preventDefault();
         anchorElement.scrollIntoView();
@@ -1521,7 +1552,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         forEach(names, name => resolver(target.prototype, name));
     })();
     eventDelegator('click', window, event => {
-        let target = event.target;
+        let { target } = event;
         while (target && !['A', 'AREA'].includes(target.tagName)) {
             target = target.parentNode;
         }
@@ -1533,10 +1564,16 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
             history.pushState(null, '', href);
         }
     }, true);
-    const resetToken = { bubbles: true, detail: true }, changeEvent = new CustomEvent('change', resetToken), inputEvent = new CustomEvent('input', resetToken);
+    const eventPayload = { detail: true };
+    eventDelegator('input', window, event => {
+        const { target } = event;
+        if (Object.is(target.tagName, 'SELECT')) {
+            promisor.then(() => forEach(target.children, option => option.dispatchEvent(new CustomEvent(daggerChangeEventName, eventPayload))));
+        }
+    }, true);
     eventDelegator('reset', window, () => event => Object.is(event.target.tagName, 'FORM') && forEach(querySelector(document.body, 'input, textarea', true, true), child => {
-        child.dispatchEvent(inputEvent);
-        child.dispatchEvent(changeEvent);
+        child.dispatchEvent(new CustomEvent('input', eventPayload));
+        child.dispatchEvent(new CustomEvent('change', eventPayload));
     }));
     register(Date, ['setDate', 'setFullYear', 'setHours', 'setMilliseconds', 'setMinutes', 'setMonth', 'setSeconds', 'setTime', 'setUTCDate', 'setUTCFullYear', 'setUTCHours', 'setUTCMilliseconds', 'setUTCMinutes', 'setUTCMonth', 'setUTCSeconds', 'setYear']) || register(Map, ['set', 'delete', 'clear']) || register(Set, ['add', 'delete', 'clear']) || register(WeakMap, ['set', 'delete']) || register(WeakSet, ['add', 'delete']);
     JSON.stringify = processorWrapper(JSON.stringify);
@@ -1595,7 +1632,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
             groupEnder('resolving routers');
             const { rootSelectors } = daggerOptions;
             asserter(['The "rootSelectors" should be "string array" instead of "%o"', rootSelectors], Array.isArray(rootSelectors) && rootSelectors.every(isString));
-            forEach(rootSelectors, rootSelector => warner(`There is no element matching the rootSelector "${ rootSelector }"`, document.querySelector(rootSelector)));         
+            forEach(rootSelectors, rootSelector => warner(`There is no element matching the rootSelector "${ rootSelector }"`, document.querySelector(rootSelector)));
             const rootNodeSet = new Set(rootSelectors.map(rootSelector => [...querySelector(document, rootSelector, true, true)]).flat());
             warner(['\u274e It\'s illegal to set "%o" as root node', html], !rootNodeSet.has(html));
             rootNodeSet.delete(html);

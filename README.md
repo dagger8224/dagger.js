@@ -7,10 +7,10 @@ The sha256 integrity of each file:
 
 |  file name   | integrity  |
 |  ----  | ----  |
-| dagger.js  | sha256-MFJv53Eu52HMEX/gOyM2V1WeKIb66JfmisuhB49c87c= |
-| dagger.min.js  | sha256-aCUk3UnFmKN/vRZmF8bH5AVAzFMPedQAPmxgt8B3bSs= |
-| dagger.release.js  | sha256-6wFU6EEq9NXWbhY6kc3kD5wULhy6YBWDJbZ5BlBax6g= |
-| dagger.release.min.js  | sha256-zJxhSx4GTHCqOfaJgAzKmjoDZMdTbpt7ei0SXd9Qthc= |
+| dagger.js  | sha256-/7KSslZ0FFzMY9/rimwHoR1vNqbEmz8SZY1wpKsZiTo= |
+| dagger.min.js  | sha256-r7NjPPaL3c4Xam6CjEy2+Sv21ls3jglcVedNFLfMeno= |
+| dagger.release.js  | sha256-F/EBG/F7mLh8KoaZzHVChdKDHvQQcM9kgsh0leELIcQ= |
+| dagger.release.min.js  | sha256-keDFq6g002Ta3fgEYCfagNQUlRWVh7scZLRigWByn+I= |
 
 dagger.js is a pure runtime framework, you don't need to prepare anything for using it but the background knowledge of html/javaScript/css.  
 
