@@ -86,7 +86,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         }
     }
     return processorCaches[expression];
-}, isFunction = target => (target instanceof Function), isObject = target => (target instanceof Object), isPromise = target => (target instanceof Promise), isShoelace = tagName => tagName.startsWith('SL-'), isString = target => Object.is(typeof target, 'string'), moduleConfigNormalizer = ((resolvedTypes = hashTableResolver(...Object.keys(moduleType).map(type => `@${ type }`)), normalizer = (config, type) => {
+}, isFunction = target => (target instanceof Function), isObject = target => (target instanceof Object), isPromise = target => (target instanceof Promise), isShoelace = tagName => tagName.startsWith('SL-'), isWiredElements = tagName => tagName.startsWith('WIRED-'), isString = target => Object.is(typeof target, 'string'), moduleConfigNormalizer = ((resolvedTypes = hashTableResolver(...Object.keys(moduleType).map(type => `@${ type }`)), normalizer = (config, type) => {
     const isArray = Array.isArray(config), rawConfig = config;
     if (isString(config) || (isArray && config.every(isString))) {
         config = { uri: config };
@@ -759,6 +759,8 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
             forEach(node.children, radio => {
                 radio.checked = Object.is(data, valueResolver(radio));
             });
+        } else if (isWiredElements(tagName)) { // TODO: validation
+            node[fieldName] = data;
         } else {
             return generalUpdater(data, node, null, { name: 'value' });
         }
@@ -1117,6 +1119,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     'OPTION': { selected: daggerChangeEventName },
     'SELECT': { value: true },
     'TEXTAREA': { focus: true, value: true },
+    // Shoelace
     'SL-ALERT': { open: slShow },
     'SL-ANIMATION': { play: ['sl-start', 'sl-finish', 'sl-cancel'] },
     // 'SL-ANIMATED-IMAGE': { play: true },
@@ -1140,7 +1143,13 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     'SL-SWITCH': { checked: slChange, focus: slFocus },
     'SL-TEXTAREA': { value: slUpdate },
     'SL-TOOLTIP': { open: slShow },
-    'SL-TREE-ITEM': { expanded: ['sl-expand', 'sl-collapse'] } // selected
+    'SL-TREE-ITEM': { expanded: ['sl-expand', 'sl-collapse'] }, // selected
+    // fluent web components (FAST)
+    'FLUENT-SELECT': { change: true, focus: true },
+    'FLUENT-SWITCH': { change: true, focus: true },
+    'FLUENT-TEXT-FIELD': { value: true },
+    // wired-elements
+    'WIRED-INPUT': { value: true },
 }))(), dataBinder = (directives, value, fields, event) => directives.eventHandlers.push(directiveResolver(`Object.is(${ value }, _$data_) || (${ value } = _$data_)`, Object.assign({ event }, fields), '$node, _$data_')), directiveAttributeResolver = (node, name, value = '') => {
     daggerOptions.debugDirective && node.setAttribute(`${ directiveType[name[0]] || 'meta' }-${ decodeURIComponent(name.substring(1)).trim().replace(/\#/g, '__').replace(/:/g, '_').replace(/[^\w]/g, '-') }-debug`, value);
 }, directiveResolver = ((baseSignature = '$module, $scope') => (expression, fields = {}, signature = '$node') => {
@@ -1265,10 +1274,18 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         });
         if (Object.is(resolvedType, 'event')) {
             fields.event = name;
-            if (lifeCycleDirectiveNames[name]) {
-                directives[name] = directiveResolver(value, fields, Object.is(name, 'sentry') ? '$nextRoute' : '$node');
+            let signature = '';
+            const isLifeCycleDirective = lifeCycleDirectiveNames[name];
+            if (isLifeCycleDirective) {
+                signature = Object.is(name, 'sentry') ? '$nextRoute' : '$node';
             } else {
-                directives.eventHandlers.push(directiveResolver(value, fields, observerEventHandlerNames[name] ? '$node, $entries' : '$node, $event'));
+                signature = observerEventHandlerNames[name] ? '$node, $entries' : '$node, $event';
+            }
+            const directive = directiveResolver(value || `${ attributeNameResolver(name) }($scope, $module, ${ signature })`, fields, signature);
+            if (isLifeCycleDirective) {
+                directives[name] = directive;
+            } else {
+                directives.eventHandlers.push(directive);
             }
         } else {
             value || (value = attributeNameResolver(name)); // shorthand
