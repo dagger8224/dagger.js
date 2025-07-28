@@ -464,7 +464,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
             children = this.children.filter(child => childNameSet.has(child.name));
             if (!Object.is(children.length, childNameSet.size)) {
                 forEach(children, child => originalSetDelete.call(childNameSet, child.name));
-                asserter(`The modules "${ [...childNameSet].join(', ') }" is not declared in the root namespace`);
+                asserter([`The modules "%o" is not declared in the root namespace`, childNameSet]);
             }
         }
         this.module = this.module || emptier();
@@ -1144,10 +1144,6 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     'SL-TEXTAREA': { value: slUpdate },
     'SL-TOOLTIP': { open: slShow },
     'SL-TREE-ITEM': { expanded: ['sl-expand', 'sl-collapse'] }, // selected
-    // fluent web components (FAST)
-    'FLUENT-SELECT': { change: true, focus: true },
-    'FLUENT-SWITCH': { change: true, focus: true },
-    'FLUENT-TEXT-FIELD': { value: true },
     // wired-elements
     'WIRED-INPUT': { value: true },
 }))(), dataBinder = (directives, value, fields, event) => directives.eventHandlers.push(directiveResolver(`Object.is(${ value }, _$data_) || (${ value } = _$data_)`, Object.assign({ event }, fields), '$node, _$data_')), directiveAttributeResolver = (node, name, value = '') => {
@@ -1290,7 +1286,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         } else {
             value || (value = attributeNameResolver(name)); // shorthand
             if (Object.is(name, 'watch')) {
-                decorators.lazy && (value = `${ value.substring(value.indexOf('(') + 1, value.indexOf(')')).trim() || 'null' }, $node => { 'use strict';\n ${ decorators.debug ? 'debugger;\n\r' : '' }return ${ value }; }`);
+                decorators.lazy && (value = `${ value.substring(value.indexOf('(') + 1, value.indexOf(')')).trim() || 'null' }, $node => { 'use strict';\n ${ decorators.debug ? 'debugger;\n\r' : '' }${ decorators.clear ? 'console.clear();\n\r' : '' }return ${ value }; }`);
             } else {
                 fields.name = name;
             }
@@ -1469,8 +1465,8 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     if (!Object.is(redirectPath)) {
         logger('\ud83e\udd98 route alias matched');
     } else if (rootRouter.match(routes, params, paths)) {
+        redirectPath = routes[0]?.redirectPath;
         routes.reverse();
-        redirectPath = routes.find(route => route.redirectPath || Object.is(route.redirectPath, ''))?.redirectPath;
     } else if (Reflect.has(routerConfigs, 'default')) {
         asserter(`The route "${ path }" is invalid`, !Object.is(routerConfigs.default, path));
         warner(`\u274e The route "${ path }" is invalid`);
