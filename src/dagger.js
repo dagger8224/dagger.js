@@ -562,7 +562,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
         (data == null) ? node.removeAttribute(name) : node.setAttribute(name, textResolver(data));
     }
 }, nodeUpdater = {
-    $boolean: (data, node, _, { name }) => node.toggleAttribute(name, !!data),
+    $boolean: (data, node, _, { name }) => node.toggleAttribute(isShoelace(node.tagName) ? name : attributeNameResolver(name), !!data),
     checked: (data, node, _, { decorators }) => {
         const { tagName, type } = node;
         if (Object.is(tagName, 'INPUT')) {

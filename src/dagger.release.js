@@ -444,7 +444,7 @@ export default ((context = Symbol('context'), currentController = null, daggerCh
         (data == null) ? node.removeAttribute(name) : node.setAttribute(name, textResolver(data));
     }
 }, nodeUpdater = {
-    $boolean: (data, node, _, { name }) => node.toggleAttribute(name, !!data),
+    $boolean: (data, node, _, { name, decorators }) => node.toggleAttribute(isShoelace(node.tagName) || decorators.raw ? name : attributeNameResolver(name), !!data),
     checked: (data, node, _, { decorators }) => {
         const { tagName, type } = node;
         if (Object.is(tagName, 'INPUT')) {
