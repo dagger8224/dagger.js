@@ -12,7 +12,7 @@
 export default ((context = Symbol('context'), currentController = null, daggerChangeEventName = 'dg-change', directiveQueue = [], dispatchSource = { bubble: 'bubble', self: 'self', mutation: 'mutation' }, moduleNameRegExp = /^[_a-z]{1}[\w]*$/, remoteUrlRegExp = /^(http:\/\/|https:\/\/|\/|\.\/|\.\.\/)/i, rootNamespace = null, rootScope = null, rootScopeCallback = null, rootNodeProfiles = [], arrayWrapper = target => Array.isArray(target) ? target : [target], emptier = () => Object.create(null), processorCaches = emptier(), styleModuleSet = new Set, eventDelegator = ((bubbleSet = new Set, captureSet = new Set, handler = (event, capture, targets, index = 0) => {
     const currentTarget = targets[index++];
     if (!currentTarget) { return; }
-    const eventListenerSet = currentTarget.$eventListenerMap && currentTarget.$eventListenerMap[event.type], eventListeners = eventListenerSet ? [...eventListenerSet].filter(listener => Object.is(listener.decorators.capture, capture)) : [];
+    const eventListenerSet = currentTarget.$eventListenerMap && currentTarget.$eventListenerMap[event.type], eventListeners = eventListenerSet ? [...eventListenerSet].filter(listener => Object.is(!!listener.decorators.capture, !!capture)) : [];
     if (!eventListeners.length) { return handler(event, capture, targets, index); }
     Object.defineProperty(event, 'currentTarget', { configurable: true, value: currentTarget });
     for (const { decorators, handler } of eventListeners) {
@@ -781,8 +781,12 @@ export default ((context = Symbol('context'), currentController = null, daggerCh
                         threshold && (options.threshold = threshold);
                         constructor = IntersectionObserver;
                     } else if (Object.is(event, 'observe-mutation')) { // MutationObserver
-                        const { attributes, childlist, subtree } = decorators;
+                        const { attributes, attributeOld, attributeFilter, character, characterOld, childlist, subtree } = decorators;
                         attributes && (options.attributes = true);
+                        attributeOld && (options.attributeOldValue = true);
+                        filter && (options.attributeFilter = filter);
+                        character && (options.characterData = true);
+                        characterOld && (options.characterDataOldValue = true);
                         childlist && (options.childList = true);
                         subtree && (options.subtree = true);
                         constructor = MutationObserver;
@@ -790,7 +794,7 @@ export default ((context = Symbol('context'), currentController = null, daggerCh
                         constructor = ResizeObserver;
                     }
                     const observer = new constructor(entries => processor(this.module, this.scope, this.node, entries), options);
-                    observer.observe(resolvedTarget);
+                    observer.observe(resolvedTarget, options);
                     return { target: currentTarget, event, observer, options };
                 } else if (once || passive || undelegate || targetOnlyEventNames[event]) {
                     const options = { capture, once, passive };
