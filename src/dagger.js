@@ -1207,7 +1207,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
                     }
                     forEach([...attributes], ({ name, value }) => this.resolveDirective(name, value, directives));
                     if (dynamic) {
-                        this.directives = directives, this.dynamic = directiveResolver(dynamic.value);
+                        this.directives = directives, this.dynamic = directiveResolver(dynamic.value || 'directive');
                         node.removeAttribute(dynamicDirective);
                     } else {
                         controllers.length || (directives.controllers = null);

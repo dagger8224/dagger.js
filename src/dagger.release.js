@@ -1068,7 +1068,7 @@ export default ((context = Symbol('context'), currentController = null, daggerCh
                     }
                     forEach([...attributes], ({ name, value }) => this.resolveDirective(name, value, directives));
                     if (dynamic) {
-                        this.directives = directives, this.dynamic = directiveResolver(dynamic.value);
+                        this.directives = directives, this.dynamic = directiveResolver(dynamic.value || 'directive');
                         node.removeAttribute(dynamicDirective);
                     } else {
                         controllers.length || (directives.controllers = null);
