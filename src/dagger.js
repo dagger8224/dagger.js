@@ -1605,7 +1605,7 @@ export default (({ asserter, logger, groupStarter, groupEnder, warner } = ((mess
     history.replaceState = (...parameters) => stateResolver(originalReplaceState, parameters);
     window.$dagger = Object.freeze(Object.assign(emptier(), { register, version: '1.0.0-RC-debug', validator: (data, path, { type, assert, required } = {}) => {
         if ((data == null) || Number.isNaN(data)) { asserter([`The data "${ path }" should be assigned a valid value instead of "%o" before using`, data], !required); }
-        type && (Array.isArray(type) ? asserter([`The type of data "${ path }" should be one of "%o" instead of "%o"`, type, data.constructor?.name], type.some(type => (data instanceof type))) : asserter([`The type of data "${ path }" should be "%o" instead of "%o"`, type, data.constructor?.name], data instanceof type));
+        type && (Array.isArray(type) ? asserter([`The type of data "${ path }" should be one of "%o" instead of "%o"`, type, data.constructor?.name], type.some(type => Object.is(typeof data, type))) : asserter([`The type of data "${ path }" should be "%o" instead of "%o"`, type, data.constructor?.name], Object.is(typeof data, type)));
         if (!assert) { return; }
         if (isFunction(assert)) {
             asserter(`The assert of "${ path }" is falsy`, assert(data));
