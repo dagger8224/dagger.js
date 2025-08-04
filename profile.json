@@ -2,7 +2,7 @@
   "name": "dagger.js",
   "license": "MIT",
   "author": "Tony Peakman",
-  "version": "0.9.20",
+  "version": "0.9.21",
   "description": "dagger.js is a lightweight html-based runtime web frontend framework.",
   "dependency": null
 }
