@@ -4,12 +4,6 @@
 
 ---
 
-## ✨ License
-
-[MIT](https://opensource.org/license/MIT)
-
----
-
 ## ✨ Features
 
 - ⚡ **Zero Learning Curve**: Use plain HTML and native JavaScript — no JSX, no DSLs, no build tools required.
@@ -184,5 +178,11 @@ If you like dagger.js, you may:
 
 - Official Site: https://daggerjs.org  
 - Example Projects: https://codepen.io/dagger8224/pens  
-- GitHub: https://github.com/dagger-js/dagger.js  
+- GitHub: https://github.com/dagger8224/dagger.js  
 - NPM: https://www.npmjs.com/package/@peakman/dagger.js  
+
+---
+
+## ✨ License
+
+[MIT](https://opensource.org/license/MIT)
