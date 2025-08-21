@@ -35,6 +35,7 @@ dagger.js provides a set of pre-defined directives to declaratively render UI el
 
 | Directive    | Description                             |
 | ------------ | --------------------------------------- |
+| `*checked`   | Dynamically toggle the checked state    |
 | `*class`     | Dynamically toggle class names          |
 | `*focus`     | Set focus on element when true          |
 | `*text`      | Render plain text                       |
@@ -42,6 +43,7 @@ dagger.js provides a set of pre-defined directives to declaratively render UI el
 | `*each`      | Loop through an array                   |
 | `*exist`     | Conditional rendering                   |
 | `*value`     | Two-way binding for input elements      |
+| `*selected`  | Dynamically toggle the selected state   |
 | `*style`     | Dynamically bind style values           |
 | `*watch`     | Run expression when dependencies change |
 | `+eventName` | Event binding, e.g., `+click`, `+keyup` |
