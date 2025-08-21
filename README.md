@@ -43,6 +43,7 @@ dagger.js provides a set of pre-defined directives to declaratively render UI el
 | `*exist`     | Conditional rendering                   |
 | `*value`     | Two-way binding for input elements      |
 | `*style`     | Dynamically bind style values           |
+| `*watch`     | Run expression when dependencies change |
 | `+eventName` | Event binding, e.g., `+click`, `+keyup` |
 | `+load`      | Run before the element is created       |
 | `+loaded`    | Run after the element is mounted        |
