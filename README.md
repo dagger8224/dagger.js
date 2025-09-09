@@ -124,28 +124,28 @@ Router is a built-in feature of dagger.js that allows you to easily define route
 https://github.com/user-attachments/assets/40e1abc5-0e12-454a-801a-faff764457b6
 
 #### [3D Tic Tac Toe](https://codepen.io/dagger8224/pen/RwMedQx)
-https://user-images.githubusercontent.com/66679262/184640434-2cc17b9a-2fce-4f4c-adc4-ffe059bb56b2.mp4
+https://github.com/user-attachments/assets/9d6660c8-ce7b-40ef-8dc7-69ba3135bbd8
 
 #### [Tesla](https://codepen.io/dagger8224/pen/RwMGvPv?editors=1010)
-https://user-images.githubusercontent.com/66679262/179399791-241e3ca0-802a-4d15-bde1-28d2ca0f0f1a.mp4
+https://github.com/user-attachments/assets/5550650c-d309-4f51-844c-767dea69a842
 
 #### [Cards](https://codepen.io/dagger8224/pen/zYWGGOY?editors=1100)
-https://user-images.githubusercontent.com/66679262/179399489-a822ebc1-11ec-4b00-b70a-81ac67ea313f.mp4
+https://github.com/user-attachments/assets/57d3a244-3591-4ef5-9edd-fa52488bf5e4
 
 #### [screensaver](https://codepen.io/dagger8224/pen/rNdOBmB?editors=1010)
-https://user-images.githubusercontent.com/66679262/179399677-2a8972ce-0fdf-4ba6-a503-db4fdc604d6f.mp4
+https://github.com/user-attachments/assets/26229588-e63e-40a2-9c1e-d13b5bbd96ba
 
 #### [Circular Progress Bar](https://codepen.io/dagger8224/pen/dympJXz?editors=1010)
-https://user-images.githubusercontent.com/66679262/179399893-e99969a8-4329-4fb0-b4d7-a573d95c91f6.mp4
+https://github.com/user-attachments/assets/136c43ad-1144-4d31-a91f-2a5e9c029597
 
 #### [Color Picker](https://codepen.io/dagger8224/pen/vYRmGJp?editors=1010)
-https://user-images.githubusercontent.com/66679262/180006750-83e9427b-1a71-4178-b808-d5b6ccf94577.mp4
+https://github.com/user-attachments/assets/2055c1e5-99b8-4142-aa71-fa567cc8f563
 
 #### [Text Animation](https://codepen.io/dagger8224/pen/JjLXppg)
-https://user-images.githubusercontent.com/66679262/179400179-5d50cbba-98e6-470a-b58b-cdee007b71e3.mp4
+https://github.com/user-attachments/assets/bfd0ef8e-4046-4e00-89ce-b89bb1649529
 
 #### [3D Carousel](https://codepen.io/dagger8224/pen/JjLRbmz)
-https://user-images.githubusercontent.com/66679262/179400265-ebd5bdbb-0222-454e-96c6-8b43b4d91625.mp4
+https://github.com/user-attachments/assets/a88cbbbe-9c23-4579-b9e8-3f62d89b9315
 
 And more [demos](https://codepen.io/collection/yyLOGj) on how to work with [Shoelace components](https://shoelace.style/components/).
 
