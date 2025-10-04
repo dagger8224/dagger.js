@@ -147,7 +147,7 @@ https://github.com/user-attachments/assets/bfd0ef8e-4046-4e00-89ce-b89bb1649529
 #### [3D Carousel](https://codepen.io/dagger8224/pen/JjLRbmz)
 https://github.com/user-attachments/assets/a88cbbbe-9c23-4579-b9e8-3f62d89b9315
 
-And more [demos](https://codepen.io/collection/yyLOGj) on how to work with [Shoelace components](https://shoelace.style/components/).
+And more [demos](https://codepen.io/collection/yyLOGj) on how to work with [Shoelace components](https://shoelace.style/#new-to-web-components).
 
 ---
 
