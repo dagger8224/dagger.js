@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>dagger.js test</title>
+    <style>[dg-cloak] { display: none !important; }</style>
+    <script type="module" crossorigin="anonymous" src="./runtime.mjs" defer></script>
+    <!--<script type="dagger/options" src="./options.json"></script>
+    <script type="dagger/modules" src="./modules.json"></script>
+    <script type="dagger/routers" src="./routers.json"></script>-->
+  </head>
+  <body dg-cloak +load="{ abc: 123 }">
+    <h1>dagger.js test</h1>
+    <div style="border: 2px solid red; padding: 20px;" +click#inside="console.error(1, $node, $event)">outside
+      <div style="border: 2px solid blue; padding: 20px; width: 300px; height: 200px;" +click#outside="console.error(2, $node, $event)">inside
+        <button +click="console.error($node, $module, $scope)">click me</button>
+      </div>
+    </div>
+  </body>
+</html>
